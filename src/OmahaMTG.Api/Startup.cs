@@ -64,22 +64,22 @@ namespace OmahaMTG.Api
             //    app.UseHsts();
             //}
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            //app.UseRouting();
+            app.UseRouting();
 
-            //app.UseAuthentication();
-            //app.UseIdentityServer();
-            //app.UseAuthorization();
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller}/{action=Index}/{id?}");
-            //    endpoints.MapRazorPages();
-            //});
+            app.UseAuthentication();
+            app.UseIdentityServer();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
 
             app.UseSpa(spa =>
             {
