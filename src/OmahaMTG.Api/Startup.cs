@@ -27,21 +27,21 @@ namespace OmahaMTG.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(OmahaMtgConfig.OmahaMtgDbConnectionString));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(OmahaMtgConfig.OmahaMtgDbConnectionString));
 
-            //services.AddDefaultIdentity<ApplicationUser>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            //services.AddIdentityServer()
-            //    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            services.AddIdentityServer()
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            //services.AddAuthentication()
-            //    .AddIdentityServerJwt();
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            ////services.AddOmahaMtgContent(OmahaMtgConfig);
+            services.AddOmahaMtgContent(OmahaMtgConfig);
             //// In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
