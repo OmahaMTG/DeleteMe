@@ -70,7 +70,7 @@ namespace OmahaMTG.Api
 
             app.UseRouting();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
             //app.UseIdentityServer();
             //app.UseAuthorization();
             app.UseEndpoints(endpoints =>
