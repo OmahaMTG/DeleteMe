@@ -55,7 +55,7 @@ namespace OmahaMTG.Api
             //if (env.IsDevelopment())
             //{
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+            //    app.UseDatabaseErrorPage();
             //}
             //else
             //{
@@ -70,16 +70,16 @@ namespace OmahaMTG.Api
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseIdentityServer();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
+            //app.UseAuthentication();
+            //app.UseIdentityServer();
+            //app.UseAuthorization();
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller}/{action=Index}/{id?}");
+            //    endpoints.MapRazorPages();
+            //});
 
             app.UseSpa(spa =>
             {
