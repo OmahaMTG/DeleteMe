@@ -39,7 +39,8 @@ namespace OmahaMTG.Api
                 {
                 //   options.
                 })
-                .AddDeveloperSigningCredential()
+                .AddSigningCredential(new X509Certificate2("certs\\myapp.pfx", "w@terb0y"))
+               // .AddDeveloperSigningCredential()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
@@ -76,9 +77,9 @@ namespace OmahaMTG.Api
             app.UseSpaStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthentication();//.AddCertificate();
             app.UseIdentityServer();
+            app.UseAuthentication();//.AddCertificate();
+            
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
