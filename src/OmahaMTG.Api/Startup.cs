@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using OmahaMTG.Api.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using OmahaMTG.Config;
 
 namespace OmahaMTG.Api
@@ -33,11 +35,16 @@ namespace OmahaMTG.Api
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+                {
+                //   options.
+                })
+                .AddDeveloperSigningCredential()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+            ;
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -70,9 +77,9 @@ namespace OmahaMTG.Api
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            //app.UseIdentityServer();
-            //app.UseAuthorization();
+            app.UseAuthentication();//.AddCertificate();
+            app.UseIdentityServer();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
