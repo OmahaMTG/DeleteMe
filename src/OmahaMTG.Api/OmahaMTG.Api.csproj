@@ -41,17 +41,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="certs\myapp.pfx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="certs\myapp.pfx">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\OmahaMTG\OmahaMTG.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="certs\myapp.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
