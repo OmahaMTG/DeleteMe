@@ -27,19 +27,6 @@ namespace OmahaMTG.Api
             configuration.Bind("ConnectionStrings", OmahaMtgConfig);
         }
 
-        public static byte[] ReadFully(Stream input)
-        {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
 
         OmahaMtgConfig OmahaMtgConfig { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -51,15 +38,11 @@ namespace OmahaMTG.Api
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            var assembly = typeof(Startup).GetTypeInfo().Assembly;
-            Stream resource = assembly.GetManifestResourceStream("OmahaMTG.Api.certs.myapp.pfx");
-
             services.AddIdentityServer(options =>
                 {
                 //   options.
                 })
-                .AddSigningCredential(new X509Certificate2(ReadFully(resource), "w@terb0y"))
-               // .AddDeveloperSigningCredential()
+
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
