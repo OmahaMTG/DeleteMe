@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OmahaMTG.Data;
 using OmahaMTG.AdminContentHandlers.Host;
-namespace OmahaMTG.Api.Controllers.Admin
+using OmahaMTG.Data;
+
+namespace OmahaMTG.Controllers.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HostController : ControllerBase
+    public class MeetingController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public HostController(IMediator mediator)
+        public MeetingController(IMediator mediator)
         {
             _mediator = mediator;
         }

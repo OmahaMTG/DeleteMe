@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OmahaMTG.Data;
 using OmahaMTG.AdminContentHandlers.Presenter;
-namespace OmahaMTG.Api.Controllers.Admin
+using OmahaMTG.Data;
+
+namespace OmahaMTG.Controllers.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
