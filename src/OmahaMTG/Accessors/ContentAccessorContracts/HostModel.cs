@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OmahaMTG.Data;
+using System;
 
 namespace OmahaMTG.Accessors.ContentAccessorContracts
 {
@@ -40,7 +41,7 @@ namespace OmahaMTG.Accessors.ContentAccessorContracts
         public bool Perm { get; set; }
     }
 
-    public class HostQueryRequest
+    public class HostQueryRequest : SkipTakeRequest
     {
         public String Filter { get; set; }
         public bool IncludeDeleted { get; set; }
