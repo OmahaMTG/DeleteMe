@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.AdminContentHandlers.Host;
 using OmahaMTG.Data;
 
@@ -18,7 +19,7 @@ namespace OmahaMTG.Controllers.Admin
 
         // GET: api/Default
         [HttpGet]
-        public async Task<ActionResult<SkipTakeSet<Model>>> Get([FromQuery]Query.Command getRequest)
+        public async Task<ActionResult<SkipTakeSet<HostModel>>> Get([FromQuery]Query.Command getRequest)
         {
             return await _mediator.Send(getRequest);
         }
@@ -32,14 +33,14 @@ namespace OmahaMTG.Controllers.Admin
 
         // POST: api/Default
         [HttpPost]
-        public async Task<ActionResult<Model>> Post([FromBody] Create.Command createRequest)
+        public async Task<ActionResult<HostModel>> Post([FromBody] Create.Command createRequest)
         {
             return await _mediator.Send(createRequest);
         }
 
         // PUT: api/Default/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Model>> Put(int id, [FromBody] Update.Command updateRequest)
+        public async Task<ActionResult<HostModel>> Put(int id, [FromBody] Update.Command updateRequest)
         {
             updateRequest.Id = id;
             return await _mediator.Send(updateRequest);

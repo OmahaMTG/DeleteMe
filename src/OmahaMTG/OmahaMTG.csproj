@@ -20,14 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="certs\" />
     <Folder Include="Controllers\Admin\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="certs\myapp.pfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

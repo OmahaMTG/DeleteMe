@@ -24,7 +24,7 @@ namespace OmahaMTG.Config
         {
             services.AddDbContext<Data.UserGroupContext>(options =>
                 options.UseSqlServer(
-                    config.OmahaMtgDbConnectionString));
+                    config.ConnectionString));
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
             return services;
