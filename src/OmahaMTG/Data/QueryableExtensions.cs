@@ -21,6 +21,7 @@ namespace OmahaMTG.Data
 
         public static async Task<SkipTakeSet<TOut>> AsSkipTakeSet<TIn, TOut>(this IQueryable<TIn> query, int skip, int take, Func<TIn, TOut> mappingFunction)
         {
+            
             var records = await query.Skip(skip).Take(take).ToListAsync();
             var result = new SkipTakeSet<TOut>
             {

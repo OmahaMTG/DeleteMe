@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OmahaMTG.AdminContentHandlers.Post;
+using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
 namespace OmahaMTG.Controllers.Admin
@@ -10,46 +9,39 @@ namespace OmahaMTG.Controllers.Admin
     [ApiController]
     public class PostController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        public PostController(IMediator mediator)
+        private readonly IPostAccessor _postAccessor;
+        public PostController(IPostAccessor postAccessor)
         {
-            _mediator = mediator;
+            _postAccessor = postAccessor;
         }
 
         // GET: api/Default
         [HttpGet]
-        public async Task<ActionResult<SkipTakeSet<Model>>> Get([FromQuery]Query.Command getRequest)
+        public async Task<ActionResult<SkipTakeSet<PostModel>>> Get([FromQuery]PostQueryRequest request)
         {
-            return await _mediator.Send(getRequest);
+            return await _postAccessor.QueryPost(request);
         }
-
-        //// GET: api/Default/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Model>> Get(int id)
-        //{
-        //    return await _contentManager.GetResource(id);
-        //}
 
         // POST: api/Default
         [HttpPost]
-        public async Task<ActionResult<Model>> Post([FromBody] Create.Command createRequest)
+        public async Task<ActionResult<PostModel>> Post([FromBody] PostCreateRequest request)
         {
-            return await _mediator.Send(createRequest);
+            return await _postAccessor.CreatePost(request);
         }
 
         // PUT: api/Default/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Model>> Put(int id, [FromBody] Update.Command updateRequest)
+        public async Task<ActionResult<PostModel>> Put(int id, [FromBody] PostUpdateRequest request)
         {
-            updateRequest.Id = id;
-            return await _mediator.Send(updateRequest);
+            request.Id = id;
+            return await _postAccessor.UpdatePost(request);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
         {
-            await _mediator.Send(new Delete.Command(){Id = id, Perm = perm});
+            await _postAccessor.DeletePost(new PostDeleteRequest() { Id = id, Perm = perm });
             return Ok();
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OmahaMTG.AdminContentHandlers.Host;
+using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
 namespace OmahaMTG.Controllers.Admin
@@ -10,46 +9,39 @@ namespace OmahaMTG.Controllers.Admin
     [ApiController]
     public class MeetingController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        public MeetingController(IMediator mediator)
+        private readonly IMeetingAccessor _meetingAccessor;
+        public MeetingController(IMeetingAccessor meetingAccessor)
         {
-            _mediator = mediator;
+            _meetingAccessor = meetingAccessor;
         }
 
         // GET: api/Default
         [HttpGet]
-        public async Task<ActionResult<SkipTakeSet<Model>>> Get([FromQuery]Query.Command getRequest)
+        public async Task<ActionResult<SkipTakeSet<MeetingModel>>> Get([FromQuery]MeetingQueryRequest request)
         {
-            return await _mediator.Send(getRequest);
+            return await _meetingAccessor.QueryMeeting(request);
         }
-
-        //// GET: api/Default/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Model>> Get(int id)
-        //{
-        //    return await _contentManager.GetResource(id);
-        //}
 
         // POST: api/Default
         [HttpPost]
-        public async Task<ActionResult<Model>> Post([FromBody] Create.Command createRequest)
+        public async Task<ActionResult<MeetingModel>> Post([FromBody] MeetingCreateRequest request)
         {
-            return await _mediator.Send(createRequest);
+            return await _meetingAccessor.CreateMeeting(request);
         }
 
         // PUT: api/Default/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Model>> Put(int id, [FromBody] Update.Command updateRequest)
+        public async Task<ActionResult<MeetingModel>> Put(int id, [FromBody] MeetingUpdateRequest request)
         {
-            updateRequest.Id = id;
-            return await _mediator.Send(updateRequest);
+            request.Id = id;
+            return await _meetingAccessor.UpdateMeeting(request);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
         {
-            await _mediator.Send(new Delete.Command(){Id = id, Perm = perm});
+            await _meetingAccessor.DeleteMeeting(new MeetingDeleteRequest() { Id = id, Perm = perm });
             return Ok();
         }
     }
