@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OmahaMTG.AdminContentHandlers.Presentation;
+using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
 namespace OmahaMTG.Controllers.Admin
@@ -10,46 +9,39 @@ namespace OmahaMTG.Controllers.Admin
     [ApiController]
     public class PresentationController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        public PresentationController(IMediator mediator)
+        private readonly IPresentationAccessor _presentationAccessor;
+        public PresentationController(IPresentationAccessor presentationAccessor)
         {
-            _mediator = mediator;
+            _presentationAccessor = presentationAccessor;
         }
 
         // GET: api/Default
         [HttpGet]
-        public async Task<ActionResult<SkipTakeSet<Model>>> Get([FromQuery]Query.Command getRequest)
+        public async Task<ActionResult<SkipTakeSet<PresentationModel>>> Get([FromQuery]PresentationQueryRequest request)
         {
-            return await _mediator.Send(getRequest);
+            return await _presentationAccessor.QueryPresentation(request);
         }
-
-        //// GET: api/Default/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Model>> Get(int id)
-        //{
-        //    return await _contentManager.GetResource(id);
-        //}
 
         // POST: api/Default
         [HttpPost]
-        public async Task<ActionResult<Model>> Post([FromBody] Create.Command createRequest)
+        public async Task<ActionResult<PresentationModel>> Post([FromBody] PresentationCreateRequest request)
         {
-            return await _mediator.Send(createRequest);
+            return await _presentationAccessor.CreatePresentation(request);
         }
 
         // PUT: api/Default/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Model>> Put(int id, [FromBody] Update.Command updateRequest)
+        public async Task<ActionResult<PresentationModel>> Put(int id, [FromBody] PresentationUpdateRequest request)
         {
-            updateRequest.Id = id;
-            return await _mediator.Send(updateRequest);
+            request.Id = id;
+            return await _presentationAccessor.UpdatePresentation(request);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
         {
-            await _mediator.Send(new Delete.Command(){Id = id, Perm = perm});
+            await _presentationAccessor.DeletePresentation(new PresentationDeleteRequest() { Id = id, Perm = perm });
             return Ok();
         }
     }

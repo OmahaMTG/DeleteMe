@@ -9,7 +9,5 @@ namespace OmahaMTG.Accessors.ContentAccessorContracts
         Task<HostModel> UpdateHost(HostUpdateRequest request);
         Task DeleteHost(HostDeleteRequest request);
         Task<SkipTakeSet<HostModel>> QueryHost(HostQueryRequest request);
-
-        Task<HostModel> GetHost(int hostId);
     }
 }

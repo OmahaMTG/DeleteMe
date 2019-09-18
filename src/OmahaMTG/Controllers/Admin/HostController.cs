@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OmahaMTG.Accessors.ContentAccessorContracts;
-using OmahaMTG.AdminContentHandlers.Host;
 using OmahaMTG.Data;
 
 namespace OmahaMTG.Controllers.Admin
@@ -11,46 +9,39 @@ namespace OmahaMTG.Controllers.Admin
     [ApiController]
     public class HostController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        public HostController(IMediator mediator)
+        private readonly IHostAccessor _hostAccessor;
+        public HostController(IHostAccessor hostAccessor)
         {
-            _mediator = mediator;
+            _hostAccessor = hostAccessor;
         }
 
         // GET: api/Default
         [HttpGet]
-        public async Task<ActionResult<SkipTakeSet<HostModel>>> Get([FromQuery]Query.Command getRequest)
+        public async Task<ActionResult<SkipTakeSet<HostModel>>> Get([FromQuery]HostQueryRequest request)
         {
-            return await _mediator.Send(getRequest);
+            return await _hostAccessor.QueryHost(request);
         }
-
-        //// GET: api/Default/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Model>> Get(int id)
-        //{
-        //    return await _contentManager.GetResource(id);
-        //}
 
         // POST: api/Default
         [HttpPost]
-        public async Task<ActionResult<HostModel>> Post([FromBody] Create.Command createRequest)
+        public async Task<ActionResult<HostModel>> Post([FromBody] HostCreateRequest request)
         {
-            return await _mediator.Send(createRequest);
+            return await _hostAccessor.CreateHost(request);
         }
 
         // PUT: api/Default/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<HostModel>> Put(int id, [FromBody] Update.Command updateRequest)
+        public async Task<ActionResult<HostModel>> Put(int id, [FromBody] HostUpdateRequest request)
         {
-            updateRequest.Id = id;
-            return await _mediator.Send(updateRequest);
+            request.Id = id;
+            return await _hostAccessor.UpdateHost(request);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
         {
-            await _mediator.Send(new Delete.Command(){Id = id, Perm = perm});
+            await _hostAccessor.DeleteHost(new HostDeleteRequest() { Id = id, Perm = perm });
             return Ok();
         }
     }

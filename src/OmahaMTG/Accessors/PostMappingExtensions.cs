@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
-namespace OmahaMTG.AdminContentHandlers.Post
+namespace OmahaMTG.Accessors
 {
     internal static class PostMappingExtensions
     {
-        internal static PostData ToPostData(this Create.Command createPostRequest)
+        internal static PostData ToPostData(this PostCreateRequest createPostRequest)
         {
             return new PostData()
             {
@@ -19,9 +19,9 @@ namespace OmahaMTG.AdminContentHandlers.Post
             };
         }
 
-        internal static Model ToPost(this PostData postData)
+        internal static PostModel ToPost(this PostData postData)
         {
-            return new Model()
+            return new PostModel()
             {
                 Id = postData.Id,
                 Body = postData.Body,
@@ -34,7 +34,7 @@ namespace OmahaMTG.AdminContentHandlers.Post
             };
         }
 
-        internal static void ApplyUpdatePostRequestToPostData(this PostData postDataToUpdate, Update.Command updatePostRequest)
+        internal static void ApplyUpdatePostRequestToPostData(this PostData postDataToUpdate, PostUpdateRequest updatePostRequest)
         {
             postDataToUpdate.Body = updatePostRequest.Body;
             postDataToUpdate.IsDraft = updatePostRequest.IsDraft;

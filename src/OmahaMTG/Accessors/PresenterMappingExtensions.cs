@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
-namespace OmahaMTG.AdminContentHandlers.Presenter
+namespace OmahaMTG.Accessors
 {
     internal static class PresenterMappingExtensions
     {
-        internal static PresenterData ToPresenterData(this Create.Command createPresenterRequest)
+        internal static PresenterData ToPresenterData(this PresenterCreateRequest createPresenterRequest)
         {
             return new PresenterData()
             {
@@ -15,9 +15,9 @@ namespace OmahaMTG.AdminContentHandlers.Presenter
             };
         }
 
-        internal static Model ToPresenter(this PresenterData presenterData)
+        internal static PresenterModel ToPresenter(this PresenterData presenterData)
         {
-            return new Model()
+            return new PresenterModel()
             {
                 Id = presenterData.Id,
                 Bio = presenterData.Bio,
@@ -28,7 +28,7 @@ namespace OmahaMTG.AdminContentHandlers.Presenter
             };
         }
 
-        internal static void ApplyUpdatePresenterRequestToPresenterData(this PresenterData presenterDataToUpdate, Update.Command updatePresenterRequest)
+        internal static void ApplyUpdatePresenterRequestToPresenterData(this PresenterData presenterDataToUpdate, PresenterUpdateRequest updatePresenterRequest)
         {
             presenterDataToUpdate.Bio = updatePresenterRequest.Bio;
             presenterDataToUpdate.Name = updatePresenterRequest.Name;

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
+using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
-namespace OmahaMTG.AdminContentHandlers.Meeting
+namespace OmahaMTG.Accessors
 {
     internal static class MeetingMappingExtensions
     {
-        internal static MeetingData ToMeetingData(this Create.Command createMeetingRequest)
+        internal static MeetingData ToMeetingData(this MeetingCreateRequest createMeetingRequest)
         {
             return new MeetingData()
             {
@@ -25,9 +26,9 @@ namespace OmahaMTG.AdminContentHandlers.Meeting
 
         }
 
-        internal static Model ToMeeting(this MeetingData meetingData)
+        internal static MeetingModel ToMeeting(this MeetingData meetingData)
         {
-            return new Model()
+            return new MeetingModel()
             {
                 Id = meetingData.Id,
                 Body = meetingData.Body,
@@ -49,7 +50,7 @@ namespace OmahaMTG.AdminContentHandlers.Meeting
             };
         }
 
-        internal static void ApplyUpdateMeetingRequestToMeetingData(this MeetingData meetingDataToUpdate, Update.Command updateMeetingRequest)
+        internal static void ApplyUpdateMeetingRequestToMeetingData(this MeetingData meetingDataToUpdate, MeetingUpdateRequest updateMeetingRequest)
         {
             meetingDataToUpdate.Body = updateMeetingRequest.Body;
             meetingDataToUpdate.IsDraft = updateMeetingRequest.IsDraft;

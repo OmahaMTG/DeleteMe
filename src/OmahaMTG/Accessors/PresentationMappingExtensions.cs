@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
-namespace OmahaMTG.AdminContentHandlers.Presentation
+namespace OmahaMTG.Accessors
 {
     internal static class PresentationMappingExtensions
     {
-        internal static PresentationData ToPresentationData(this Create.Command createPresentationRequest)
+        internal static PresentationData ToPresentationData(this PresentationCreateRequest createPresentationRequest)
         {
             return new PresentationData()
             {
@@ -17,9 +17,9 @@ namespace OmahaMTG.AdminContentHandlers.Presentation
             };
         }
 
-        internal static Model ToPresentation(this PresentationData presentationData)
+        internal static PresentationModel ToPresentation(this PresentationData presentationData)
         {
-            return new Model()
+            return new PresentationModel()
             {
                 Id = presentationData.Id,
                 Details = presentationData.Details,
@@ -39,7 +39,7 @@ namespace OmahaMTG.AdminContentHandlers.Presentation
         //    return presentationDatas.Select(u => u.ToPresentationData());
         //}
 
-        internal static void ApplyUpdatePresentationRequestToPresentationData(this PresentationData presentationDataToUpdate, Update.Command updatePresentationRequest)
+        internal static void ApplyUpdatePresentationRequestToPresentationData(this PresentationData presentationDataToUpdate, PresentationUpdateRequest updatePresentationRequest)
         {
             presentationDataToUpdate.Details = updatePresentationRequest.Details;
             presentationDataToUpdate.Title = updatePresentationRequest.Title;

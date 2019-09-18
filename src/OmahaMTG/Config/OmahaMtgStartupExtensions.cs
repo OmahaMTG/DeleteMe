@@ -1,20 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-//using OmahaMTG.Content.Host;
-//using OmahaMTG.Content.Sponsor;
-using System.Collections.Generic;
-using System.Reflection;
-using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-//using OmahaMTG.Accessors.UserGroupAccessor;
-//using OmahaMTG.Api;
-//using OmahaMTG.Content.Meeting;
-//using OmahaMTG.Content.Post;
-//using OmahaMTG.Content.Presentation;
-//using OmahaMTG.Content.Presenter;
-using OmahaMTG.Data;
-
+using OmahaMTG.Accessors;
+using OmahaMTG.Accessors.ContentAccessorContracts;
 
 namespace OmahaMTG.Config
 {
@@ -26,7 +14,12 @@ namespace OmahaMTG.Config
                 options.UseSqlServer(
                     config.ConnectionString));
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient<IHostAccessor, ContentAccessor>();
+            services.AddTransient<IPostAccessor, ContentAccessor>();
+            services.AddTransient<ISponsorAccessor, ContentAccessor>();
+            services.AddTransient<IPresentationAccessor, ContentAccessor>();
+            services.AddTransient<IPresenterAccessor, ContentAccessor>();
+            services.AddTransient<IMeetingAccessor, ContentAccessor>();
             return services;
         }
 
@@ -41,8 +34,6 @@ namespace OmahaMTG.Config
                     //context.Database.EnsureCreated();
                 }
             }
-
-            //app.UseAuthentication();
 
             return app;
         }

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
-namespace OmahaMTG.AdminContentHandlers.Sponsor
+namespace OmahaMTG.Accessors
 {
     internal static class SqlSponsorMappingExtensions
     {
-        internal static SponsorData ToSponsorData(this Create.Command createSponsorRequest)
+        internal static SponsorData ToSponsorData(this SponsorCreateRequest createSponsorRequest)
         {
             return new SponsorData()
             {
@@ -18,9 +17,9 @@ namespace OmahaMTG.AdminContentHandlers.Sponsor
             };
         }
 
-        internal static Model ToSponsor(this SponsorData sponsorData)
+        internal static SponsorModel ToSponsor(this SponsorData sponsorData)
         {
-            return new Model()
+            return new SponsorModel()
             {
                 Id = sponsorData.Id,
                 Name = sponsorData.Name,
@@ -34,7 +33,7 @@ namespace OmahaMTG.AdminContentHandlers.Sponsor
             };
         }
 
-        internal static void ApplyUpdateSponsorRequestToSponsorData(this SponsorData sponsorDataToUpdate, Update.Command updateSponsorRequest)
+        internal static void ApplyUpdateSponsorRequestToSponsorData(this SponsorData sponsorDataToUpdate, SponsorUpdateRequest updateSponsorRequest)
         {
             sponsorDataToUpdate.Name = updateSponsorRequest.Name;
             sponsorDataToUpdate.Blurb = updateSponsorRequest.Blurb;

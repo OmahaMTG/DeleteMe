@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using OmahaMTG.Accessors.ContentAccessorContracts;
+﻿using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
-namespace OmahaMTG.AdminContentHandlers.Host
+namespace OmahaMTG.Accessors
 {
     internal static class HostMappingExtensions
     {
-        internal static HostData ToHostData(this Create.Command createHostRequest)
+        internal static HostData ToHostData(this HostCreateRequest createHostRequest)
         {
             return new HostData()
             {
@@ -30,7 +29,7 @@ namespace OmahaMTG.AdminContentHandlers.Host
             };
         }
 
-        internal static void ApplyUpdateHostRequestToHostData(this HostData hostDataToUpdate, Update.Command updateHostRequest)
+        internal static void ApplyUpdateHostRequestToHostData(this HostData hostDataToUpdate, HostUpdateRequest updateHostRequest)
         {
             hostDataToUpdate.Name = updateHostRequest.Name;
             hostDataToUpdate.Blurb = updateHostRequest.Blurb;
