@@ -27,12 +27,11 @@ namespace OmahaMTG.Config
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                using (var context = serviceScope.ServiceProvider.GetRequiredService<Data.UserGroupContext>())
-                {
-                    context.Database.Migrate();
-                    //context.Database.EnsureDeleted();
-                    //context.Database.EnsureCreated();
-                }
+                var context = serviceScope.ServiceProvider.GetRequiredService<Data.UserGroupContext>();
+                context.Database.Migrate();
+                //context.Database.EnsureDeleted();
+                //context.Database.EnsureCreated();
+
             }
 
             return app;
