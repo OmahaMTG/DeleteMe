@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './App.module.scss';
-import Sponsors from './screens/Sponsors';
+import Sponsors from './screens/contentManagers/Sponsors';
 import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 // import { CounterButton } from './components/CounterButton';
 
