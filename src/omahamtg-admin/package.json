@@ -58,5 +58,6 @@
     "@types/react-virtualized-auto-sizer": "^1.0.0",
     "@types/react-window": "^1.8.1",
     "@types/react-window-infinite-loader": "^1.0.1"
-  }
+  },
+  "proxy": "https://omtg.azurewebsites.net"
 }
