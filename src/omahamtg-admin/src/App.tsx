@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Router>
       <div className={styles.app}>
-        <div className={styles.head}>OmahaMTG Admin</div>
+        <div className={styles.head}>Admin</div>
         <div className={styles.body}>
           <div className={styles.sidebar}>
             <ul>
@@ -16,19 +16,19 @@ const App = () => {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/Sponsors/">Sponsors</Link>
+                <Link to="/Sponsors/">things</Link>
               </li>
               <li>
-                <Link to="/Hosts/">Hosts</Link>
+                <Link to="/Hosts/">More things</Link>
               </li>
               <li>
-                <Link to="/Posts/">Posts</Link>
+                <Link to="/Posts/">Other things</Link>
               </li>
               <li>
                 <Link to="/Events/">Events</Link>
               </li>
               <li>
-                <Link to="/Presenters/">Presenters</Link>
+                <Link to="/Presenters/">thing thing</Link>
               </li>
             </ul>
           </div>
