@@ -52,3 +52,22 @@
   //   margin-left: 0;
   // }
 }
+
+.siteNav {
+  list-style-type: none;
+  margin-left: 0.75rem;
+  padding-left: 0;
+
+  li {
+    margin-top: 0.75rem;
+
+    a {
+      text-decoration: none;
+      color: #f7f7f7;
+    }
+  }
+
+  .activeFile {
+    border-right: solid 5px #ffd300;
+  }
+}

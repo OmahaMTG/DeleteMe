@@ -11,7 +11,7 @@ const App = () => {
         <div className={styles.head}>Admin</div>
         <div className={styles.body}>
           <div className={styles.sidebar}>
-            <ul>
+            <ul className={styles.siteNav}>
               <li>
                 <Link to="/">Home</Link>
               </li>
