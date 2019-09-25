@@ -1,5 +1,3 @@
-import Sponsors from './Sponsors';
-
 export interface Sponsor {
   id: number;
   name: string;

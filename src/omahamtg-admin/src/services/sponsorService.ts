@@ -1,7 +1,6 @@
-import { OmahaMTGSiteAxios } from './AxiosInstances';
-import { start } from 'repl';
+// import { OmahaMTGSiteAxios } from './AxiosInstances';
 
-const http = OmahaMTGSiteAxios();
+// const http = OmahaMTGSiteAxios();
 
 export const getSponsors = async (startIndex: number, stopIndex: number) => {
   const result: { name: string; id: number; blurb: string; contactInfo: string; shortBlurb: string; url: string }[] = [];

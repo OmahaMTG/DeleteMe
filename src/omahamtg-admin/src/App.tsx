@@ -16,24 +16,24 @@ const App = () => {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/Sponsors/">things</Link>
+                <Link to="/Sponsor/">Sponsors</Link>
               </li>
               <li>
-                <Link to="/Hosts/">More things</Link>
+                <Link to="/Hosts/">Hosts</Link>
               </li>
               <li>
-                <Link to="/Posts/">Other things</Link>
+                <Link to="/Posts/">Posts</Link>
               </li>
               <li>
                 <Link to="/Events/">Events</Link>
               </li>
               <li>
-                <Link to="/Presenters/">thing thing</Link>
+                <Link to="/Presenters/">Presenters</Link>
               </li>
             </ul>
           </div>
           <div className={styles.content}>
-            <Route path="/Sponsors/" component={Sponsors} />
+            <Route path="/Sponsor/" component={Sponsors} />
           </div>
         </div>
       </div>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Sponsor, PagedSet, defaultSponsorPage } from './SponsorModels';
+import { Sponsor, PagedSet, defaultSponsorPage } from './SponsorModels.d';
 import { getSponsors } from '../../services/sponsorService';
 export const useSponsors = () => {
   const [sponsors, setSponsors] = useState<PagedSet<Sponsor>>(defaultSponsorPage);
-  const [formState, setFormState] = useState<Sponsor>();
+  // const [formState, setFormState] = useState<Sponsor>();
 
   useEffect(() => {
     (async () => {
