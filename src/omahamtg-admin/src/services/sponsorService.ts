@@ -46,3 +46,8 @@ export const updateSponsor = async (sponsorId: number, sponsor: Omit<sponsor, 'i
   const result = await http.put<sponsor>(`/sponsor/${sponsorId}`, sponsor);
   return result.data;
 };
+
+export const deleteSponsor = async (sponsorId: number, perm: boolean = false) => {
+  const result = await http.delete<sponsor>(`/sponsor/${sponsorId}?perm=${perm}`);
+  return result.data;
+};

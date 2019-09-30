@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Sponsor, PagedSet, defaultSponsorPage } from './SponsorModels.d';
-import { getSponsors, createSponsor, updateSponsor } from '../../services/sponsorService';
-import { number } from 'prop-types';
+import { Sponsor, PagedSet, EditorState } from './SponsorModels.d';
+import * as Api from '../../services/sponsorService';
 import { useParams } from 'react-router-dom';
 
 const defaultSponsor = {
@@ -12,34 +11,41 @@ const defaultSponsor = {
   url: ''
 };
 
+const defaultSponsorPage: PagedSet<Sponsor> = {
+  taken: 0,
+  skipped: 0,
+  records: [],
+  totalRecords: 0
+};
+
+const defaultEditorState: EditorState<Sponsor> = {
+  editId: 0,
+  editView: defaultSponsor,
+  mode: 'new'
+};
+
 export const useSponsors = () => {
   const [sponsors, setSponsors] = useState<PagedSet<Sponsor>>(defaultSponsorPage);
-  const [currentSponsorForm, setCurrentSponsorForm] = useState<Omit<Sponsor, 'id'>>(defaultSponsor);
-  const [formMode, setFormMode] = useState<{ editId: number; mode: 'edit' | 'new' }>({ editId: 0, mode: 'new' });
+  const [sponsorForm, setSponsorForm] = useState<EditorState<Sponsor>>(defaultEditorState);
+
   let { id } = useParams();
 
   useEffect(() => {
     (async () => {
-      const items = await getSponsors(0, 50);
+      const items = await Api.getSponsors(0, 50);
       setSponsors(items);
     })();
   }, []);
 
   useEffect(() => {
-    //(async () => {
     if (typeof id !== 'undefined') {
       const intId = parseInt(id);
       const sponsor = sponsors.records.find(s => s.id === intId);
 
       if (sponsor) {
-        setCurrentSponsorForm(sponsor);
-        setFormMode({ editId: intId, mode: 'edit' });
+        setSponsorForm({ editView: sponsor, editId: intId, mode: 'edit' });
       }
     }
-
-    // const items = await getSponsors(0, 50);
-    // setSponsors(items);
-    //  })();
   }, [id, sponsors]);
 
   const isSponsorLoaded = (index: number) => {
@@ -47,7 +53,7 @@ export const useSponsors = () => {
   };
 
   const loadMoreSponsors = async (startIndex: number, stopIndex: number) => {
-    const loadedSponsors = await getSponsors(startIndex, stopIndex);
+    const loadedSponsors = await Api.getSponsors(startIndex, stopIndex);
     setSponsors(prev => {
       const newSponsorArray = [...sponsors.records];
       newSponsorArray.splice(startIndex, stopIndex - startIndex, ...loadedSponsors.records);
@@ -56,45 +62,44 @@ export const useSponsors = () => {
     return;
   };
 
-  const editSponsor = (sponsorId: number) => {
-    const sponsor = sponsors.records.find(s => s.id === sponsorId);
+  // const editSponsor = (sponsorId: number) => {
+  //   const sponsor = sponsors.records.find(s => s.id === sponsorId);
 
-    if (sponsor) {
-      setCurrentSponsorForm(sponsor);
-      setFormMode({ editId: sponsorId, mode: 'edit' });
-    }
-  };
+  //   if (sponsor) {
+  //     setSponsorForm({ editView: sponsor, editId: sponsorId, mode: 'edit' });
+  //   }
+  // };
 
   const updateSponsorContent = (key: string, value: string | boolean) => {
-    setCurrentSponsorForm(current => (({ ...current, [key]: value } as unknown) as Pick<Sponsor, keyof Sponsor>));
+    setSponsorForm(current => ({ ...current, editView: ({ ...current.editView, [key]: value } as unknown) as Pick<Sponsor, keyof Sponsor> }));
   };
 
-  const saveSponsor = () => {
-    if (formMode.mode === 'new') {
-      createSponsor(currentSponsorForm);
+  const saveSponsor = async () => {
+    if (sponsorForm.mode === 'new') {
+      await Api.createSponsor(sponsorForm.editView);
     }
 
-    if (formMode.mode === 'edit') {
-      updateSponsor(formMode.editId, currentSponsorForm);
+    if (sponsorForm.mode === 'edit') {
+      await Api.updateSponsor(sponsorForm.editId, sponsorForm.editView);
     }
   };
 
-  const deleteSponsor = () => {};
+  const deleteSponsor = async (id: number) => {
+    await Api.deleteSponsor(id);
+  };
 
   const createNewSponsor = () => {
-    setCurrentSponsorForm(defaultSponsor);
-    setFormMode({ editId: 0, mode: 'new' });
+    setSponsorForm({ editView: defaultSponsor, editId: 0, mode: 'edit' });
   };
 
   return {
     sponsors,
     isSponsorLoaded,
     loadMoreSponsors,
-    currentSponsorForm,
+    sponsorForm,
     createNewSponsor,
     saveSponsor,
-    editSponsor,
     updateSponsorContent,
-    formMode
+    deleteSponsor
   };
 };

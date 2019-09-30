@@ -12,7 +12,16 @@ import { TextAreaInput } from '../../components/Form/TextAreaInput';
 import { ButtonFieldSet } from '../../components/Form/ButtonFieldSet ';
 
 const Sponsors = () => {
-  const { sponsors, isSponsorLoaded, loadMoreSponsors, currentSponsorForm, updateSponsorContent, saveSponsor, editSponsor } = useSponsors();
+  const {
+    sponsors,
+    isSponsorLoaded,
+    loadMoreSponsors,
+    updateSponsorContent,
+    saveSponsor,
+    createNewSponsor,
+    deleteSponsor,
+    sponsorForm
+  } = useSponsors();
 
   const Row = ({ index, style }: { index: number; style: any }) => {
     // console.log(index, sponsors.records[index]);
@@ -29,15 +38,10 @@ const Sponsors = () => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.value);
-    // console.log(e.target.name);
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     updateSponsorContent(name, value);
-    // this.setState({
-    //   [name]: value
-    // });
   };
 
   return (
@@ -61,21 +65,21 @@ const Sponsors = () => {
             event.preventDefault();
             saveSponsor();
           }}>
-          <TextInput label={'Name'} name={'name'} value={currentSponsorForm.name} onChange={handleInputChange} />
-          <MarkdownInput label={'Blurb'} name={'blurb'} value={currentSponsorForm.blurb} onChange={value => updateSponsorContent('blurb', value)} />
-          <TextInput label={'Website URL (Banner Add)'} name={'url'} value={currentSponsorForm.url} onChange={handleInputChange} />
+          <TextInput label={'Name'} name={'name'} value={sponsorForm.editView.name} onChange={handleInputChange} />
+          <MarkdownInput label={'Blurb'} name={'blurb'} value={sponsorForm.editView.blurb} onChange={value => updateSponsorContent('blurb', value)} />
+          <TextInput label={'Website URL (Banner Add)'} name={'url'} value={sponsorForm.editView.url} onChange={handleInputChange} />
           <TextAreaInput
             rows={3}
             label={'Banner Add Blurb'}
             name={'shortBlurb'}
-            value={currentSponsorForm.shortBlurb}
+            value={sponsorForm.editView.shortBlurb}
             onChange={event => updateSponsorContent('shortBlurb', event.target.value)}
           />
           <TextAreaInput
             rows={10}
             label={'Contact Info'}
             name={'contactInfo'}
-            value={currentSponsorForm.contactInfo}
+            value={sponsorForm.editView.contactInfo}
             onChange={event => updateSponsorContent('contactInfo', event.target.value)}
           />
           <ButtonFieldSet>
