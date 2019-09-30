@@ -8,7 +8,7 @@ export const OmahaMTGSiteAxios = () => {
   };
 
   const instance = axios.create({
-    baseURL: 'https://omtg.azurewebsites.net/api/',
+    baseURL: 'https://localhost:4433/api/',
     timeout: 15000,
     headers
   });
