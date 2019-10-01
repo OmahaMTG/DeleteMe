@@ -24,7 +24,6 @@ const Sponsors = () => {
   } = useSponsors();
 
   const Row = ({ index, style }: { index: number; style: any }) => {
-    // console.log(index, sponsors.records[index]);
     return (
       <div style={style}>
         {sponsors.records[index] && (
@@ -84,7 +83,7 @@ const Sponsors = () => {
           />
           <ButtonFieldSet>
             <div className="button-left">
-              <input type="submit" value="Delete" className="btn-delete" />
+              <input type="button" value="Delete" className="btn-delete" onClick={() => deleteSponsor()} />
             </div>
             <div className="button-right">
               <input type="submit" value="Cancel" className="btn-cancel" />

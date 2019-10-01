@@ -62,14 +62,6 @@ export const useSponsors = () => {
     return;
   };
 
-  // const editSponsor = (sponsorId: number) => {
-  //   const sponsor = sponsors.records.find(s => s.id === sponsorId);
-
-  //   if (sponsor) {
-  //     setSponsorForm({ editView: sponsor, editId: sponsorId, mode: 'edit' });
-  //   }
-  // };
-
   const updateSponsorContent = (key: string, value: string | boolean) => {
     setSponsorForm(current => ({ ...current, editView: ({ ...current.editView, [key]: value } as unknown) as Pick<Sponsor, keyof Sponsor> }));
   };
@@ -84,8 +76,8 @@ export const useSponsors = () => {
     }
   };
 
-  const deleteSponsor = async (id: number) => {
-    await Api.deleteSponsor(id);
+  const deleteSponsor = async () => {
+    await Api.deleteSponsor(sponsorForm.editId);
   };
 
   const createNewSponsor = () => {
