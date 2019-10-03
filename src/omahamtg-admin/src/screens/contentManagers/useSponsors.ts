@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Sponsor, PagedSet, EditorState } from './SponsorModels.d';
+import { Sponsor, EditorState, ListState } from './SponsorModels.d';
 import * as Api from '../../services/sponsorService';
 import { useParams } from 'react-router-dom';
 
@@ -11,11 +11,16 @@ const defaultSponsor = {
   url: ''
 };
 
-const defaultSponsorPage: PagedSet<Sponsor> = {
-  taken: 0,
-  skipped: 0,
-  records: [],
-  totalRecords: 0
+const defaultListState: ListState<Sponsor> = {
+  resultSet: {
+    taken: 0,
+    skipped: 0,
+    records: [],
+    totalRecords: 0
+  },
+  state: 'initializing',
+  filter: '',
+  appliedFilter: ''
 };
 
 const defaultEditorState: EditorState<Sponsor> = {
@@ -25,73 +30,89 @@ const defaultEditorState: EditorState<Sponsor> = {
 };
 
 export const useSponsors = () => {
-  const [sponsors, setSponsors] = useState<PagedSet<Sponsor>>(defaultSponsorPage);
-  const [sponsorForm, setSponsorForm] = useState<EditorState<Sponsor>>(defaultEditorState);
+  const [sponsorListState, setSponsorListState] = useState<ListState<Sponsor>>(defaultListState);
+  const [sponsorFormState, setSponsorFormState] = useState<EditorState<Sponsor>>(defaultEditorState);
 
   let { id } = useParams();
 
   useEffect(() => {
     (async () => {
-      const items = await Api.getSponsors(0, 50);
-      setSponsors(items);
+      setSponsorListState(current => ({ ...current, state: 'initializing' }));
+      const items = await Api.getSponsors(0, 50, sponsorListState.appliedFilter);
+      setSponsorListState(current => ({ ...current, resultSet: items, state: 'ready' }));
     })();
-  }, []);
+  }, [sponsorListState.appliedFilter]);
 
   useEffect(() => {
     if (typeof id !== 'undefined') {
       const intId = parseInt(id);
-      const sponsor = sponsors.records.find(s => s.id === intId);
+      const sponsor = sponsorListState.resultSet.records.find(s => s.id === intId);
 
       if (sponsor) {
-        setSponsorForm({ editView: sponsor, editId: intId, mode: 'edit' });
+        setSponsorFormState({ editView: sponsor, editId: intId, mode: 'edit' });
       }
     }
-  }, [id, sponsors]);
+  }, [id, sponsorListState.resultSet.records]);
 
   const isSponsorLoaded = (index: number) => {
-    return typeof sponsors.records[index] !== 'undefined';
+    return typeof sponsorListState.resultSet.records[index] !== 'undefined';
   };
 
   const loadMoreSponsors = async (startIndex: number, stopIndex: number) => {
-    const loadedSponsors = await Api.getSponsors(startIndex, stopIndex);
-    setSponsors(prev => {
-      const newSponsorArray = [...sponsors.records];
+    const loadedSponsors = await Api.getSponsors(startIndex, stopIndex, sponsorListState.appliedFilter);
+    setSponsorListState(current => {
+      const newSponsorArray = [...current.resultSet.records];
       newSponsorArray.splice(startIndex, stopIndex - startIndex, ...loadedSponsors.records);
-      return { ...sponsors, records: newSponsorArray };
+      return { ...current, resultSet: { ...current.resultSet, records: newSponsorArray } };
     });
     return;
   };
 
   const updateSponsorContent = (key: string, value: string | boolean) => {
-    setSponsorForm(current => ({ ...current, editView: ({ ...current.editView, [key]: value } as unknown) as Pick<Sponsor, keyof Sponsor> }));
+    setSponsorFormState(current => ({ ...current, editView: ({ ...current.editView, [key]: value } as unknown) as Pick<Sponsor, keyof Sponsor> }));
+  };
+
+  const updateSearchFilter = (value: string) => {
+    setSponsorListState(current => ({ ...current, filter: value }));
+  };
+
+  const applySearchFilter = () => {
+    setSponsorListState(current => ({ ...current, appliedFilter: current.filter }));
   };
 
   const saveSponsor = async () => {
-    if (sponsorForm.mode === 'new') {
-      await Api.createSponsor(sponsorForm.editView);
+    if (sponsorFormState.mode === 'new') {
+      await Api.createSponsor(sponsorFormState.editView);
     }
 
-    if (sponsorForm.mode === 'edit') {
-      await Api.updateSponsor(sponsorForm.editId, sponsorForm.editView);
+    if (sponsorFormState.mode === 'edit') {
+      await Api.updateSponsor(sponsorFormState.editId, sponsorFormState.editView);
     }
   };
 
   const deleteSponsor = async () => {
-    await Api.deleteSponsor(sponsorForm.editId);
+    await Api.deleteSponsor(sponsorFormState.editId);
   };
 
   const createNewSponsor = () => {
-    setSponsorForm({ editView: defaultSponsor, editId: 0, mode: 'edit' });
+    setSponsorFormState({ editView: defaultSponsor, editId: 0, mode: 'edit' });
+  };
+
+  const clearSearchFilter = () => {
+    setSponsorListState(cur => ({ ...cur, filter: '', appliedFilter: '' }));
   };
 
   return {
-    sponsors,
+    sponsorListState,
     isSponsorLoaded,
     loadMoreSponsors,
-    sponsorForm,
+    sponsorFormState,
     createNewSponsor,
     saveSponsor,
     updateSponsorContent,
-    deleteSponsor
+    deleteSponsor,
+    updateSearchFilter,
+    applySearchFilter,
+    clearSearchFilter
   };
 };

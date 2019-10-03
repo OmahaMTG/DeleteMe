@@ -10,28 +10,38 @@ import { TextInput } from '../../components/Form/TextInput';
 import { MarkdownInput } from '../../components/Form/MarkdownInput';
 import { TextAreaInput } from '../../components/Form/TextAreaInput';
 import { ButtonFieldSet } from '../../components/Form/ButtonFieldSet ';
+import { SearchInput } from '../../components/SearchInput';
+import { Button } from '../../components/Form/Button';
 
 const Sponsors = () => {
   const {
-    sponsors,
+    sponsorFormState,
     isSponsorLoaded,
     loadMoreSponsors,
     updateSponsorContent,
     saveSponsor,
-    createNewSponsor,
+
+    updateSearchFilter,
     deleteSponsor,
-    sponsorForm
+    sponsorListState,
+    applySearchFilter,
+    clearSearchFilter
   } = useSponsors();
 
   const Row = ({ index, style }: { index: number; style: any }) => {
     return (
       <div style={style}>
-        {sponsors.records[index] && (
-          <Link to={`/Sponsor/${sponsors.records[index].id}/${sponsors.records[index].name.replace(/[^a-zA-Z0-9-_]/g, '_')}`}>
-            {sponsors.records[index] && sponsors.records[index].name + ' - ' + sponsors.records[index].id}
+        {sponsorListState.resultSet.records[index] && (
+          <Link
+            to={`/Sponsor/${sponsorListState.resultSet.records[index].id}/${sponsorListState.resultSet.records[index].name.replace(
+              /[^a-zA-Z0-9-_]/g,
+              '_'
+            )}`}>
+            {sponsorListState.resultSet.records[index] &&
+              sponsorListState.resultSet.records[index].name + ' - ' + sponsorListState.resultSet.records[index].id}
           </Link>
         )}
-        {!sponsors.records[index] && <div>Loading... </div>}
+        {!sponsorListState.resultSet.records[index] && <div>Loading... </div>}
       </div>
     );
   };
@@ -46,17 +56,37 @@ const Sponsors = () => {
   return (
     <>
       <div className={styles.listContainer}>
-        <InfiniteLoader isItemLoaded={isSponsorLoaded} itemCount={sponsors.totalRecords} loadMoreItems={loadMoreSponsors}>
-          {({ onItemsRendered, ref }) => (
-            <AutoSizer>
-              {({ height, width }) => (
-                <List height={height} itemSize={35} width={width} itemCount={sponsors.totalRecords} onItemsRendered={onItemsRendered} ref={ref}>
-                  {Row}
-                </List>
+        <div className={styles.search}>
+          <SearchInput placeholder="Filter..." onChange={e => updateSearchFilter(e.currentTarget.value)} value={sponsorListState.filter} />
+          <div>
+            {' '}
+            <Button onClick={() => applySearchFilter()} value="Search" />
+            <Button onClick={() => clearSearchFilter()} value="Clear Search" />
+          </div>
+        </div>
+        <div className={styles.list}>
+          {sponsorListState.state === 'initializing' && <div>Loading...</div>}
+          {sponsorListState.state === 'error' && <div>Error...</div>}
+          {sponsorListState.state === 'ready' && (
+            <InfiniteLoader isItemLoaded={isSponsorLoaded} itemCount={sponsorListState.resultSet.totalRecords} loadMoreItems={loadMoreSponsors}>
+              {({ onItemsRendered, ref }) => (
+                <AutoSizer>
+                  {({ height, width }) => (
+                    <List
+                      height={height}
+                      itemSize={35}
+                      width={width}
+                      itemCount={sponsorListState.resultSet.totalRecords}
+                      onItemsRendered={onItemsRendered}
+                      ref={ref}>
+                      {Row}
+                    </List>
+                  )}
+                </AutoSizer>
               )}
-            </AutoSizer>
+            </InfiniteLoader>
           )}
-        </InfiniteLoader>
+        </div>
       </div>
       <div className={styles.formContainer}>
         <form
@@ -64,21 +94,26 @@ const Sponsors = () => {
             event.preventDefault();
             saveSponsor();
           }}>
-          <TextInput label={'Name'} name={'name'} value={sponsorForm.editView.name} onChange={handleInputChange} />
-          <MarkdownInput label={'Blurb'} name={'blurb'} value={sponsorForm.editView.blurb} onChange={value => updateSponsorContent('blurb', value)} />
-          <TextInput label={'Website URL (Banner Add)'} name={'url'} value={sponsorForm.editView.url} onChange={handleInputChange} />
+          <TextInput label={'Name'} name={'name'} value={sponsorFormState.editView.name} onChange={handleInputChange} />
+          <MarkdownInput
+            label={'Blurb'}
+            name={'blurb'}
+            value={sponsorFormState.editView.blurb}
+            onChange={value => updateSponsorContent('blurb', value)}
+          />
+          <TextInput label={'Website URL (Banner Add)'} name={'url'} value={sponsorFormState.editView.url} onChange={handleInputChange} />
           <TextAreaInput
             rows={3}
             label={'Banner Add Blurb'}
             name={'shortBlurb'}
-            value={sponsorForm.editView.shortBlurb}
+            value={sponsorFormState.editView.shortBlurb}
             onChange={event => updateSponsorContent('shortBlurb', event.target.value)}
           />
           <TextAreaInput
             rows={10}
             label={'Contact Info'}
             name={'contactInfo'}
-            value={sponsorForm.editView.contactInfo}
+            value={sponsorFormState.editView.contactInfo}
             onChange={event => updateSponsorContent('contactInfo', event.target.value)}
           />
           <ButtonFieldSet>

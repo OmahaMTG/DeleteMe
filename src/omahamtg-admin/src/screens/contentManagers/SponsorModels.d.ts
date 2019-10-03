@@ -14,6 +14,13 @@ export interface PagedSet<T> {
   records: T[];
 }
 
+export interface ListState<T> {
+  resultSet: PagedSet<T>;
+  state: 'initializing' | 'ready' | 'error';
+  filter: string;
+  appliedFilter: string;
+}
+
 export interface EditorState<T> {
   editId: number;
   mode: 'edit' | 'new';

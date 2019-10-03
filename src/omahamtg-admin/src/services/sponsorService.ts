@@ -32,8 +32,8 @@ const http = OmahaMTGSiteAxios();
 //   // return sponsors;
 // };
 
-export const getSponsors = async (startIndex: number, stopIndex: number) => {
-  const result = await http.get<PagedSet<sponsor>>(`/sponsor?skip=${startIndex}&take=${stopIndex - startIndex}`);
+export const getSponsors = async (startIndex: number, stopIndex: number, filter: string) => {
+  const result = await http.get<PagedSet<sponsor>>(`/sponsor?skip=${startIndex}&take=${stopIndex - startIndex}&filter=${filter}`);
   return result.data;
 };
 
