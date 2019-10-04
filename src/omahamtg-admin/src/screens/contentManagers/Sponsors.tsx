@@ -20,7 +20,6 @@ const Sponsors = () => {
     loadMoreSponsors,
     updateSponsorContent,
     saveSponsor,
-
     updateSearchFilter,
     deleteSponsor,
     sponsorListState,
@@ -89,6 +88,7 @@ const Sponsors = () => {
         </div>
       </div>
       <div className={styles.formContainer}>
+        {sponsorFormState.mode === 'edit' && <Link to={`/Sponsor/`}>New Sponsor</Link>}
         <form
           onSubmit={event => {
             event.preventDefault();
@@ -118,7 +118,7 @@ const Sponsors = () => {
           />
           <ButtonFieldSet>
             <div className="button-left">
-              <input type="button" value="Delete" className="btn-delete" onClick={() => deleteSponsor()} />
+              {sponsorFormState.mode === 'edit' && <input type="button" value="Delete" className="btn-delete" onClick={() => deleteSponsor()} />}
             </div>
             <div className="button-right">
               <input type="submit" value="Cancel" className="btn-cancel" />
@@ -126,6 +126,7 @@ const Sponsors = () => {
             </div>
           </ButtonFieldSet>
         </form>
+        <div style={{ color: 'red' }}>{sponsorFormState.editorMessage}</div>
       </div>
     </>
   );

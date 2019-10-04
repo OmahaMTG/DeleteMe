@@ -26,7 +26,8 @@ const defaultListState: ListState<Sponsor> = {
 const defaultEditorState: EditorState<Sponsor> = {
   editId: 0,
   editView: defaultSponsor,
-  mode: 'new'
+  mode: 'new',
+  editorMessage: ''
 };
 
 export const useSponsors = () => {
@@ -47,10 +48,11 @@ export const useSponsors = () => {
     if (typeof id !== 'undefined') {
       const intId = parseInt(id);
       const sponsor = sponsorListState.resultSet.records.find(s => s.id === intId);
-
       if (sponsor) {
-        setSponsorFormState({ editView: sponsor, editId: intId, mode: 'edit' });
+        setSponsorFormState(cur => ({ ...cur, editView: sponsor, editId: intId, mode: 'edit' }));
       }
+    } else {
+      setSponsorFormState(defaultEditorState);
     }
   }, [id, sponsorListState.resultSet.records]);
 
@@ -82,24 +84,36 @@ export const useSponsors = () => {
 
   const saveSponsor = async () => {
     if (sponsorFormState.mode === 'new') {
-      await Api.createSponsor(sponsorFormState.editView);
+      const newSponsor = await Api.createSponsor(sponsorFormState.editView);
+      setSponsorFormState(cur => ({ ...cur, editId: newSponsor.id, mode: 'edit' }));
     }
 
     if (sponsorFormState.mode === 'edit') {
       await Api.updateSponsor(sponsorFormState.editId, sponsorFormState.editView);
     }
+    setFormMessage(`Saved Sponsor: ${sponsorFormState.editView.name}`);
   };
 
   const deleteSponsor = async () => {
+    // const deletes = sponsorListState.resultSet.records.map(s => Api.deleteSponsor(s.id));
+
+    // await Promise.all(deletes);
     await Api.deleteSponsor(sponsorFormState.editId);
+    setSponsorFormState(cur => defaultEditorState);
+    setFormMessage(`Deleted Sponsor: ${sponsorFormState.editView.name}`);
   };
 
-  const createNewSponsor = () => {
-    setSponsorFormState({ editView: defaultSponsor, editId: 0, mode: 'edit' });
-  };
+  // const createNewSponsor = () => {
+  //   setSponsorFormState(cur => ({ ...cur, editView: defaultSponsor, editId: 0, mode: 'edit' }));
+  // };
 
   const clearSearchFilter = () => {
     setSponsorListState(cur => ({ ...cur, filter: '', appliedFilter: '' }));
+  };
+
+  const setFormMessage = (message: string) => {
+    setSponsorFormState(cur => ({ ...cur, editorMessage: message }));
+    setTimeout(() => setSponsorFormState(cur => ({ ...cur, editorMessage: '' })), 2500);
   };
 
   return {
@@ -107,7 +121,6 @@ export const useSponsors = () => {
     isSponsorLoaded,
     loadMoreSponsors,
     sponsorFormState,
-    createNewSponsor,
     saveSponsor,
     updateSponsorContent,
     deleteSponsor,

@@ -25,4 +25,5 @@ export interface EditorState<T> {
   editId: number;
   mode: 'edit' | 'new';
   editView: Omit<T, 'id'>;
+  editorMessage: string;
 }
