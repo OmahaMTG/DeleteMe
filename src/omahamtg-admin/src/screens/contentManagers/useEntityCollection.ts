@@ -1,16 +1,8 @@
-import { useEffect, useState, createContext } from 'react';
-import { ListState, PagedSet } from './SponsorModels.d';
-import createUseContext from 'constate';
-import { IApiService } from '../../services/serviceContracts';
+import { useEffect, useState } from 'react';
+import { IApiService, PagedSet } from '../../services/serviceContracts';
+import { entityCollection, entityBase, ListState } from './ContentManagerModels';
 
-export interface ListState<T> {
-  resultSet: PagedSet<T>;
-  state: 'initializing' | 'ready' | 'error';
-  filter: string;
-  appliedFilter: string;
-}
-
-export const useEntityList = <T>(apiService: IApiService<T>, defaultEntity: T) => {
+export const useEntityCollection = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: Omit<T, 'id'>): entityCollection<T> => {
   const defaultListState: ListState<T> = {
     resultSet: {
       taken: 0,
@@ -64,20 +56,7 @@ export const useEntityList = <T>(apiService: IApiService<T>, defaultEntity: T) =
     loadMoreEntities,
     updateSearchFilter,
     applySearchFilter,
-    clearSearchFilter, 
+    clearSearchFilter,
     listState
   };
 };
-
-
-export const EntityListContext = createContext(null);
-
-export const EntityListProvider = <T>(apiService: IApiService<T>, defaultEntity: T) =>{
-  const hook = useEntityList(apiService, defaultEntity);
-return (
-    <EntityListContext.Provider value={hook}>
-    {children}
-  </EntityListContext.Provider>
-)
-
-};1

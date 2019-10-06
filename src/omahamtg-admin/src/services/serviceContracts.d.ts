@@ -1,3 +1,5 @@
+import { entityBase } from '../screens/contentManagers/ContentManagerModels';
+
 interface sponsor {
   id: number;
   name: string;
@@ -14,7 +16,7 @@ export interface PagedSet<T> {
   records: T[];
 }
 
-interface IApiService<T> {
+interface IApiService<T extends entityBase> {
   queryEntities: (startIndex: number, stopIndex: number, filter: string) => Promise<PagedSet<T>>;
   createEntity: (entity: Omit<T, 'id'>) => Promise<T>;
   updateEntity: (entityId: number, entity: Omit<T, 'id'>) => Promise<T>;

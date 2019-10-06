@@ -1,23 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Sponsor, EditorState, ListState } from './SponsorModels.d';
-import * as Api from '../../services/ApiService';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { IApiService } from '../../services/serviceContracts';
-import { useEntityList } from './useEntityList';
+import { entityBase, EditorState, entityEditor } from './ContentManagerModels';
 
-const defaultSponsor = {
-  name: '',
-  blurb: '',
-  contactInfo: '',
-  shortBlurb: '',
-  url: ''
-};
-
-interface entityBase {
-  id: number;
-}
-
-export const useSponsors = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: T) => {
+export const useEntityEditor = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: Omit<T, 'id'>): entityEditor<T> => {
   const defaultEditorState: EditorState<T> = {
     editId: 0,
     editView: defaultEntity,
@@ -27,25 +12,25 @@ export const useSponsors = <T extends entityBase>(apiService: IApiService<T>, de
 
   const [formState, setFormState] = useState<EditorState<T>>(defaultEditorState);
 
-  let { id } = useParams();
+  //let { id } = useParams();
 
-  //   useEffect(() => {
-  //     if (typeof id !== 'undefined') {
-  //       const intId = parseInt(id);
-  //       const sponsor = sponsorListState.resultSet.records.find(s => s.id === intId);
-  //       if (sponsor) {
-  //         setSponsorFormState(cur => ({ ...cur, editView: sponsor, editId: intId, mode: 'edit' }));
-  //       }
-  //     } else {
-  //       setSponsorFormState(defaultEditorState);
+  // useEffect(() => {
+  //   if (typeof id !== 'undefined') {
+  //     const intId = parseInt(id);
+  //     const sponsor = sponsorListState.resultSet.records.find(s => s.id === intId);
+  //     if (sponsor) {
+  //       setSponsorFormState(cur => ({ ...cur, editView: sponsor, editId: intId, mode: 'edit' }));
   //     }
-  //   }, [id, sponsorListState.resultSet.records]);
+  //   } else {
+  //     setSponsorFormState(defaultEditorState);
+  //   }
+  // }, [id, sponsorListState.resultSet.records]);
 
-  const updateSponsorContent = (key: string, value: string | boolean) => {
+  const updateEntityContent = (key: string, value: string | boolean) => {
     setFormState(current => ({ ...current, editView: ({ ...current.editView, [key]: value } as unknown) as Pick<T, keyof T> }));
   };
 
-  const saveSponsor = async () => {
+  const saveEntity = async () => {
     if (formState.mode === 'new') {
       const newSponsor = await apiService.createEntity(formState.editView);
       setFormState(cur => ({ ...cur, editId: newSponsor.id, mode: 'edit' }));
@@ -57,7 +42,7 @@ export const useSponsors = <T extends entityBase>(apiService: IApiService<T>, de
     setFormMessage(`Saved Sponsor`);
   };
 
-  const deleteSponsor = async () => {
+  const deleteEntity = async () => {
     // const deletes = sponsorListState.resultSet.records.map(s => Api.deleteSponsor(s.id));
 
     // await Promise.all(deletes);
@@ -72,15 +57,9 @@ export const useSponsors = <T extends entityBase>(apiService: IApiService<T>, de
   };
 
   return {
-    sponsorListState,
-    isSponsorLoaded,
-    loadMoreSponsors,
-    sponsorFormState,
-    saveSponsor,
-    updateSponsorContent,
-    deleteSponsor,
-    updateSearchFilter,
-    applySearchFilter,
-    clearSearchFilter
+    updateEntityContent,
+    saveEntity,
+    deleteEntity,
+    formState
   };
 };
