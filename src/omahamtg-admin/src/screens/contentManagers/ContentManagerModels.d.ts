@@ -2,7 +2,7 @@ export interface PagedSet<T extends entityBase> {
   skipped: number;
   taken: number;
   totalRecords: number;
-  records: T[];
+  records: entityArray;
 }
 
 export interface ListState<T extends entityBase> {
@@ -12,23 +12,20 @@ export interface ListState<T extends entityBase> {
   appliedFilter: string;
 }
 
-// export interface ListState<T> {
-//   resultSet: PagedSet<T>;
-//   state: 'initializing' | 'ready' | 'error';
-//   filter: string;
-//   appliedFilter: string;
-// }
-
 export interface EditorState<T extends entityBase> {
   editId: number;
   mode: 'edit' | 'new';
-  editView: Omit<T, 'id'>;
+  editView: idlessEntity;
   editorMessage: string;
 }
 
-type entityBase = {
+interface entityBase {
   id: number;
-};
+}
+
+export type idlessEntity = Omit<entityBase, 'id'>;
+
+type entityArray = entityBase[];
 
 export interface entityEditor<T extends entityBase> {
   updateEntityContent: (key: string, value: string | boolean) => void;

@@ -2,9 +2,9 @@ import React, { createContext } from 'react';
 import { IApiService } from '../../services/serviceContracts';
 import { useEntityCollection } from './useEntityCollection';
 import { useEntityEditor } from './useEntityEditor';
-import { entityBase, entityProvider } from './ContentManagerModels';
+import { entityBase, entityProvider, idlessEntity } from './ContentManagerModels';
 
-export const createUseContext = <T extends entityBase>(defaultEntity: Omit<T, 'int'>) => {
+export const createUseContext = <T extends entityBase>() => {
   // const buildDefault = (): entityProvider<T> => {
   //   return {
   //     entityCollection: {
@@ -52,7 +52,7 @@ export const createUseContext = <T extends entityBase>(defaultEntity: Omit<T, 'i
 
   const EntityListProvider = <T extends entityBase>(props: {
     apiService: IApiService<T>;
-    defaultEntity: Omit<T, 'id'>;
+    defaultEntity: idlessEntity;
     children: JSX.Element[] | JSX.Element;
   }) => {
     const entityCollection = useEntityCollection(props.apiService, props.defaultEntity);

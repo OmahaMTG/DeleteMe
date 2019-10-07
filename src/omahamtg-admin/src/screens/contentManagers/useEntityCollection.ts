@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { IApiService, PagedSet } from '../../services/serviceContracts';
-import { entityCollection, entityBase, ListState } from './ContentManagerModels';
+import { IApiService } from '../../services/serviceContracts';
+import { entityCollection, entityBase, ListState, idlessEntity } from './ContentManagerModels';
 
-export const useEntityCollection = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: Omit<T, 'id'>): entityCollection<T> => {
+export const useEntityCollection = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: idlessEntity): entityCollection<T> => {
   const defaultListState: ListState<T> = {
     resultSet: {
       taken: 0,

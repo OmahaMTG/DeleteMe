@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { IApiService } from '../../services/serviceContracts';
-import { entityBase, EditorState, entityEditor } from './ContentManagerModels';
+import { entityBase, EditorState, entityEditor, idlessEntity } from './ContentManagerModels';
 
-export const useEntityEditor = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: Omit<T, 'id'>): entityEditor<T> => {
+export const useEntityEditor = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: idlessEntity): entityEditor<T> => {
   const defaultEditorState: EditorState<T> = {
     editId: 0,
     editView: defaultEntity,

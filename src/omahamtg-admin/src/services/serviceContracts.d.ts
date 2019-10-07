@@ -18,7 +18,7 @@ export interface PagedSet<T> {
 
 interface IApiService<T extends entityBase> {
   queryEntities: (startIndex: number, stopIndex: number, filter: string) => Promise<PagedSet<T>>;
-  createEntity: (entity: Omit<T, 'id'>) => Promise<T>;
-  updateEntity: (entityId: number, entity: Omit<T, 'id'>) => Promise<T>;
+  createEntity: (entity: idlessEntity) => Promise<T>;
+  updateEntity: (entityId: number, entity: idlessEntity) => Promise<T>;
   deleteEntity: (entityId: number, perm: boolean) => Promise<void>;
 }
