@@ -2,7 +2,7 @@ export interface PagedSet<T extends entityBase> {
   skipped: number;
   taken: number;
   totalRecords: number;
-  records: entityArray;
+  records: entityArray[];
 }
 
 export interface ListState<T extends entityBase> {
@@ -23,9 +23,11 @@ interface entityBase {
   id: number;
 }
 
+// type entityBase<T>
+
 export type idlessEntity = Omit<entityBase, 'id'>;
 
-type entityArray = entityBase[];
+type entityArray<T extends entityBase> = T[];
 
 export interface entityEditor<T extends entityBase> {
   updateEntityContent: (key: string, value: string | boolean) => void;

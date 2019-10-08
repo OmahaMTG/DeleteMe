@@ -1,6 +1,6 @@
 import { OmahaMTGSiteAxios } from './AxiosInstances';
-import { PagedSet, IApiService } from './serviceContracts';
-import { idlessEntity, entityBase } from '../screens/contentManagers/ContentManagerModels';
+import { IApiService } from './serviceContracts';
+import { idlessEntity, entityBase, PagedSet } from '../screens/contentManagers/ContentManagerModels';
 
 const buildApiService = <T extends entityBase>(url: string): IApiService<T> => {
   const http = OmahaMTGSiteAxios();
