@@ -29,13 +29,6 @@ export type idlessEntity = Omit<entityBase, 'id'>;
 
 type entityArray<T extends entityBase> = T[];
 
-export interface entityEditor<T extends entityBase> {
-  updateEntityContent: (key: string, value: string | boolean) => void;
-  saveEntity: () => Promise<void>;
-  deleteEntity: () => Promise<void>;
-  formState: EditorState;
-}
-
 export interface entityCollection<T extends entityBase> {
   isEntityLoaded: (index: number) => boolean;
   loadMoreEntities: (startIndex: number, stopIndex: number) => Promise<void>;
@@ -43,6 +36,10 @@ export interface entityCollection<T extends entityBase> {
   applySearchFilter: () => void;
   clearSearchFilter: () => void;
   listState: ListState<T>;
+  updateEntityContent: (key: string, value: string | boolean) => void;
+  saveEntity: () => Promise<void>;
+  deleteEntity: () => Promise<void>;
+  formState: EditorState;
 }
 
 export interface entityProvider<T extends entityBase> {

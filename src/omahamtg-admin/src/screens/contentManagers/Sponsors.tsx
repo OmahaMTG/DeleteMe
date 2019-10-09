@@ -14,7 +14,6 @@ import { Button } from '../../components/Form/Button';
 import { buildApiService } from '../../services/ApiService';
 import { entityBase } from './ContentManagerModels';
 import { useEntityCollection } from './useEntityCollection';
-import { useEntityEditor } from './useEntityEditor';
 
 export interface Sponsor extends entityBase {
   id: number;
@@ -36,12 +35,7 @@ const defaultSponsor = {
 const sponsorService = buildApiService<Sponsor>('/sponsor');
 
 const Sponsors = () => {
-  // return <div>hi</div>;
-
-  //const { entityCollection, entityEditor } = useContext(sponsorContext.Context);
-
   const entityCollection = useEntityCollection(sponsorService, defaultSponsor);
-  const entityEditor = useEntityEditor(sponsorService, defaultSponsor);
 
   const Row = ({ index, style }: { index: number; style: any }) => {
     return (
@@ -64,7 +58,7 @@ const Sponsors = () => {
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-    entityEditor.updateEntityContent(name, value);
+    entityCollection.updateEntityContent(name, value);
   };
 
   return (
@@ -110,38 +104,38 @@ const Sponsors = () => {
         </div>
       </div>
       <div className={styles.formContainer}>
-        {entityEditor.formState.mode === 'edit' && <Link to={`/Sponsor/`}>New Sponsor</Link>}
+        {entityCollection.formState.mode === 'edit' && <Link to={`/Sponsor/`}>New Sponsor</Link>}
         <form
           onSubmit={event => {
             event.preventDefault();
-            entityEditor.saveEntity();
+            entityCollection.saveEntity();
           }}>
-          <TextInput label={'Name'} name={'name'} value={entityEditor.formState.editView.name} onChange={handleInputChange} />
+          <TextInput label={'Name'} name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
           <MarkdownInput
             label={'Blurb'}
             name={'blurb'}
-            value={entityEditor.formState.editView.blurb}
-            onChange={value => entityEditor.updateEntityContent('blurb', value)}
+            value={entityCollection.formState.editView.blurb}
+            onChange={value => entityCollection.updateEntityContent('blurb', value)}
           />
-          <TextInput label={'Website URL (Banner Add)'} name={'url'} value={entityEditor.formState.editView.url} onChange={handleInputChange} />
+          <TextInput label={'Website URL (Banner Add)'} name={'url'} value={entityCollection.formState.editView.url} onChange={handleInputChange} />
           <TextAreaInput
             rows={3}
             label={'Banner Add Blurb'}
             name={'shortBlurb'}
-            value={entityEditor.formState.editView.shortBlurb}
-            onChange={event => entityEditor.updateEntityContent('shortBlurb', event.target.value)}
+            value={entityCollection.formState.editView.shortBlurb}
+            onChange={event => entityCollection.updateEntityContent('shortBlurb', event.target.value)}
           />
           <TextAreaInput
             rows={10}
             label={'Contact Info'}
             name={'contactInfo'}
-            value={entityEditor.formState.editView.contactInfo}
-            onChange={event => entityEditor.updateEntityContent('contactInfo', event.target.value)}
+            value={entityCollection.formState.editView.contactInfo}
+            onChange={event => entityCollection.updateEntityContent('contactInfo', event.target.value)}
           />
           <ButtonFieldSet>
             <div className="button-left">
-              {entityEditor.formState.mode === 'edit' && (
-                <input type="button" value="Delete" className="btn-delete" onClick={() => entityEditor.deleteEntity()} />
+              {entityCollection.formState.mode === 'edit' && (
+                <input type="button" value="Delete" className="btn-delete" onClick={() => entityCollection.deleteEntity()} />
               )}
             </div>
             <div className="button-right">
@@ -150,39 +144,10 @@ const Sponsors = () => {
             </div>
           </ButtonFieldSet>
         </form>
-        <div style={{ color: 'red' }}>{entityEditor.formState.editorMessage}</div>
+        <div style={{ color: 'red' }}>{entityCollection.formState.editorMessage}</div>
       </div>
     </>
   );
 };
-
-// export interface Sponsor extends entityBase {
-//   id: number;
-//   name: string;
-//   blurb: string;
-//   contactInfo: string;
-//   shortBlurb: string;
-//   url: string;
-// }
-
-// const sponsorContext = createUseContext<Sponsor>();
-
-// const defaultSponsor = {
-//   name: '',
-//   blurb: '',
-//   contactInfo: '',
-//   shortBlurb: '',
-//   url: ''
-// };
-
-// const sponsorService = buildApiService<Sponsor>('/sponsor');
-
-// export const WrappedSponsors = () => {
-//   return (
-//     <sponsorContext.Provider apiService={sponsorService} defaultEntity={defaultSponsor}>
-//       <Sponsors />
-//     </sponsorContext.Provider>
-//   );
-// };
 
 export default Sponsors;
