@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { IApiService } from '../../services/serviceContracts';
 import { entityCollection, entityBase, ListState, idlessEntity, EditorState } from './ContentManagerModels';
 import { useParams } from 'react-router';
@@ -16,12 +16,15 @@ export const useEntityCollection = <T extends entityBase>(apiService: IApiServic
     appliedFilter: ''
   };
 
-  const defaultEditorState: EditorState<T> = {
-    editId: 0,
-    editView: defaultEntity,
-    mode: 'new',
-    editorMessage: ''
-  };
+  const defaultEditorState: EditorState<T> = useMemo(
+    () => ({
+      editId: 0,
+      editView: defaultEntity,
+      mode: 'new',
+      editorMessage: ''
+    }),
+    [defaultEntity]
+  );
 
   const [listState, setListState] = useState<ListState<T>>(defaultListState);
   const [formState, setFormState] = useState<EditorState<T>>(defaultEditorState);
@@ -48,7 +51,7 @@ export const useEntityCollection = <T extends entityBase>(apiService: IApiServic
     } else {
       setFormState(defaultEditorState);
     }
-  }, [id, listState.resultSet.records]);
+  }, [id, listState.resultSet.records, defaultEditorState]);
 
   const loadMoreEntities = async (startIndex: number, stopIndex: number) => {
     const loadedSponsors = await apiService.queryEntities(startIndex, stopIndex, listState.appliedFilter);
@@ -78,8 +81,17 @@ export const useEntityCollection = <T extends entityBase>(apiService: IApiServic
 
   const saveEntity = async () => {
     if (formState.mode === 'new') {
+      setFormMessage(`Saving...`);
       const newSponsor = await apiService.createEntity(formState.editView);
+
       setFormState(cur => ({ ...cur, editId: newSponsor.id, mode: 'edit' }));
+
+      setListState(current => {
+        return {
+          ...current,
+          resultSet: { ...current.resultSet, records: [...current.resultSet.records, newSponsor], totalRecords: current.resultSet.totalRecords + 1 }
+        };
+      });
     }
 
     if (formState.mode === 'edit') {

@@ -80,13 +80,13 @@ const Sponsors = () => {
           {entityCollection.listState.state === 'initializing' && <div>Loading...</div>}
           {entityCollection.listState.state === 'error' && <div>Error...</div>}
           {entityCollection.listState.state === 'ready' && (
-            <InfiniteLoader
-              isItemLoaded={entityCollection.isEntityLoaded}
-              itemCount={entityCollection.listState.resultSet.totalRecords}
-              loadMoreItems={entityCollection.loadMoreEntities}>
-              {({ onItemsRendered, ref }) => (
-                <AutoSizer>
-                  {({ height, width }) => (
+            <AutoSizer>
+              {({ height, width }) => (
+                <InfiniteLoader
+                  isItemLoaded={entityCollection.isEntityLoaded}
+                  itemCount={entityCollection.listState.resultSet.totalRecords}
+                  loadMoreItems={entityCollection.loadMoreEntities}>
+                  {({ onItemsRendered, ref }) => (
                     <List
                       height={height}
                       itemSize={35}
@@ -97,9 +97,9 @@ const Sponsors = () => {
                       {Row}
                     </List>
                   )}
-                </AutoSizer>
+                </InfiniteLoader>
               )}
-            </InfiniteLoader>
+            </AutoSizer>
           )}
         </div>
       </div>
