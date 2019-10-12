@@ -2,7 +2,7 @@ export interface PagedSet<T extends entityBase> {
   skipped: number;
   taken: number;
   totalRecords: number;
-  records: entityArray[];
+  records: T[];
 }
 
 export interface ListState<T extends entityBase> {
@@ -15,6 +15,7 @@ export interface ListState<T extends entityBase> {
 export interface EditorState<T extends entityBase> {
   editId: number;
   mode: 'edit' | 'new';
+  submitting: boolean;
   editView: idlessEntity;
   editorMessage: string;
 }
