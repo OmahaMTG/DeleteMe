@@ -14,20 +14,19 @@ import { Button } from '../../components/Form/Button';
 import { buildApiService } from '../../services/ApiService';
 import { useEntityCollection } from './useEntityCollection';
 import Modali, { useModali } from 'modali';
-import { Sponsor } from '../../models/sponsor';
+import { Host } from '../../models/host';
 
-const defaultSponsor = {
+const defaultHost: Omit<Host, 'id'> = {
   name: '',
   blurb: '',
   contactInfo: '',
-  shortBlurb: '',
-  url: ''
+  address: ''
 };
 
-const sponsorService = buildApiService<Sponsor>('/sponsor');
+const hostService = buildApiService<Host>('/host');
 
-const Sponsors = () => {
-  const entityCollection = useEntityCollection(sponsorService, defaultSponsor, '/Sponsor');
+const Hosts = () => {
+  const entityCollection = useEntityCollection(hostService, defaultHost, '/host');
   const [deleteConfirmationModal, toggleDeleteConfirmationModal] = useModali({
     animated: true,
     title: 'Are you sure?',
@@ -50,9 +49,10 @@ const Sponsors = () => {
       <div style={style}>
         {entityCollection.listState.resultSet.records[index] && (
           <Link
-            to={`/Sponsor/${entityCollection.listState.resultSet.records[index].id}/${entityCollection.listState.resultSet.records[
-              index
-            ].name.replace(/[^a-zA-Z0-9-_]/g, '_')}`}>
+            to={`/host/${entityCollection.listState.resultSet.records[index].id}/${entityCollection.listState.resultSet.records[index].name.replace(
+              /[^a-zA-Z0-9-_]/g,
+              '_'
+            )}`}>
             {entityCollection.listState.resultSet.records[index] &&
               entityCollection.listState.resultSet.records[index].name + ' - ' + entityCollection.listState.resultSet.records[index].id}
           </Link>
@@ -112,8 +112,8 @@ const Sponsors = () => {
         </div>
       </div>
       <div className={styles.formContainer}>
-        <h2>Sponsors</h2>
-        {entityCollection.formState.mode === 'edit' && <Link to={`/Host/`}>New Sponsor</Link>}
+        <h2>Hosts {process.env.PUBLIC_URL}xx</h2>
+        {entityCollection.formState.mode === 'edit' && <Link to={`/host/`}>New Host</Link>}
         <form
           onSubmit={event => {
             event.preventDefault();
@@ -126,13 +126,12 @@ const Sponsors = () => {
             value={entityCollection.formState.editView.blurb}
             onChange={value => entityCollection.updateEntityContent('blurb', value)}
           />
-          <TextInput label={'Website URL (Banner Add)'} name={'url'} value={entityCollection.formState.editView.url} onChange={handleInputChange} />
           <TextAreaInput
             rows={3}
-            label={'Banner Add Blurb'}
-            name={'shortBlurb'}
-            value={entityCollection.formState.editView.shortBlurb}
-            onChange={event => entityCollection.updateEntityContent('shortBlurb', event.target.value)}
+            label={'Address'}
+            name={'address'}
+            value={entityCollection.formState.editView.address}
+            onChange={event => entityCollection.updateEntityContent('address', event.target.value)}
           />
           <TextAreaInput
             rows={10}
@@ -166,4 +165,4 @@ const Sponsors = () => {
   );
 };
 
-export default Sponsors;
+export default Hosts;

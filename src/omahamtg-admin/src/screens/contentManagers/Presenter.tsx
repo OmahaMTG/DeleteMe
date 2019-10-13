@@ -14,20 +14,18 @@ import { Button } from '../../components/Form/Button';
 import { buildApiService } from '../../services/ApiService';
 import { useEntityCollection } from './useEntityCollection';
 import Modali, { useModali } from 'modali';
-import { Sponsor } from '../../models/sponsor';
+import { Presenter } from '../../models/presenter';
 
-const defaultSponsor = {
+const defaultPresenter: Omit<Presenter, 'id'> = {
   name: '',
-  blurb: '',
-  contactInfo: '',
-  shortBlurb: '',
-  url: ''
+  bio: '',
+  contactInfo: ''
 };
 
-const sponsorService = buildApiService<Sponsor>('/sponsor');
+const presenterService = buildApiService<Presenter>('/presenter');
 
-const Sponsors = () => {
-  const entityCollection = useEntityCollection(sponsorService, defaultSponsor, '/Sponsor');
+const Presenters = () => {
+  const entityCollection = useEntityCollection(presenterService, defaultPresenter, '/presenter');
   const [deleteConfirmationModal, toggleDeleteConfirmationModal] = useModali({
     animated: true,
     title: 'Are you sure?',
@@ -50,7 +48,7 @@ const Sponsors = () => {
       <div style={style}>
         {entityCollection.listState.resultSet.records[index] && (
           <Link
-            to={`/Sponsor/${entityCollection.listState.resultSet.records[index].id}/${entityCollection.listState.resultSet.records[
+            to={`/presenter/${entityCollection.listState.resultSet.records[index].id}/${entityCollection.listState.resultSet.records[
               index
             ].name.replace(/[^a-zA-Z0-9-_]/g, '_')}`}>
             {entityCollection.listState.resultSet.records[index] &&
@@ -112,8 +110,8 @@ const Sponsors = () => {
         </div>
       </div>
       <div className={styles.formContainer}>
-        <h2>Sponsors</h2>
-        {entityCollection.formState.mode === 'edit' && <Link to={`/Host/`}>New Sponsor</Link>}
+        <h2>Presenters</h2>
+        {entityCollection.formState.mode === 'edit' && <Link to={`/presenter/`}>New Presenter</Link>}
         <form
           onSubmit={event => {
             event.preventDefault();
@@ -121,26 +119,19 @@ const Sponsors = () => {
           }}>
           <TextInput label={'Name'} name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
           <MarkdownInput
-            label={'Blurb'}
-            name={'blurb'}
-            value={entityCollection.formState.editView.blurb}
-            onChange={value => entityCollection.updateEntityContent('blurb', value)}
+            label={'Bio'}
+            name={'bio'}
+            value={entityCollection.formState.editView.bio}
+            onChange={value => entityCollection.updateEntityContent('bio', value)}
           />
-          <TextInput label={'Website URL (Banner Add)'} name={'url'} value={entityCollection.formState.editView.url} onChange={handleInputChange} />
           <TextAreaInput
             rows={3}
-            label={'Banner Add Blurb'}
-            name={'shortBlurb'}
-            value={entityCollection.formState.editView.shortBlurb}
-            onChange={event => entityCollection.updateEntityContent('shortBlurb', event.target.value)}
-          />
-          <TextAreaInput
-            rows={10}
             label={'Contact Info'}
             name={'contactInfo'}
             value={entityCollection.formState.editView.contactInfo}
             onChange={event => entityCollection.updateEntityContent('contactInfo', event.target.value)}
           />
+
           <ButtonFieldSet>
             <div className="button-left">
               {entityCollection.formState.mode === 'edit' && (
@@ -166,4 +157,4 @@ const Sponsors = () => {
   );
 };
 
-export default Sponsors;
+export default Presenters;

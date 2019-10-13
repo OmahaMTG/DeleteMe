@@ -3,7 +3,11 @@ import { IApiService } from '../../services/serviceContracts';
 import { entityCollection, entityBase, ListState, EditorState, EntityCollectionState } from './ContentManagerModels';
 import { useParams, useHistory } from 'react-router';
 
-export const useEntityCollection = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: Omit<T, 'id'>): entityCollection<T> => {
+export const useEntityCollection = <T extends entityBase>(
+  apiService: IApiService<T>,
+  defaultEntity: Omit<T, 'id'>,
+  uIRouteRoot: string
+): entityCollection<T> => {
   const defaultListState: ListState<T> = {
     resultSet: {
       taken: 0,
@@ -30,7 +34,6 @@ export const useEntityCollection = <T extends entityBase>(apiService: IApiServic
 
   const [collectionState, setCollectionState] = useState<EntityCollectionState<T>>(defaultCollectionState);
   const [formMessage, setFormMessage] = useState<string>();
-
   let { id } = useParams();
   let history = useHistory();
 
@@ -108,11 +111,12 @@ export const useEntityCollection = <T extends entityBase>(apiService: IApiServic
       list: {
         ...cur.list,
         resultSet: { ...cur.list.resultSet, records: [...cur.list.resultSet.records, newSponsor], totalRecords: cur.list.resultSet.totalRecords + 1 }
-      }
+      },
+      editor: { ...cur.editor, state: 'idle' }
     }));
 
     assignFormMessage(`Saved`);
-    history.push(`/Sponsor/${newSponsor.id}`);
+    history.push(`${uIRouteRoot}/${newSponsor.id}`);
   };
 
   const saveEditEntity = async () => {

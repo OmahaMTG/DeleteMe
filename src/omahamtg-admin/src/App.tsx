@@ -2,6 +2,9 @@ import React from 'react';
 import styles from './App.module.scss';
 import Sponsors from './screens/contentManagers/Sponsors';
 import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
+import Hosts from './screens/contentManagers/Hosts';
+import Presenters from './screens/contentManagers/Presenter';
+import Templates from './screens/contentManagers/Templates';
 // import { CounterButton } from './components/CounterButton';
 
 const App = () => {
@@ -16,22 +19,22 @@ const App = () => {
                 <Link to="/">Home</Link>
               </li>{' '}
               <li>
-                <Link to="/Events/">Events</Link>
+                <Link to="/Event/">Events</Link>
               </li>
               <li>
                 <Link to="/Sponsor/">Sponsors</Link>
               </li>
               <li>
-                <Link to="/Hosts/">Hosts</Link>
+                <Link to="/Host/">Hosts</Link>
               </li>
               <li>
-                <Link to="/Presenters/">Presenters</Link>
+                <Link to="/Presenter/">Presenters</Link>
               </li>
               <li>
                 <Link to="/Message/">Contact</Link>
               </li>
               <li>
-                <Link to="/Templates/">Templates</Link>
+                <Link to="/Template/">Templates</Link>
               </li>
               {/* <li>
                 <Link to="/Posts/">Posts</Link>
@@ -40,6 +43,11 @@ const App = () => {
           </div>
           <div className={styles.content}>
             <Route path="/Sponsor/:id?" component={Sponsors} />
+            <Route path="/Host/:id?" component={Hosts} />
+
+            <Route path="/Presenter/:id?" component={Presenters} />
+
+            <Route path="/Template/:id?" component={Templates} />
           </div>
         </div>
       </div>
