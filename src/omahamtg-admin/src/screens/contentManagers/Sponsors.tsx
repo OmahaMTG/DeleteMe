@@ -135,16 +135,22 @@ const Sponsors = () => {
           <ButtonFieldSet>
             <div className="button-left">
               {entityCollection.formState.mode === 'edit' && (
-                <input type="button" value="Delete" className="btn-delete" onClick={() => entityCollection.deleteEntity()} />
+                <input
+                  type="button"
+                  value="Delete"
+                  className="btn-delete"
+                  onClick={() => entityCollection.deleteEntity()}
+                  disabled={entityCollection.formState.state === 'saving'}
+                />
               )}
             </div>
             <div className="button-right">
-              <input type="submit" value="Cancel" className="btn-cancel" />
-              <input type="submit" value="Save" className="btn-save" />
+              <input type="submit" value="Cancel" className="btn-cancel" disabled={entityCollection.formState.state === 'saving'} />
+              <input type="submit" value="Save" className="btn-save" disabled={entityCollection.formState.state === 'saving'} />
             </div>
           </ButtonFieldSet>
         </form>
-        <div style={{ color: 'red' }}>{entityCollection.formState.editorMessage}</div>
+        <div style={{ color: 'red' }}>{entityCollection.formMessage}</div>
       </div>
     </>
   );

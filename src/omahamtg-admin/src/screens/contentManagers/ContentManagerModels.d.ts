@@ -15,9 +15,13 @@ export interface ListState<T extends entityBase> {
 export interface EditorState<T extends entityBase> {
   editId: number;
   mode: 'edit' | 'new';
-  submitting: boolean;
-  editView: idlessEntity;
-  editorMessage: string;
+  editView: Omit<T, 'id'>;
+  state: 'idle' | 'saving';
+}
+
+interface EntityCollectionState<T extends entityBase> {
+  list: ListState<T>;
+  editor: EditorState<T>;
 }
 
 interface entityBase {
@@ -40,7 +44,8 @@ export interface entityCollection<T extends entityBase> {
   updateEntityContent: (key: string, value: string | boolean) => void;
   saveEntity: () => Promise<void>;
   deleteEntity: () => Promise<void>;
-  formState: EditorState;
+  formState: EditorState<T>;
+  formMessage: string | undefined;
 }
 
 export interface entityProvider<T extends entityBase> {

@@ -1,10 +1,9 @@
 import { useEffect, useState, useMemo } from 'react';
 import { IApiService } from '../../services/serviceContracts';
-import { entityCollection, entityBase, ListState, idlessEntity, EditorState } from './ContentManagerModels';
+import { entityCollection, entityBase, ListState, EditorState, EntityCollectionState } from './ContentManagerModels';
 import { useParams, useHistory } from 'react-router';
-import { cursorTo } from 'readline';
 
-export const useEntityCollection = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: idlessEntity): entityCollection<T> => {
+export const useEntityCollection = <T extends entityBase>(apiService: IApiService<T>, defaultEntity: Omit<T, 'id'>): entityCollection<T> => {
   const defaultListState: ListState<T> = {
     resultSet: {
       taken: 0,
@@ -22,113 +21,146 @@ export const useEntityCollection = <T extends entityBase>(apiService: IApiServic
       editId: 0,
       editView: defaultEntity,
       mode: 'new',
-      editorMessage: ''
+      state: 'idle'
     }),
     [defaultEntity]
   );
 
-  const [listState, setListState] = useState<ListState<T>>(defaultListState);
-  const [formState, setFormState] = useState<EditorState<T>>(defaultEditorState);
+  const defaultCollectionState = { editor: defaultEditorState, list: defaultListState };
+
+  const [collectionState, setCollectionState] = useState<EntityCollectionState<T>>(defaultCollectionState);
+  const [formMessage, setFormMessage] = useState<string>();
+
   let { id } = useParams();
   let history = useHistory();
+
   useEffect(() => {
     (async () => {
-      setListState(current => ({ ...current, state: 'initializing' }));
-      const items = await apiService.queryEntities(0, 50, listState.appliedFilter);
-      setListState(current => ({ ...current, resultSet: items, state: 'ready' }));
+      setCollectionState(cur => ({ ...cur, list: { ...cur.list, state: 'initializing' } }));
+      const items = await apiService.queryEntities(0, 50, collectionState.list.appliedFilter);
+      setCollectionState(cur => ({ ...cur, list: { ...cur.list, resultSet: items, state: 'ready' } }));
     })();
-  }, [listState.appliedFilter, apiService]);
-
-  const isEntityLoaded = (index: number) => {
-    return typeof listState.resultSet.records[index] !== 'undefined';
-  };
+  }, [collectionState.list.appliedFilter, apiService]);
 
   useEffect(() => {
     if (typeof id !== 'undefined') {
       const intId = parseInt(id);
-      const sponsor = listState.resultSet.records.find(s => s.id === intId);
+      const sponsor = collectionState.list.resultSet.records.find(s => s.id === intId);
       if (sponsor) {
-        setFormState(cur => ({ ...cur, editView: sponsor, editId: intId, mode: 'edit' }));
+        setCollectionState(cur => ({ ...cur, editor: { ...cur.editor, editView: sponsor, editId: intId, mode: 'edit' } }));
       }
     } else {
-      setFormState(defaultEditorState);
+      setCollectionState(cur => ({ ...cur, editor: defaultEditorState }));
     }
-  }, [id, listState.resultSet.records, defaultEditorState]);
+  }, [id, collectionState.list.resultSet.records, defaultEditorState]);
+
+  const isEntityLoaded = (index: number) => {
+    return typeof collectionState.list.resultSet.records[index] !== 'undefined';
+  };
 
   const loadMoreEntities = async (startIndex: number, stopIndex: number) => {
-    const loadedSponsors = await apiService.queryEntities(startIndex, stopIndex, listState.appliedFilter);
-    setListState(current => {
-      const newSponsorArray = [...current.resultSet.records];
+    const loadedSponsors = await apiService.queryEntities(startIndex, stopIndex, collectionState.list.appliedFilter);
+    setCollectionState(cur => {
+      const newSponsorArray = [...cur.list.resultSet.records];
       newSponsorArray.splice(startIndex, stopIndex - startIndex, ...loadedSponsors.records);
-      return { ...current, resultSet: { ...current.resultSet, records: newSponsorArray } };
+
+      return { ...cur, list: { ...cur.list, resultSet: { ...cur.list.resultSet, records: newSponsorArray } } };
     });
-    return;
   };
 
   const updateSearchFilter = (value: string) => {
-    setListState(current => ({ ...current, filter: value }));
+    setCollectionState(cur => ({ ...cur, list: { ...cur.list, filter: value } }));
   };
 
   const applySearchFilter = () => {
-    setListState(current => ({ ...current, appliedFilter: current.filter }));
+    setCollectionState(cur => ({ ...cur, list: { ...cur.list, appliedFilter: cur.list.filter } }));
   };
 
   const clearSearchFilter = () => {
-    setListState(cur => ({ ...cur, filter: '', appliedFilter: '' }));
+    setCollectionState(cur => ({ ...cur, list: { ...cur.list, filter: '', appliedFilter: '' } }));
   };
 
   const updateEntityContent = (key: string, value: string | boolean) => {
-    setFormState(current => ({ ...current, editView: ({ ...current.editView, [key]: value } as unknown) as Pick<T, keyof T> }));
+    setCollectionState(cur => ({
+      ...cur,
+      editor: { ...cur.editor, editView: ({ ...cur.editor.editView, [key]: value } as unknown) as Pick<T, keyof T> }
+    }));
   };
 
   const saveEntity = async () => {
-    if (formState.mode === 'new') {
-      //   setFormMessage(`Saving...`);
-      const newSponsor = await apiService.createEntity(formState.editView);
-
-      //setFormState(cur => ({ ...cur, editId: newSponsor.id, mode: 'edit' }));
-      history.push(`/Sponsor/${newSponsor.id}`);
-      setListState(current => {
-        return {
-          ...current,
-          resultSet: { ...current.resultSet, records: [...current.resultSet.records, newSponsor], totalRecords: current.resultSet.totalRecords + 1 }
-        };
-      });
+    if (collectionState.editor.mode === 'new') {
+      await saveCreateEntity();
     }
 
-    if (formState.mode === 'edit') {
-      const idToUpdate = formState.editId;
-      const updated = await apiService.updateEntity(idToUpdate, formState.editView);
+    if (collectionState.editor.mode === 'edit') {
+      await saveEditEntity();
+    }
+  };
 
-      setListState(cur => ({
-        ...cur,
+  const saveCreateEntity = async () => {
+    setCollectionState(cur => ({ ...cur, editor: { ...cur.editor, state: 'saving' } }));
+    const newSponsor = await apiService.createEntity(collectionState.editor.editView);
+
+    //setFormState(cur => ({ ...cur, editId: newSponsor.id, mode: 'edit' }));
+    console.log({ records: [...collectionState.list.resultSet.records, newSponsor], totalRecords: collectionState.list.resultSet.totalRecords + 1 });
+    setCollectionState(cur => ({
+      ...cur,
+      list: {
+        ...cur.list,
+        resultSet: { ...cur.list.resultSet, records: [...cur.list.resultSet.records, newSponsor], totalRecords: cur.list.resultSet.totalRecords + 1 }
+      }
+    }));
+
+    assignFormMessage(`Saved`);
+    history.push(`/Sponsor/${newSponsor.id}`);
+  };
+
+  const saveEditEntity = async () => {
+    setCollectionState(cur => ({ ...cur, editor: { ...cur.editor, state: 'saving' } }));
+    const idToUpdate = collectionState.editor.editId;
+    const updated = await apiService.updateEntity(idToUpdate, collectionState.editor.editView);
+
+    setCollectionState(cur => ({
+      ...cur,
+      list: {
+        ...cur.list,
         resultSet: {
-          ...cur.resultSet,
-          records: cur.resultSet.records.map(f => (f.id === idToUpdate ? updated : f))
+          ...cur.list.resultSet,
+          records: cur.list.resultSet.records.map(f => (f.id === idToUpdate ? updated : f))
         }
-      }));
-    }
-    //  setFormMessage(`Saved Sponsor`);
+      },
+      editor: {
+        ...cur.editor,
+        state: 'idle'
+      }
+    }));
+    assignFormMessage(`Saved`);
   };
 
   const deleteEntity = async () => {
-    const idToDelete = formState.editId;
+    const idToDelete = collectionState.editor.editId;
+    setCollectionState(cur => ({ ...cur, editor: { ...cur.editor, state: 'saving' } }));
     await apiService.deleteEntity(idToDelete, false);
-    setListState(cur => ({
+
+    setCollectionState(cur => ({
       ...cur,
-      resultSet: {
-        ...cur.resultSet,
-        totalRecords: cur.resultSet.totalRecords - 1,
-        records: cur.resultSet.records.filter(f => f.id !== idToDelete)
-      }
+      list: {
+        ...cur.list,
+        resultSet: {
+          ...cur.list.resultSet,
+          totalRecords: cur.list.resultSet.totalRecords - 1,
+          records: cur.list.resultSet.records.filter(f => f.id !== idToDelete)
+        }
+      },
+      editor: defaultEditorState
     }));
-    setFormState(cur => defaultEditorState);
-    setFormMessage(`Deleted Sponsor`);
+
+    assignFormMessage(`Deleted`);
   };
 
-  const setFormMessage = (message: string) => {
-    setFormState(cur => ({ ...cur, editorMessage: message }));
-    setTimeout(() => setFormState(cur => ({ ...cur, editorMessage: '' })), 2500);
+  const assignFormMessage = (message: string) => {
+    setFormMessage(message);
+    setTimeout(() => setFormMessage(undefined), 2500);
   };
 
   return {
@@ -137,10 +169,11 @@ export const useEntityCollection = <T extends entityBase>(apiService: IApiServic
     updateSearchFilter,
     applySearchFilter,
     clearSearchFilter,
-    listState,
+    listState: collectionState.list,
     updateEntityContent,
     saveEntity,
     deleteEntity,
-    formState
+    formState: collectionState.editor,
+    formMessage
   };
 };
