@@ -12,6 +12,7 @@ namespace OmahaMTG.Accessors
                 Bio = createPresenterRequest.Bio,
                 Name = createPresenterRequest.Name,
                 OmahaMtgUserId = createPresenterRequest.OmahaMtgUserId,
+                ContactInfo = createPresenterRequest.ContactInfo
             };
         }
 
@@ -23,7 +24,7 @@ namespace OmahaMTG.Accessors
                 Bio = presenterData.Bio,
                 Name = presenterData.Name,
                 OmahaMtgUserId = presenterData.OmahaMtgUserId,
-
+                ContactInfo = presenterData.ContactInfo,
                 IsDeleted = presenterData.IsDeleted
             };
         }
@@ -33,6 +34,7 @@ namespace OmahaMTG.Accessors
             presenterDataToUpdate.Bio = updatePresenterRequest.Bio;
             presenterDataToUpdate.Name = updatePresenterRequest.Name;
             presenterDataToUpdate.OmahaMtgUserId = updatePresenterRequest.OmahaMtgUserId;
+            presenterDataToUpdate.ContactInfo = updatePresenterRequest.ContactInfo;
         }
 
         //internal static IEnumerable<PresenterModel> ToPresenters(this IEnumerable<PresenterData> presenterDatas)
