@@ -64,5 +64,6 @@
     "@types/react-window": "^1.8.1",
     "@types/react-window-infinite-loader": "^1.0.1",
     "@types/showdown": "^1.9.3"
-  }
+  },
+  "homepage": "https://omtg.azurewebsites.net/Admin"
 }
