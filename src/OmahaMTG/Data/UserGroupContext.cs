@@ -32,7 +32,7 @@ namespace OmahaMTG.Data
         public DbSet<PostTagData> PostTags { get; set; }
 
         public DbSet<SiteSponsorData> SiteSponsors { get; set; }
-
+        public DbSet<TemplateData> Templates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

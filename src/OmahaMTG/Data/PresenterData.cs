@@ -8,6 +8,7 @@ namespace OmahaMTG.Data
     {
         public string Name { get; set; }
         public string Bio { get; set; }
+        public string ContactInfo { get; set; }
 
         public string OmahaMtgUserId { get; set; }
         public ICollection<PresentationPresenterData> PresentationPresenters { get; set; }

@@ -7,27 +7,25 @@ import InfiniteLoader from 'react-window-infinite-loader';
 import { Link } from 'react-router-dom';
 import { TextInput } from '../../components/Form/TextInput';
 import { MarkdownInput } from '../../components/Form/MarkdownInput';
-import { TextAreaInput } from '../../components/Form/TextAreaInput';
 import { ButtonFieldSet } from '../../components/Form/ButtonFieldSet ';
 import { SearchInput } from '../../components/SearchInput';
 import { Button } from '../../components/Form/Button';
 import { buildApiService } from '../../services/ApiService';
 import { useEntityCollection } from './useEntityCollection';
 import Modali, { useModali } from 'modali';
-import { Sponsor } from '../../models/sponsor';
+import { template } from '../../models/template';
 
-const defaultSponsor = {
+const defaultTemplate = {
   name: '',
-  blurb: '',
-  contactInfo: '',
-  shortBlurb: '',
-  url: ''
+  body: '',
+  isEmail: false,
+  isMeeting: false
 };
 
-const sponsorService = buildApiService<Sponsor>('/sponsor');
+const templateService = buildApiService<template>('/template');
 
-const Sponsors = () => {
-  const entityCollection = useEntityCollection(sponsorService, defaultSponsor, '/Sponsor');
+const Templates = () => {
+  const entityCollection = useEntityCollection(templateService, defaultTemplate, '/Template');
   const [deleteConfirmationModal, toggleDeleteConfirmationModal] = useModali({
     animated: true,
     title: 'Are you sure?',
@@ -112,8 +110,8 @@ const Sponsors = () => {
         </div>
       </div>
       <div className={styles.formContainer}>
-        <h2>Sponsors</h2>
-        {entityCollection.formState.mode === 'edit' && <Link to={`/Host/`}>New Sponsor</Link>}
+        <h2>Templates</h2>
+        {entityCollection.formState.mode === 'edit' && <Link to={`/Template/`}>New Template</Link>}
         <form
           onSubmit={event => {
             event.preventDefault();
@@ -121,26 +119,12 @@ const Sponsors = () => {
           }}>
           <TextInput label={'Name'} name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
           <MarkdownInput
-            label={'Blurb'}
-            name={'blurb'}
-            value={entityCollection.formState.editView.blurb}
-            onChange={value => entityCollection.updateEntityContent('blurb', value)}
+            label={'Body'}
+            name={'body'}
+            value={entityCollection.formState.editView.body}
+            onChange={value => entityCollection.updateEntityContent('body', value)}
           />
-          <TextInput label={'Website URL (Banner Add)'} name={'url'} value={entityCollection.formState.editView.url} onChange={handleInputChange} />
-          <TextAreaInput
-            rows={3}
-            label={'Banner Add Blurb'}
-            name={'shortBlurb'}
-            value={entityCollection.formState.editView.shortBlurb}
-            onChange={event => entityCollection.updateEntityContent('shortBlurb', event.target.value)}
-          />
-          <TextAreaInput
-            rows={10}
-            label={'Contact Info'}
-            name={'contactInfo'}
-            value={entityCollection.formState.editView.contactInfo}
-            onChange={event => entityCollection.updateEntityContent('contactInfo', event.target.value)}
-          />
+
           <ButtonFieldSet>
             <div className="button-left">
               {entityCollection.formState.mode === 'edit' && (
@@ -166,4 +150,4 @@ const Sponsors = () => {
   );
 };
 
-export default Sponsors;
+export default Templates;

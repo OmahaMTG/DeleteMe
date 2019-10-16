@@ -20,6 +20,7 @@ namespace OmahaMTG.Config
             services.AddTransient<IPresentationAccessor, ContentAccessor>();
             services.AddTransient<IPresenterAccessor, ContentAccessor>();
             services.AddTransient<IMeetingAccessor, ContentAccessor>();
+            services.AddTransient<ITemplateAccessor, ContentAccessor>();
             return services;
         }
 

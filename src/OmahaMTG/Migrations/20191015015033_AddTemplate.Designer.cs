@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OmahaMTG.Data;
 
 namespace OmahaMTG.Migrations
 {
     [DbContext(typeof(UserGroupContext))]
-    partial class UserGroupContextModelSnapshot : ModelSnapshot
+    [Migration("20191015015033_AddTemplate")]
+    partial class AddTemplate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
