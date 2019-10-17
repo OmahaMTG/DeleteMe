@@ -12,7 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "util", "util", "{E65FB40E-F
 		notes.txt = notes.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmahaMTG.Site", "src\OmahaMTG.Site\OmahaMTG.Site.csproj", "{EDF05517-A51F-4C9A-B94E-70DF8DE0816E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmahaMTG.Site", "src\OmahaMTG.Site\OmahaMTG.Site.csproj", "{EDF05517-A51F-4C9A-B94E-70DF8DE0816E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hero4Hire.Architecture", "src\Hero4Hire.Architecture\Hero4Hire.Architecture.csproj", "{240BE75E-A8F7-4F65-93AD-D6BD11A19402}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,10 @@ Global
 		{EDF05517-A51F-4C9A-B94E-70DF8DE0816E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDF05517-A51F-4C9A-B94E-70DF8DE0816E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDF05517-A51F-4C9A-B94E-70DF8DE0816E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{240BE75E-A8F7-4F65-93AD-D6BD11A19402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240BE75E-A8F7-4F65-93AD-D6BD11A19402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240BE75E-A8F7-4F65-93AD-D6BD11A19402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240BE75E-A8F7-4F65-93AD-D6BD11A19402}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
