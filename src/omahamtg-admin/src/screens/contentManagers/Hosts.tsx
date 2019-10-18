@@ -49,10 +49,9 @@ const Hosts = () => {
       <div style={style}>
         {entityCollection.listState.resultSet.records[index] && (
           <Link
-            to={`/host/${entityCollection.listState.resultSet.records[index].id}/${entityCollection.listState.resultSet.records[index].name.replace(
-              /[^a-zA-Z0-9-_]/g,
-              '_'
-            )}`}>
+            to={`/Admin/host/${entityCollection.listState.resultSet.records[index].id}/${entityCollection.listState.resultSet.records[
+              index
+            ].name.replace(/[^a-zA-Z0-9-_]/g, '_')}`}>
             {entityCollection.listState.resultSet.records[index] &&
               entityCollection.listState.resultSet.records[index].name + ' - ' + entityCollection.listState.resultSet.records[index].id}
           </Link>
