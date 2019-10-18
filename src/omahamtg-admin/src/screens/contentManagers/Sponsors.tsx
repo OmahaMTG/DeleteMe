@@ -27,7 +27,7 @@ const defaultSponsor = {
 const sponsorService = buildApiService<Sponsor>('/sponsor');
 
 const Sponsors = () => {
-  const entityCollection = useEntityCollection(sponsorService, defaultSponsor, '/Sponsor');
+  const entityCollection = useEntityCollection(sponsorService, defaultSponsor, '/Admin/Sponsor');
   const [deleteConfirmationModal, toggleDeleteConfirmationModal] = useModali({
     animated: true,
     title: 'Are you sure?',
@@ -113,7 +113,7 @@ const Sponsors = () => {
       </div>
       <div className={styles.formContainer}>
         <h2>Sponsors</h2>
-        {entityCollection.formState.mode === 'edit' && <Link to={`/Host/`}>New Sponsor</Link>}
+        {entityCollection.formState.mode === 'edit' && <Link to={`/Admin/Sponsor/`}>New Sponsor</Link>}
         <form
           onSubmit={event => {
             event.preventDefault();

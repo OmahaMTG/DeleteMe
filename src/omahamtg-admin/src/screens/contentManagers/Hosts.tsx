@@ -26,7 +26,7 @@ const defaultHost: Omit<Host, 'id'> = {
 const hostService = buildApiService<Host>('/host');
 
 const Hosts = () => {
-  const entityCollection = useEntityCollection(hostService, defaultHost, '/host');
+  const entityCollection = useEntityCollection(hostService, defaultHost, '/Admin/host');
   const [deleteConfirmationModal, toggleDeleteConfirmationModal] = useModali({
     animated: true,
     title: 'Are you sure?',
@@ -113,7 +113,7 @@ const Hosts = () => {
       </div>
       <div className={styles.formContainer}>
         <h2>Hosts {process.env.PUBLIC_URL}xx</h2>
-        {entityCollection.formState.mode === 'edit' && <Link to={`/host/`}>New Host</Link>}
+        {entityCollection.formState.mode === 'edit' && <Link to={`/Admin/host/`}>New Host</Link>}
         <form
           onSubmit={event => {
             event.preventDefault();

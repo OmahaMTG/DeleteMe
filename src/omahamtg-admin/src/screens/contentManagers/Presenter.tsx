@@ -25,7 +25,7 @@ const defaultPresenter: Omit<Presenter, 'id'> = {
 const presenterService = buildApiService<Presenter>('/presenter');
 
 const Presenters = () => {
-  const entityCollection = useEntityCollection(presenterService, defaultPresenter, '/presenter');
+  const entityCollection = useEntityCollection(presenterService, defaultPresenter, '/Admin/presenter');
   const [deleteConfirmationModal, toggleDeleteConfirmationModal] = useModali({
     animated: true,
     title: 'Are you sure?',
@@ -111,7 +111,7 @@ const Presenters = () => {
       </div>
       <div className={styles.formContainer}>
         <h2>Presenters</h2>
-        {entityCollection.formState.mode === 'edit' && <Link to={`/presenter/`}>New Presenter</Link>}
+        {entityCollection.formState.mode === 'edit' && <Link to={`/Admin/presenter/`}>New Presenter</Link>}
         <form
           onSubmit={event => {
             event.preventDefault();

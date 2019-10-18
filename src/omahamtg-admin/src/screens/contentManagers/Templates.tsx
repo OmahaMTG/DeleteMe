@@ -25,7 +25,7 @@ const defaultTemplate = {
 const templateService = buildApiService<template>('/template');
 
 const Templates = () => {
-  const entityCollection = useEntityCollection(templateService, defaultTemplate, '/Template');
+  const entityCollection = useEntityCollection(templateService, defaultTemplate, '/Admin/Template');
   const [deleteConfirmationModal, toggleDeleteConfirmationModal] = useModali({
     animated: true,
     title: 'Are you sure?',
@@ -111,7 +111,7 @@ const Templates = () => {
       </div>
       <div className={styles.formContainer}>
         <h2>Templates</h2>
-        {entityCollection.formState.mode === 'edit' && <Link to={`/Template/`}>New Template</Link>}
+        {entityCollection.formState.mode === 'edit' && <Link to={`/Admin/Template/`}>New Template</Link>}
         <form
           onSubmit={event => {
             event.preventDefault();
