@@ -16,25 +16,25 @@ const App = () => {
           <div className={styles.sidebar}>
             <ul className={styles.siteNav}>
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/Admin/">Home</Link>
               </li>{' '}
               <li>
-                <Link to="/Event/">Events</Link>
+                <Link to="/Admin/Event/">Events</Link>
               </li>
               <li>
-                <Link to="/Sponsor/">Sponsors</Link>
+                <Link to="/Admin/Sponsor/">Sponsors</Link>
               </li>
               <li>
-                <Link to="/Host/">Hosts</Link>
+                <Link to="/Admin/Host/">Hosts</Link>
               </li>
               <li>
-                <Link to="/Presenter/">Presenters</Link>
+                <Link to="/Admin/Presenter/">Presenters</Link>
               </li>
               <li>
-                <Link to="/Message/">Contact</Link>
+                <Link to="/Admin/Message/">Contact</Link>
               </li>
               <li>
-                <Link to="/Template/">Templates</Link>
+                <Link to="/Admin/Template/">Templates</Link>
               </li>
               {/* <li>
                 <Link to="/Posts/">Posts</Link>
@@ -42,12 +42,12 @@ const App = () => {
             </ul>
           </div>
           <div className={styles.content}>
-            <Route path="/Sponsor/:id?" component={Sponsors} />
-            <Route path="/Host/:id?" component={Hosts} />
+            <Route path="/Admin/Sponsor/:id?" component={Sponsors} />
+            <Route path="/Admin/Host/:id?" component={Hosts} />
 
-            <Route path="/Presenter/:id?" component={Presenters} />
+            <Route path="/Admin/Presenter/:id?" component={Presenters} />
 
-            <Route path="/Template/:id?" component={Templates} />
+            <Route path="/Admin/Template/:id?" component={Templates} />
           </div>
         </div>
       </div>

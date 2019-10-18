@@ -5,6 +5,7 @@ import { idlessEntity, entityBase, PagedSet } from '../screens/contentManagers/C
 const buildApiService = <T extends entityBase>(url: string): IApiService<T> => {
   const http = OmahaMTGSiteAxios();
   const queryEntities = async (startIndex: number, stopIndex: number, filter: string) => {
+    console.log(url);
     const result = await http.get<PagedSet<T>>(`${url}?skip=${startIndex}&take=${stopIndex - startIndex}&filter=${filter}`);
     return result.data;
   };

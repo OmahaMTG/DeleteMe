@@ -1,0 +1,12 @@
+[
+  {
+    "env": "prod",
+    "uiHostname": "https://omtg.azurewebsites.net/",
+    "apiServer": "https://omtg.azurewebsites.net/api"
+  },
+  {
+    "env": "localdev",
+    "uiHostname": "localhost",
+    "apiServer": "https://localhost:4433/api/"
+  }
+]

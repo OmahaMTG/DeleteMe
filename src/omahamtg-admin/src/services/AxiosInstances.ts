@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { config } from '../util/config';
 
 export const OmahaMTGSiteAxios = () => {
   const headers: any = {
@@ -8,7 +9,7 @@ export const OmahaMTGSiteAxios = () => {
   };
 
   const instance = axios.create({
-    baseURL: 'https://localhost:4433/api/',
+    baseURL: config.apiServer,
     timeout: 15000,
     headers
   });
