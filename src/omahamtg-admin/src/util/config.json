@@ -1,7 +1,7 @@
 [
   {
     "env": "prod",
-    "uiHostname": "https://omtg.azurewebsites.net/",
+    "uiHostname": "omtg.azurewebsites.net",
     "apiServer": "https://omtg.azurewebsites.net/api/"
   },
   {
