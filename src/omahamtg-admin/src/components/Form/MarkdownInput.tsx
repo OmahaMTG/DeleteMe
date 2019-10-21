@@ -3,7 +3,7 @@ import styles from './Form.module.scss';
 import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
-
+import { Label } from 'office-ui-fabric-react/lib/Label';
 interface MarkdownInputProps {
   label: string;
   value: string;
@@ -23,7 +23,7 @@ export const MarkdownInput = (props: MarkdownInputProps) => {
 
   return (
     <div className={styles.fieldSet}>
-      <label>{props.label}</label>
+      <Label>{props.label}</Label>
       <ReactMde
         onChange={props.onChange}
         value={props.value}

@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './App.module.scss';
 import Sponsors from './screens/contentManagers/Sponsors';
-import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
+import { Route, HashRouter as Router, Link } from 'react-router-dom';
 import Hosts from './screens/contentManagers/Hosts';
 import Presenters from './screens/contentManagers/Presenter';
 import Templates from './screens/contentManagers/Templates';
+import GroupMeeting from './screens/contentManagers/GroupMeeting';
 // import { CounterButton } from './components/CounterButton';
 
 const App = () => {
@@ -44,7 +45,7 @@ const App = () => {
           <div className={styles.content}>
             <Route path="/Admin/Sponsor/:id?" component={Sponsors} />
             <Route path="/Admin/Host/:id?" component={Hosts} />
-
+            <Route path="/Admin/Event/:id?" component={GroupMeeting} />
             <Route path="/Admin/Presenter/:id?" component={Presenters} />
 
             <Route path="/Admin/Template/:id?" component={Templates} />

@@ -1,3 +1,4 @@
+import '../node_modules/antd/dist/antd.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
