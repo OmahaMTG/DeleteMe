@@ -1,26 +1,29 @@
 import React from 'react';
 import { FixedSizeList as List } from 'react-window';
 
-import styles from './ContentManager.module.scss';
+import styles from '../ContentManager.module.scss';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import InfiniteLoader from 'react-window-infinite-loader';
 import { Link } from 'react-router-dom';
 
-import { ButtonFieldSet } from '../../components/Form/ButtonFieldSet ';
-import { SearchInput } from '../../components/SearchInput';
-import { buildApiService } from '../../services/ApiService';
-import { useEntityCollection } from './useEntityCollection';
+import { ButtonFieldSet } from '../../../components/Form/ButtonFieldSet ';
+import { SearchInput } from '../../../components/SearchInput';
+import { buildApiService } from '../../../services/ApiService';
+import { useEntityCollection } from '../useEntityCollection';
 import Modali, { useModali } from 'modali';
-import { Host } from '../../models/host';
-import { MarkdownInput } from '../../components/Form/MarkdownInput';
+import { Host } from '../../../models/host';
+import { MarkdownInput } from '../../../components/Form/MarkdownInput';
 import { Label } from 'office-ui-fabric-react/lib/Label';
-import { TagPicker, IBasePicker, ITag } from 'office-ui-fabric-react/lib/Pickers';
+import { TagPicker } from 'office-ui-fabric-react/lib/Pickers';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import { DefaultButton, PrimaryButton, Stack, IStackTokens } from 'office-ui-fabric-react';
+import { Stack } from 'office-ui-fabric-react';
 import { Collapse } from 'antd';
-import { Input } from 'antd';
-import { TextInput } from '../../components/Form/TextInput';
+import { Row as ARow, Col } from 'antd';
+import { TextInput } from '../../../components/Form/TextInput';
 import { Button } from 'antd';
+import { DatePicker } from 'antd';
+import { Select, Spin } from 'antd';
+
 const { Panel } = Collapse;
 const defaultHost: Omit<Host, 'id'> = {
   name: '',
@@ -128,14 +131,37 @@ const GroupMeeting = () => {
 
           <Collapse accordion style={{ marginTop: 20 }}>
             <Panel header="Basics" key="1">
-              <TextField label="Event Start Time" value={'hi'} onChange={console.log} />
-              <TextField label="Event End Time" value={'hi'} onChange={console.log} />
-              <TextField label="Publish Start Time" value={'hi'} onChange={console.log} />
-              <TextField label="Vimeo ID" value={'hi'} onChange={console.log} />
-              <TextField label="Template" value={'hi'} onChange={console.log} />
+              <ARow gutter={16}>
+                <Col span={12}>
+                  <DatePicker showTime placeholder="Event Start Time" onChange={() => {}} onOk={() => {}} />
+                </Col>
+                <Col span={12}>
+                  <DatePicker showTime placeholder="Event End Time" onChange={() => {}} onOk={() => {}} />
+                </Col>
+              </ARow>
+
+              <ARow gutter={16}>
+                <Col span={12}>
+                  {' '}
+                  <TextInput label="Publish Start Time" name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
+                </Col>
+                <Col span={12}>
+                  <TextInput label="Vimeo ID" name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
+                </Col>
+              </ARow>
+
+              <Select
+                mode="default"
+                labelInValue
+                value={'d'}
+                placeholder="Select users"
+                filterOption={false}
+                onSearch={() => {}}
+                onChange={() => {}}
+                style={{ width: '100%' }}></Select>
             </Panel>
             <Panel header="Host" key="2">
-              <Stack horizontal disableShrink verticalAlign="center" maxWidth="600px" horizontalAlign="space-between">
+              <Stack horizontal disableShrink verticalAlign="center" horizontalAlign="space-between">
                 <Label>Host</Label>
                 <Button type="default" size="small">
                   Populate Host Body
@@ -157,16 +183,53 @@ const GroupMeeting = () => {
               <MarkdownInput label={'Host Body'} name={'blurb'} value={entityCollection.formState.editView.blurb} onChange={console.log} />
             </Panel>
             <Panel header="Sponsors" key="3">
-              <Stack horizontal disableShrink verticalAlign="center" maxWidth="600px" horizontalAlign="space-between">
+              <Stack horizontal disableShrink verticalAlign="center" horizontalAlign="space-between">
                 <Label>Sponsor</Label>
-                <PrimaryButton style={{ height: 20 }} text="Populate Host Body" />
+                <Button type="default" size="small">
+                  Populate Sponsor Body
+                </Button>
               </Stack>
-              <TextField label="Sponsor" value={'hi'} onChange={console.log} styles={{ fieldGroup: { width: 600 } }} />
+              <TagPicker
+                onResolveSuggestions={() => []}
+                pickerSuggestionsProps={{
+                  suggestionsHeaderText: 'Matching Hosts',
+                  noResultsFoundText: 'No Hosts'
+                }}
+                itemLimit={2}
+                inputProps={{
+                  onBlur: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onBlur called'),
+                  onFocus: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onFocus called'),
+                  'aria-label': 'Tag Picker'
+                }}
+              />
               <MarkdownInput label={'Sponsor Body'} name={'blurb'} value={entityCollection.formState.editView.blurb} onChange={console.log} />
             </Panel>
             <Panel header="Presentations" key="4">
-              <TextField label="Presenter" value={'hi'} onChange={console.log} styles={{ fieldGroup: { width: 600 } }} />
-              <MarkdownInput label={'Presenter Body'} name={'blurb'} value={entityCollection.formState.editView.blurb} onChange={console.log} />
+              <Collapse accordion style={{ marginTop: 20 }}>
+                <Panel header="presenter" key="1">
+                  <Stack horizontal disableShrink verticalAlign="center" horizontalAlign="space-between">
+                    <Label>Sponsor</Label>
+                    <Button type="default" size="small">
+                      Populate Sponsor Body
+                    </Button>
+                  </Stack>
+                  <TagPicker
+                    onResolveSuggestions={() => []}
+                    pickerSuggestionsProps={{
+                      suggestionsHeaderText: 'Matching Hosts',
+                      noResultsFoundText: 'No Hosts'
+                    }}
+                    itemLimit={2}
+                    inputProps={{
+                      onBlur: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onBlur called'),
+                      onFocus: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onFocus called'),
+                      'aria-label': 'Tag Picker'
+                    }}
+                  />
+                  <MarkdownInput label={'Presenter Body'} name={'blurb'} value={entityCollection.formState.editView.blurb} onChange={console.log} />
+                </Panel>
+              </Collapse>
+              <TextInput label={'Presentation Title'} name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
               <MarkdownInput label={'Presentation'} name={'blurb'} value={entityCollection.formState.editView.blurb} onChange={console.log} />
             </Panel>
           </Collapse>
