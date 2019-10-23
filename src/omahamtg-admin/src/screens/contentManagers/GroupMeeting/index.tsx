@@ -15,14 +15,15 @@ import { Host } from '../../../models/host';
 import { MarkdownInput } from '../../../components/Form/MarkdownInput';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { TagPicker } from 'office-ui-fabric-react/lib/Pickers';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Stack } from 'office-ui-fabric-react';
-import { Collapse } from 'antd';
+import { Collapse, Icon } from 'antd';
 import { Row as ARow, Col } from 'antd';
 import { TextInput } from '../../../components/Form/TextInput';
 import { Button } from 'antd';
 import { DatePicker } from 'antd';
 import { Select, Spin } from 'antd';
+import { DateTime } from '../../../components/Form/DateTime';
+import { MultiSelect } from '../../../components/Form/MultiSelect';
 
 const { Panel } = Collapse;
 const defaultHost: Omit<Host, 'id'> = {
@@ -70,8 +71,10 @@ const GroupMeeting = () => {
     );
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target;
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement> | { currentTarget: { value: string; name: string; type: 'date'; checked: boolean } }
+  ) => {
+    const target = e.currentTarget;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     entityCollection.updateEntityContent(name, value);
@@ -133,104 +136,86 @@ const GroupMeeting = () => {
             <Panel header="Basics" key="1">
               <ARow gutter={16}>
                 <Col span={12}>
-                  <DatePicker showTime placeholder="Event Start Time" onChange={() => {}} onOk={() => {}} />
+                  <DateTime label="Event Start Time" name={'name'} value={entityCollection.formState.editView.name} onChange={() => {}} />
                 </Col>
                 <Col span={12}>
-                  <DatePicker showTime placeholder="Event End Time" onChange={() => {}} onOk={() => {}} />
+                  <DateTime label="Event End Time" name={'name'} value={entityCollection.formState.editView.name} onChange={() => {}} />
                 </Col>
               </ARow>
 
               <ARow gutter={16}>
                 <Col span={12}>
-                  {' '}
-                  <TextInput label="Publish Start Time" name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
+                  <DateTime label="Publish Start Time" name={'name'} value={entityCollection.formState.editView.name} onChange={() => {}} />
                 </Col>
                 <Col span={12}>
                   <TextInput label="Vimeo ID" name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
                 </Col>
               </ARow>
-
-              <Select
-                mode="default"
-                labelInValue
-                value={'d'}
-                placeholder="Select users"
-                filterOption={false}
-                onSearch={() => {}}
-                onChange={() => {}}
-                style={{ width: '100%' }}></Select>
+              <MultiSelect label="Template" name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
             </Panel>
             <Panel header="Host" key="2">
-              <Stack horizontal disableShrink verticalAlign="center" horizontalAlign="space-between">
-                <Label>Host</Label>
-                <Button type="default" size="small">
-                  Populate Host Body
-                </Button>
-              </Stack>
-              <TagPicker
-                onResolveSuggestions={() => []}
-                pickerSuggestionsProps={{
-                  suggestionsHeaderText: 'Matching Hosts',
-                  noResultsFoundText: 'No Hosts'
-                }}
-                itemLimit={2}
-                inputProps={{
-                  onBlur: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onBlur called'),
-                  onFocus: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onFocus called'),
-                  'aria-label': 'Tag Picker'
-                }}
+              <MultiSelect label="Host" name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
+              <MarkdownInput
+                label={'Host Body'}
+                name={'blurb'}
+                value={entityCollection.formState.editView.blurb}
+                onChange={console.log}
+                extraAction={{ label: 'Populate Host Body', action: () => {} }}
               />
-              <MarkdownInput label={'Host Body'} name={'blurb'} value={entityCollection.formState.editView.blurb} onChange={console.log} />
             </Panel>
             <Panel header="Sponsors" key="3">
-              <Stack horizontal disableShrink verticalAlign="center" horizontalAlign="space-between">
-                <Label>Sponsor</Label>
-                <Button type="default" size="small">
-                  Populate Sponsor Body
-                </Button>
-              </Stack>
-              <TagPicker
-                onResolveSuggestions={() => []}
-                pickerSuggestionsProps={{
-                  suggestionsHeaderText: 'Matching Hosts',
-                  noResultsFoundText: 'No Hosts'
-                }}
-                itemLimit={2}
-                inputProps={{
-                  onBlur: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onBlur called'),
-                  onFocus: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onFocus called'),
-                  'aria-label': 'Tag Picker'
-                }}
+              <ARow gutter={16}>
+                <Col span="12">
+                  <Button type="danger" size="small" onClick={() => {}}>
+                    Delete Sponsor
+                  </Button>
+                </Col>
+              </ARow>
+              <MultiSelect label="Sponsor" name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
+              <MarkdownInput
+                label={'Sponsor Body'}
+                name={'blurb'}
+                value={entityCollection.formState.editView.blurb}
+                onChange={console.log}
+                extraAction={{ label: 'Populate Sponsor Body', action: () => {} }}
               />
-              <MarkdownInput label={'Sponsor Body'} name={'blurb'} value={entityCollection.formState.editView.blurb} onChange={console.log} />
             </Panel>
+
             <Panel header="Presentations" key="4">
+              <ARow gutter={16}>
+                <Col span="12">
+                  <Button type="danger" size="small" onClick={() => {}}>
+                    Delete Presentation
+                  </Button>
+                </Col>
+              </ARow>
               <Collapse accordion style={{ marginTop: 20 }}>
                 <Panel header="presenter" key="1">
-                  <Stack horizontal disableShrink verticalAlign="center" horizontalAlign="space-between">
-                    <Label>Sponsor</Label>
-                    <Button type="default" size="small">
-                      Populate Sponsor Body
-                    </Button>
-                  </Stack>
-                  <TagPicker
-                    onResolveSuggestions={() => []}
-                    pickerSuggestionsProps={{
-                      suggestionsHeaderText: 'Matching Hosts',
-                      noResultsFoundText: 'No Hosts'
-                    }}
-                    itemLimit={2}
-                    inputProps={{
-                      onBlur: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onBlur called'),
-                      onFocus: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onFocus called'),
-                      'aria-label': 'Tag Picker'
-                    }}
+                  <ARow gutter={16}>
+                    <Col span="12">
+                      <Button type="danger" size="small" onClick={() => {}}>
+                        Delete Sponsor
+                      </Button>
+                    </Col>
+                  </ARow>
+                  <MultiSelect label="Presenter" name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
+                  <MarkdownInput
+                    label={'Presenter Body'}
+                    name={'blurb'}
+                    value={entityCollection.formState.editView.blurb}
+                    onChange={console.log}
+                    extraAction={{ label: 'Populate Presenter Body', action: () => {} }}
                   />
-                  <MarkdownInput label={'Presenter Body'} name={'blurb'} value={entityCollection.formState.editView.blurb} onChange={console.log} />
                 </Panel>
               </Collapse>
-              <TextInput label={'Presentation Title'} name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
-              <MarkdownInput label={'Presentation'} name={'blurb'} value={entityCollection.formState.editView.blurb} onChange={console.log} />
+              <MultiSelect label="Presentation" name={'name'} value={entityCollection.formState.editView.name} onChange={handleInputChange} />
+              <MarkdownInput
+                label={'Presentation Body'}
+                name={'blurb'}
+                value={entityCollection.formState.editView.blurb}
+                onChange={console.log}
+                extraAction={{ label: 'Populate Presentation Body', action: () => {} }}
+              />
             </Panel>
           </Collapse>
 
