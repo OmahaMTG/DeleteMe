@@ -24,9 +24,13 @@ import { DatePicker } from 'antd';
 import { Select, Spin } from 'antd';
 import { DateTime } from '../../../components/Form/DateTime';
 import { MultiSelect } from '../../../components/Form/MultiSelect';
+import { useGroupManagerContext } from './GroupMeetingContext';
 
 const { Panel } = Collapse;
 
-const Host = () => {};
+export const HostPannel = () => {
+  const { applySearchFilter } = useGroupManagerContext();
+  applySearchFilter();
 
-export default Host;
+  return <div>hi</div>;
+};

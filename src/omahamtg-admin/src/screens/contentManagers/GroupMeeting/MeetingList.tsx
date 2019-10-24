@@ -27,6 +27,8 @@ import { MultiSelect } from '../../../components/Form/MultiSelect';
 
 const { Panel } = Collapse;
 
-const MeetingList = () => {};
+const MeetingList = () => {
+  return <></>;
+};
 
 export default MeetingList;
