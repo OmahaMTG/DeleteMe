@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using OmahaMTG._01_Models;
 using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
@@ -9,8 +10,8 @@ namespace OmahaMTG.Controllers.Admin
     [ApiController]
     public class HostController : ControllerBase
     {
-        private readonly IHostAccessor _hostAccessor;
-        public HostController(IHostAccessor hostAccessor)
+        private readonly IHostManager _hostAccessor;
+        public HostController(IHostManager hostAccessor)
         {
             _hostAccessor = hostAccessor;
         }

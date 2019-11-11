@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using OmahaMTG._01_Models;
 using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
@@ -9,8 +10,8 @@ namespace OmahaMTG.Controllers.Admin
     [ApiController]
     public class PresenterController : ControllerBase
     {
-        private readonly IPresenterAccessor _presenterAccessor;
-        public PresenterController(IPresenterAccessor presenterAccessor)
+        private readonly IPresenterManager _presenterAccessor;
+        public PresenterController(IPresenterManager presenterAccessor)
         {
             _presenterAccessor = presenterAccessor;
         }

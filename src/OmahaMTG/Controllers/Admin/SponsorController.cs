@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using OmahaMTG._01_Models;
 using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
@@ -9,8 +10,8 @@ namespace OmahaMTG.Controllers.Admin
     [ApiController]
     public class SponsorController : ControllerBase
     {
-        private readonly ISponsorAccessor _sponsorAccessor;
-        public SponsorController(ISponsorAccessor sponsorAccessor)
+        private readonly ISponsorManager _sponsorAccessor;
+        public SponsorController(ISponsorManager sponsorAccessor)
         {
             _sponsorAccessor = sponsorAccessor;
         }

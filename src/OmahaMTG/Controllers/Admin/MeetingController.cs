@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using OmahaMTG._01_Models;
 using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
@@ -9,8 +10,8 @@ namespace OmahaMTG.Controllers.Admin
     [ApiController]
     public class MeetingController : ControllerBase
     {
-        private readonly IMeetingAccessor _meetingAccessor;
-        public MeetingController(IMeetingAccessor meetingAccessor)
+        private readonly IMeetingManager _meetingAccessor;
+        public MeetingController(IMeetingManager meetingAccessor)
         {
             _meetingAccessor = meetingAccessor;
         }

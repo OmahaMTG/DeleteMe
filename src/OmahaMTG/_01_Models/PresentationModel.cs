@@ -1,8 +1,7 @@
-﻿using OmahaMTG.Data;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using OmahaMTG.Data;
 
-namespace OmahaMTG.Accessors.ContentAccessorContracts
+namespace OmahaMTG._01_Models
 {
     public class PresentationModel
     {
@@ -32,6 +31,11 @@ namespace OmahaMTG.Accessors.ContentAccessorContracts
     {
         public int Id { get; set; }
         public bool Perm { get; set; }
+    }
+
+    public class PresentationGetRequest
+    {
+        public int Id { get; set; }
     }
 
     public class PresentationQueryRequest : SkipTakeRequest

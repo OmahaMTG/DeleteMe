@@ -14,13 +14,13 @@ namespace OmahaMTG.Config
                 options.UseSqlServer(
                     config.ConnectionString));
 
-            services.AddTransient<IHostAccessor, ContentAccessor>();
+            services.AddTransient<IHostManager, ContentAccessor>();
             services.AddTransient<IPostAccessor, ContentAccessor>();
-            services.AddTransient<ISponsorAccessor, ContentAccessor>();
-            services.AddTransient<IPresentationAccessor, ContentAccessor>();
-            services.AddTransient<IPresenterAccessor, ContentAccessor>();
-            services.AddTransient<IMeetingAccessor, ContentAccessor>();
-            services.AddTransient<ITemplateAccessor, ContentAccessor>();
+            services.AddTransient<ISponsorManager, ContentAccessor>();
+            services.AddTransient<IPresentationManager, ContentAccessor>();
+            services.AddTransient<IPresenterManager, ContentAccessor>();
+            services.AddTransient<IMeetingManager, ContentAccessor>();
+            services.AddTransient<ITemplateManager, ContentAccessor>();
             return services;
         }
 

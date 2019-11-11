@@ -2,7 +2,7 @@
 using OmahaMTG._01_Models;
 using OmahaMTG.Data;
 
-namespace OmahaMTG.Accessors.ContentAccessorContracts
+namespace OmahaMTG._02_Managers.Contract
 {
     public interface ISponsorManager
     {

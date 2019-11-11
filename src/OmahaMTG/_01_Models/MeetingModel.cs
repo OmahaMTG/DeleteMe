@@ -1,8 +1,8 @@
-﻿using OmahaMTG.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using OmahaMTG.Data;
 
-namespace OmahaMTG.Accessors.ContentAccessorContracts
+namespace OmahaMTG._01_Models
 {
     public class MeetingModel
     {
@@ -61,6 +61,11 @@ namespace OmahaMTG.Accessors.ContentAccessorContracts
     {
         public int Id { get; set; }
         public bool Perm { get; set; }
+    }
+
+    public class MeetingGetRequest
+    {
+        public int Id { get; set; }
     }
 
     public class MeetingQueryRequest : SkipTakeRequest

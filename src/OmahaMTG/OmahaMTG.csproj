@@ -27,4 +27,9 @@
     <ProjectReference Include="..\Hero4Hire.Architecture\Hero4Hire.Architecture.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="_03_Engines\" />
+    <Folder Include="_04_Accessors\ContentAccessor\" />
+  </ItemGroup>
+
 </Project>

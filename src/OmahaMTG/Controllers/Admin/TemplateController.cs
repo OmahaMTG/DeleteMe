@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using OmahaMTG._01_Models;
 using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
@@ -9,8 +10,8 @@ namespace OmahaMTG.Controllers.Admin
     [ApiController]
     public class TemplateController : ControllerBase
     {
-        private readonly ITemplateAccessor _templateAccessor;
-        public TemplateController(ITemplateAccessor templateAccessor)
+        private readonly ITemplateManager _templateAccessor;
+        public TemplateController(ITemplateManager templateAccessor)
         {
             _templateAccessor = templateAccessor;
         }

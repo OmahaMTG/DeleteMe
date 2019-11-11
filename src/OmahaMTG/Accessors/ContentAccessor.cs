@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using OmahaMTG._01_Models;
 using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 
 namespace OmahaMTG.Accessors
 {
-    class ContentAccessor : IHostAccessor, IMeetingAccessor, IPostAccessor, IPresentationAccessor, IPresenterAccessor, ISponsorAccessor, ITemplateAccessor
+    class ContentAccessor : IHostManager, IMeetingManager, IPostAccessor, IPresentationManager, IPresenterManager, ISponsorManager, ITemplateManager
     {
         private readonly UserGroupContext _dbContext;
         public ContentAccessor(UserGroupContext dbContext)

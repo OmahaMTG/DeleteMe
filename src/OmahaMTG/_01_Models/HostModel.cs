@@ -1,7 +1,7 @@
-﻿using OmahaMTG.Data;
-using System;
+﻿using System;
+using OmahaMTG.Data;
 
-namespace OmahaMTG.Accessors.ContentAccessorContracts
+namespace OmahaMTG._01_Models
 {
     public class HostModel
     {
@@ -39,6 +39,11 @@ namespace OmahaMTG.Accessors.ContentAccessorContracts
     {
         public int Id { get; set; }
         public bool Perm { get; set; }
+    }
+
+    public class HostGetRequest
+    {
+        public int Id { get; set; }
     }
 
     public class HostQueryRequest : SkipTakeRequest

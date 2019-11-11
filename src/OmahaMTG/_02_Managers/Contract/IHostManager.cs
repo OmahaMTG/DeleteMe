@@ -1,8 +1,8 @@
-﻿using OmahaMTG.Data;
+﻿using OmahaMTG._01_Models;
+using OmahaMTG.Data;
 using System.Threading.Tasks;
-using OmahaMTG._01_Models;
 
-namespace OmahaMTG.Accessors.ContentAccessorContracts
+namespace OmahaMTG._02_Managers.Contract
 {
     public interface IHostManager
     {
@@ -10,5 +10,7 @@ namespace OmahaMTG.Accessors.ContentAccessorContracts
         Task<HostModel> UpdateHost(HostUpdateRequest request);
         Task DeleteHost(HostDeleteRequest request);
         Task<SkipTakeSet<HostModel>> QueryHost(HostQueryRequest request);
+
+        Task<HostModel> GetHost(HostGetRequest request);
     }
 }
