@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using OmahaMTG._01_Models;
+﻿using OmahaMTG._01_Models.Admin.Template;
 using OmahaMTG.Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG._02_Managers.Contract
 {
@@ -11,6 +11,7 @@ namespace OmahaMTG._02_Managers.Contract
         Task<TemplateModel> UpdateTemplate(TemplateUpdateRequest request);
         Task DeleteTemplate(TemplateDeleteRequest request);
         Task<SkipTakeSet<TemplateModel>> QueryTemplate(TemplateQueryRequest request);
+        Task<TemplateModel> GetTemplate(TemplateGetRequest request);
 
 
     }

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
-using OmahaMTG._01_Models;
-using OmahaMTG.Accessors.ContentAccessorContracts;
+﻿using OmahaMTG._01_Models.Admin.Post;
 using OmahaMTG.Data;
+using System;
+using System.Linq;
 
 namespace OmahaMTG.Accessors
 {

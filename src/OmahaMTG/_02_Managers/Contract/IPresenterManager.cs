@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using OmahaMTG._01_Models;
+﻿using OmahaMTG._01_Models.Admin.Presenter;
 using OmahaMTG.Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG._02_Managers.Contract
 {
@@ -10,6 +10,6 @@ namespace OmahaMTG._02_Managers.Contract
         Task<PresenterModel> UpdatePresenter(PresenterUpdateRequest request);
         Task DeletePresenter(PresenterDeleteRequest request);
         Task<SkipTakeSet<PresenterModel>> QueryPresenter(PresenterQueryRequest request);
-
+        Task<PresenterModel> GetPresenter(PresenterGetRequest request);
     }
 }

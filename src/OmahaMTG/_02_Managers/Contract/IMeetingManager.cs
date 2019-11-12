@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using OmahaMTG._01_Models;
+﻿using OmahaMTG._01_Models.Admin.Meeting;
 using OmahaMTG.Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG._02_Managers.Contract
 {
@@ -11,6 +11,6 @@ namespace OmahaMTG._02_Managers.Contract
         Task DeleteMeeting(MeetingDeleteRequest request);
         Task<SkipTakeSet<MeetingModel>> QueryMeeting(MeetingQueryRequest request);
 
-
+        Task<MeetingModel> GetMeeting(MeetingGetRequest request);
     }
 }

@@ -1,5 +1,4 @@
-﻿using OmahaMTG._01_Models;
-using OmahaMTG.Accessors.ContentAccessorContracts;
+﻿using OmahaMTG._01_Models.Admin.Host;
 using OmahaMTG.Data;
 
 namespace OmahaMTG.Accessors

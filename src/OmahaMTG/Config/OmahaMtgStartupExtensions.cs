@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using OmahaMTG.Accessors;
 using OmahaMTG.Accessors.ContentAccessorContracts;
 
@@ -19,7 +19,7 @@ namespace OmahaMTG.Config
             services.AddTransient<ISponsorManager, ContentAccessor>();
             services.AddTransient<IPresentationManager, ContentAccessor>();
             services.AddTransient<IPresenterManager, ContentAccessor>();
-            services.AddTransient<IMeetingManager, ContentAccessor>();
+            //services.AddTransient<IMeetingManager, ContentAccessor>();
             services.AddTransient<ITemplateManager, ContentAccessor>();
             return services;
         }

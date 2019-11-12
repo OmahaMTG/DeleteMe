@@ -1,4 +1,4 @@
-﻿using OmahaMTG._01_Models;
+﻿using OmahaMTG._01_Models.Admin.Host;
 using OmahaMTG.Data;
 using System.Threading.Tasks;
 

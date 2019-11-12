@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using OmahaMTG._01_Models;
+﻿using OmahaMTG._01_Models.Admin.Sponsor;
 using OmahaMTG.Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG.Accessors.ContentAccessorContracts
 {
