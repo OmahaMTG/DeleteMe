@@ -1,4 +1,4 @@
-﻿using OmahaMTG._01_Models.Admin.Presenter;
+﻿using OmahaMTG._01_Managers.Admin.Model.Presenter;
 using OmahaMTG.Data;
 
 namespace OmahaMTG.Accessors

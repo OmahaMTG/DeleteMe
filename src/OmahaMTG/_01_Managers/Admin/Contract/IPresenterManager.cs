@@ -1,0 +1,15 @@
+﻿using System.Threading.Tasks;
+using OmahaMTG._01_Managers.Admin.Model.Presenter;
+using OmahaMTG.Data;
+
+namespace OmahaMTG._01_Managers.Admin.Contract
+{
+    public interface IPresenterManager
+    {
+        Task<PresenterModel> CreatePresenter(PresenterCreateRequest request);
+        Task<PresenterModel> UpdatePresenter(PresenterUpdateRequest request);
+        Task DeletePresenter(PresenterDeleteRequest request);
+        Task<SkipTakeSet<PresenterModel>> QueryPresenter(PresenterQueryRequest request);
+        Task<PresenterModel> GetPresenter(PresenterGetRequest request);
+    }
+}

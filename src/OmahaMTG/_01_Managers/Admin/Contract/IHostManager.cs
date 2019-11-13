@@ -1,0 +1,16 @@
+﻿using System.Threading.Tasks;
+using OmahaMTG._01_Managers.Admin.Model.Host;
+using OmahaMTG.Data;
+
+namespace OmahaMTG._01_Managers.Admin.Contract
+{
+    public interface IHostManager
+    {
+        Task<HostModel> CreateHost(HostCreateRequest request);
+        Task<HostModel> UpdateHost(HostUpdateRequest request);
+        Task DeleteHost(HostDeleteRequest request);
+        Task<SkipTakeSet<HostModel>> QueryHost(HostQueryRequest request);
+
+        Task<HostModel> GetHost(HostGetRequest request);
+    }
+}

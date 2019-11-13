@@ -28,15 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="_01_Models\Admin\Host\" />
-    <Folder Include="_01_Models\Admin\Meeting\" />
-    <Folder Include="_01_Models\Admin\Post\" />
-    <Folder Include="_01_Models\Admin\Presentation\" />
-    <Folder Include="_01_Models\Admin\Presenter\" />
-    <Folder Include="_01_Models\Admin\Sponsor\" />
-    <Folder Include="_01_Models\Admin\Template\" />
-    <Folder Include="_03_Engines\" />
-    <Folder Include="_04_Accessors\ContentAccessor\" />
+    <Folder Include="_04_Utilities\" />
+    <Folder Include="_02_Engines\" />
   </ItemGroup>
 
 </Project>

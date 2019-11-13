@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OmahaMTG._01_Models.Admin.Host;
 using OmahaMTG.Accessors.ContentAccessorContracts;
 using OmahaMTG.Data;
 using System.Threading.Tasks;
+using OmahaMTG._01_Managers.Admin.Model.Host;
 
 namespace OmahaMTG.Controllers.Admin
 {
