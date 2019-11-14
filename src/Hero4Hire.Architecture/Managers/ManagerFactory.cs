@@ -1,11 +1,13 @@
-﻿using System;
-using Hero4Hire.Architecture.Accessors;
+﻿using Hero4Hire.Architecture.Accessors;
 using Hero4Hire.Architecture.Engines;
 using Hero4Hire.Architecture.Utilities;
+using System;
 
 namespace Hero4Hire.Architecture.Managers
 {
-    public class ManagerFactory<TAmbientContext> : FactoryBase<TAmbientContext>
+
+
+    public class ManagerFactory<TAmbientContext> : FactoryBase<TAmbientContext>, IManagerFactory<TAmbientContext>
     {
         public ManagerFactory(IServiceProvider serviceProvider, TAmbientContext ambientContext) : base(serviceProvider, ambientContext)
         {

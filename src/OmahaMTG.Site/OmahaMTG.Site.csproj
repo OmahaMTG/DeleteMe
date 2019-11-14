@@ -26,6 +26,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\Hero4Hire.Architecture\Hero4Hire.Architecture.csproj" />
     <ProjectReference Include="..\OmahaMTG\OmahaMTG.csproj" />
   </ItemGroup>
 
