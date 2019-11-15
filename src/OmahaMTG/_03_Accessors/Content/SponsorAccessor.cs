@@ -1,35 +1,73 @@
-﻿using OmahaMTG._01_Managers.Admin.Model.Sponsor;
+﻿using Microsoft.EntityFrameworkCore;
+using OmahaMTG._01_Managers.Admin.Model.Sponsor;
 using OmahaMTG._03_Accessors.ContentAccessor.Contract;
+using OmahaMTG._03_Accessors.MappingExtensions;
 using OmahaMTG.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OmahaMTG._03_Accessors.Content
 {
     partial class ContentAccessor : ISponsorAccessor
     {
-        public Task<SponsorModel> CreateSponsor(SponsorCreateRequest request)
+        public async Task<SponsorModel> CreateSponsor(SponsorCreateRequest request)
         {
-            throw new System.NotImplementedException();
+            var newRecord = request.ToSponsorData();
+            _dbContext.Sponsors.Add(newRecord);
+            await _dbContext.SaveChangesAsync();
+            return newRecord.ToSponsor();
         }
 
-        public Task<SponsorModel> UpdateSponsor(SponsorUpdateRequest request)
+        public async Task<SponsorModel> UpdateSponsor(SponsorUpdateRequest request)
         {
-            throw new System.NotImplementedException();
+            var sponsorToUpdate = await _dbContext.Sponsors.FirstOrDefaultAsync(w => w.Id == request.Id);
+            if (sponsorToUpdate != null)
+            {
+                sponsorToUpdate.ApplyUpdateSponsorRequestToSponsorData(request);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return sponsorToUpdate.ToSponsor();
         }
 
-        public Task DeleteSponsor(SponsorDeleteRequest request)
+        public async Task DeleteSponsor(SponsorDeleteRequest request)
         {
-            throw new System.NotImplementedException();
+            var sponsorFromDatabase = await _dbContext.Sponsors.FirstOrDefaultAsync(w => w.Id == request.Id);
+            if (sponsorFromDatabase != null)
+            {
+                if (request.Perm)
+                {
+                    _dbContext.Sponsors.Remove(sponsorFromDatabase);
+                }
+                else
+                {
+                    sponsorFromDatabase.IsDeleted = true; ;
+                }
+
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
-        public Task<SkipTakeSet<SponsorModel>> QuerySponsor(SponsorQueryRequest request)
+        public async Task<SkipTakeSet<SponsorModel>> QuerySponsor(SponsorQueryRequest request)
         {
-            throw new System.NotImplementedException();
+            var result = (await _dbContext.Sponsors
+                .Where(p => request.IncludeDeleted || !p.IsDeleted)
+                .Where(p => string.IsNullOrWhiteSpace(request.Filter) || EF.Functions.Like(p.Name, $"%{request.Filter}%"))
+                .OrderBy(p => p.Name)
+                .ThenBy(p => p.CreatedDate)
+                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToSponsor()));
+
+            return result;
         }
 
-        public Task<SponsorModel> GetSponsor(SponsorModel request)
+        public async Task<SponsorModel> GetSponsor(SponsorModel request)
         {
-            throw new System.NotImplementedException();
+            var result = await _dbContext.Sponsors
+                .Where(p => request.Id == p.Id)
+                .Select(s => s.ToSponsor())
+                .FirstOrDefaultAsync();
+
+            return result;
         }
     }
 }

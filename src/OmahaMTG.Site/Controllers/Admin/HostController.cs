@@ -1,9 +1,10 @@
-﻿using Hero4Hire.Architecture.Managers;
-using Microsoft.AspNetCore.Mvc;
-using OmahaMTG._01_Managers.Admin.Contract;
+﻿using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._01_Managers.Admin.Model.Host;
 using OmahaMTG.Data;
+using System;
 using System.Threading.Tasks;
+using Hero4Hire.Architecture;
+using OmahaMTG._00_Common;
 
 //using OmahaMTG.Accessors.ContentAccessorContracts;
 
@@ -13,23 +14,23 @@ namespace OmahaMTG.Site.Controllers.Admin
     [ApiController]
     public class HostController : ControllerBase
     {
-        private readonly IManagerFactory<string> _managerFactory;
-        public HostController(IManagerFactory<string> managerFactory)
+        private readonly IServiceProvider _serviceProvider;
+        public HostController(IServiceProvider serviceProvider, IAmbientContextFactory<AmbientContext> factory)
         {
-            _managerFactory = managerFactory;
+            _serviceProvider = serviceProvider;
         }
 
         // GET: api/Default
         [HttpGet]
         public async Task<ActionResult<SkipTakeSet<HostModel>>> Get([FromQuery]HostQueryRequest request)
         {
-            var manager = _managerFactory.CreateManager<IHostManager>();
-            //  var manager = new Hero4Hire.Architecture.Managers.ManagerFactory<string>(_serviceProvider, "test");
-            //var m = manager.CreateManager<IHostManager>();
 
-            return await manager.QueryHost(request);
+            //var managerFactory = new Hero4Hire.Architecture.Managers.ManagerFactory<string>(_serviceProvider, "test");
+            //var manager = managerFactory.CreateManager<IHostManager>();
 
+            //return await manager.QueryHost(request);
 
+            throw new NotImplementedException();
             //return await _hostAccessor.QueryHost(request);
         }
 

@@ -1,35 +1,73 @@
-﻿using OmahaMTG._01_Managers.Admin.Model.Presenter;
+﻿using Microsoft.EntityFrameworkCore;
+using OmahaMTG._01_Managers.Admin.Model.Presenter;
 using OmahaMTG._03_Accessors.ContentAccessor.Contract;
 using OmahaMTG.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OmahaMTG._03_Accessors.Content
 {
     partial class ContentAccessor : IPresenterAccessor
     {
-        public Task<PresenterModel> CreatePresenter(PresenterCreateRequest request)
+        public async Task<PresenterModel> CreatePresenter(PresenterCreateRequest request)
         {
-            throw new System.NotImplementedException();
+            var newRecord = request.ToPresenterData();
+            _dbContext.Presenters.Add(newRecord);
+            await _dbContext.SaveChangesAsync();
+            return newRecord.ToPresenter();
         }
 
-        public Task<PresenterModel> UpdatePresenter(PresenterUpdateRequest request)
+        public async Task<PresenterModel> UpdatePresenter(PresenterUpdateRequest request)
         {
-            throw new System.NotImplementedException();
+            var presenterToUpdate = await _dbContext.Presenters.FirstOrDefaultAsync(w => w.Id == request.Id);
+            if (presenterToUpdate != null)
+            {
+                presenterToUpdate.ApplyUpdatePresenterRequestToPresenterData(request);
+
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return presenterToUpdate.ToPresenter();
         }
 
-        public Task DeletePresenter(PresenterDeleteRequest request)
+        public async Task DeletePresenter(PresenterDeleteRequest request)
         {
-            throw new System.NotImplementedException();
+            var presenterToDelete = await _dbContext.Presenters.FirstOrDefaultAsync(w => w.Id == request.Id);
+            if (presenterToDelete != null)
+            {
+                if (request.Perm)
+                {
+                    _dbContext.Presenters.Remove(presenterToDelete);
+                }
+                else
+                {
+                    presenterToDelete.IsDeleted = true; ;
+                }
+
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
-        public Task<SkipTakeSet<PresenterModel>> QueryPresenter(PresenterQueryRequest request)
+        public async Task<SkipTakeSet<PresenterModel>> QueryPresenter(PresenterQueryRequest request)
         {
-            throw new System.NotImplementedException();
+            var result = (await _dbContext.Presenters
+                .Where(p => request.IncludeDeleted || !p.IsDeleted)
+                .Where(p => string.IsNullOrWhiteSpace(request.Filter) || EF.Functions.Like(p.Name, $"%{request.Filter}%"))
+                .OrderBy(p => p.Name)
+                .ThenBy(p => p.CreatedDate)
+                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToPresenter()));
+
+            return result;
         }
 
-        public Task<PresenterModel> GetPresenter(PresenterGetRequest request)
+        public async Task<PresenterModel> GetPresenter(PresenterGetRequest request)
         {
-            throw new System.NotImplementedException();
+            var result = await _dbContext.Presenters
+                .Where(p => request.Id == p.Id)
+                .Select(s => s.ToPresenter())
+                .FirstOrDefaultAsync();
+
+            return result;
         }
     }
 }

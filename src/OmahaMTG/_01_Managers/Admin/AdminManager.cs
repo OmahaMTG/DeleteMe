@@ -1,4 +1,5 @@
 ﻿using Hero4Hire.Architecture.Managers;
+using OmahaMTG._00_Common;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._01_Managers.Admin.Model.Host;
 using OmahaMTG._01_Managers.Admin.Model.Meeting;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OmahaMTG._01_Managers.Admin
 {
-    class AdminManager : ManagerBase<string>, IHostManager, IMeetingManager, IPresenterManager, ISponsorManager, ITemplateManager
+    class AdminManager : ManagerBase<AmbientContext>, IHostManager, IMeetingManager, IPresenterManager, ISponsorManager, ITemplateManager
     {
         //private readonly AccessorFactory<string> _accessorFactory;
         //public AdminManager(AccessorFactory<string> accessorFactory)

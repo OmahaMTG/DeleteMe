@@ -1,35 +1,75 @@
-﻿using OmahaMTG._01_Managers.Admin.Model.Host;
+﻿using Microsoft.EntityFrameworkCore;
+using OmahaMTG._01_Managers.Admin.Model.Host;
 using OmahaMTG._03_Accessors.ContentAccessor.Contract;
 using OmahaMTG.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OmahaMTG._03_Accessors.Content
 {
     partial class ContentAccessor : IHostAccessor
     {
-        public Task<HostModel> CreateHost(HostCreateRequest request)
+
+        public async Task<HostModel> CreateHost(HostCreateRequest request)
         {
-            throw new System.NotImplementedException();
+            var newRecord = request.ToHostData();
+            _dbContext.Hosts.Add(newRecord);
+            await _dbContext.SaveChangesAsync();
+            return newRecord.ToHost();
         }
 
-        public Task<HostModel> UpdateHost(HostUpdateRequest request)
+        public async Task<HostModel> UpdateHost(HostUpdateRequest request)
         {
-            throw new System.NotImplementedException();
+            var hostToUpdate = await _dbContext.Hosts.FirstOrDefaultAsync(w => w.Id == request.Id);
+            if (hostToUpdate != null)
+            {
+                hostToUpdate.ApplyUpdateHostRequestToHostData(request);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return hostToUpdate.ToHost();
         }
 
-        public Task DeleteHost(HostDeleteRequest request)
+        public async Task DeleteHost(HostDeleteRequest request)
         {
-            throw new System.NotImplementedException();
+            var hostFromDatabase = await _dbContext.Hosts.FirstOrDefaultAsync(w => w.Id == request.Id);
+            if (hostFromDatabase != null)
+            {
+                if (request.Perm)
+                {
+                    _dbContext.Hosts.Remove(hostFromDatabase);
+                }
+                else
+                {
+                    hostFromDatabase.IsDeleted = true;
+                }
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
-        public Task<SkipTakeSet<HostModel>> QueryHost(HostQueryRequest request)
+        public async Task<SkipTakeSet<HostModel>> QueryHost(HostQueryRequest request)
         {
-            throw new System.NotImplementedException();
+            var result = (await _dbContext.Hosts
+                .Where(p => request.IncludeDeleted || !p.IsDeleted)
+                .Where(p => string.IsNullOrWhiteSpace(request.Filter) || EF.Functions.Like(p.Name, $"%{request.Filter}%"))
+                .OrderBy(p => p.Name)
+                .ThenBy(p => p.CreatedDate)
+                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToHost()));
+
+            return result;
         }
 
-        public Task<HostModel> GetHost(HostGetRequest request)
+        public async Task<HostModel> GetHost(HostGetRequest request)
         {
-            throw new System.NotImplementedException();
+            var result = await _dbContext.Hosts
+                .Where(p => request.Id == p.Id)
+                .Select(s => s.ToHost())
+                .FirstOrDefaultAsync();
+
+            return result;
         }
+
+
+
     }
 }

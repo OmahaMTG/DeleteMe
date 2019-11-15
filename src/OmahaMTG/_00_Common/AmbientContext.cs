@@ -1,0 +1,11 @@
+﻿using Hero4Hire.Architecture;
+using System.Collections.Generic;
+
+namespace OmahaMTG._00_Common
+{
+    public class AmbientContext : IAmbientContext
+    {
+        public string UserId { get; set; }
+        public IEnumerable<string> Roles { get; set; }
+    }
+}

@@ -1,5 +1,6 @@
 ﻿//using System;
 //using System.Linq;
+//using OmahaMTG._01_Managers.Admin.Model.Meeting;
 //using OmahaMTG._01_Models;
 //using OmahaMTG.Accessors.ContentAccessorContracts;
 //using OmahaMTG.Data;

@@ -1,7 +1,7 @@
 ﻿using OmahaMTG._01_Managers.Admin.Model.Presenter;
 using OmahaMTG.Data;
 
-namespace OmahaMTG._03_Accessors.MappingExtensions
+namespace OmahaMTG._03_Accessors.Content
 {
     internal static class PresenterMappingExtensions
     {

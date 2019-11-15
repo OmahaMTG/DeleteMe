@@ -1,35 +1,74 @@
-﻿using OmahaMTG._01_Managers.Admin.Model.Template;
+﻿using Microsoft.EntityFrameworkCore;
+using OmahaMTG._01_Managers.Admin.Model.Template;
 using OmahaMTG._03_Accessors.ContentAccessor.Contract;
+using OmahaMTG._03_Accessors.MappingExtensions;
 using OmahaMTG.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OmahaMTG._03_Accessors.Content
 {
     partial class ContentAccessor : ITemplateAccessor
     {
-        public Task<TemplateModel> CreateTemplate(TemplateCreateRequest request)
+        public async Task<TemplateModel> CreateTemplate(TemplateCreateRequest request)
         {
-            throw new System.NotImplementedException();
+            var newRecord = request.ToTemplateData();
+            _dbContext.Templates.Add(newRecord);
+            await _dbContext.SaveChangesAsync();
+            return newRecord.ToTemplate();
         }
 
-        public Task<TemplateModel> UpdateTemplate(TemplateUpdateRequest request)
+        public async Task<TemplateModel> UpdateTemplate(TemplateUpdateRequest request)
         {
-            throw new System.NotImplementedException();
+            var templateToUpdate = await _dbContext.Templates.FirstOrDefaultAsync(w => w.Id == request.Id);
+            if (templateToUpdate != null)
+            {
+                templateToUpdate.ApplyUpdateTemplateRequestToTemplateData(request);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return templateToUpdate.ToTemplate();
         }
 
-        public Task DeleteTemplate(TemplateDeleteRequest request)
+        public async Task DeleteTemplate(TemplateDeleteRequest request)
         {
-            throw new System.NotImplementedException();
+            var templateFromDatabase = await _dbContext.Templates.FirstOrDefaultAsync(w => w.Id == request.Id);
+            if (templateFromDatabase != null)
+            {
+                if (request.Perm)
+                {
+                    _dbContext.Templates.Remove(templateFromDatabase);
+                }
+                else
+                {
+                    templateFromDatabase.IsDeleted = true; ;
+                }
+
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
-        public Task<SkipTakeSet<TemplateModel>> QueryTemplate(TemplateQueryRequest request)
+        public async Task<SkipTakeSet<TemplateModel>> QueryTemplate(TemplateQueryRequest request)
         {
-            throw new System.NotImplementedException();
+            var result = (await _dbContext.Templates
+                .Where(p => request.IncludeDeleted || !p.IsDeleted)
+                .Where(p => string.IsNullOrWhiteSpace(request.Filter) || EF.Functions.Like(p.Name, $"%{request.Filter}%"))
+                .OrderBy(p => p.Name)
+                .ThenBy(p => p.CreatedDate)
+                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToTemplate()));
+
+            return result;
         }
 
-        public Task<TemplateModel> GetTemplate(TemplateGetRequest request)
+        public async Task<TemplateModel> GetTemplate(TemplateGetRequest request)
         {
-            throw new System.NotImplementedException();
+            var result = await _dbContext.Templates
+                .Where(p => request.Id == p.Id)
+                .Select(s => s.ToTemplate())
+                .FirstOrDefaultAsync();
+
+            return result;
         }
     }
 }
+

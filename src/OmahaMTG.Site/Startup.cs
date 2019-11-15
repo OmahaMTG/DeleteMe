@@ -1,3 +1,4 @@
+using Hero4Hire.Architecture;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -5,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OmahaMTG._00_Common;
 using OmahaMTG._01_Managers;
 using OmahaMTG._03_Accessors;
 using OmahaMTG.Config;
@@ -37,6 +39,9 @@ namespace OmahaMTG.Site
 
             //services.AddTransient<FactoryBase<string>>(new Hero4Hire.Architecture.Managers.ManagerFactory<string>(_serviceProvider, "test");)
             //services.AddFactory<IManagerFactory<string>, ManagerFactory<string>>();
+            //services.AddSingleton(provider =>
+            //    new Func<AmbientContext>(() => provider.GetService<IUnitOfWork>()));
+            services.AddSingleton<IAmbientContextFactory<AmbientContext>, AmbientContextFactory>();
             services.AddManagerServices();
             services.AddAccessorServices();
             //services.AddOmahaMtgContent(OmahaMtgConfig);

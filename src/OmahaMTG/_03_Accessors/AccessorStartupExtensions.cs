@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using OmahaMTG._03_Accessors.ContentAccessor.Contract;
 
 namespace OmahaMTG._03_Accessors
 {
@@ -9,11 +8,11 @@ namespace OmahaMTG._03_Accessors
         public static IServiceCollection AddAccessorServices(this IServiceCollection services)
         {
 
-            services.AddTransient<IHostAccessor, Content.ContentAccessor>();
-            services.AddTransient<ISponsorAccessor, Content.ContentAccessor>();
-            services.AddTransient<IPresenterAccessor, Content.ContentAccessor>();
-            services.AddTransient<IMeetingAccessor, Content.ContentAccessor>();
-            services.AddTransient<ITemplateAccessor, Content.ContentAccessor>();
+            //services.AddTransient<IHostAccessor, Content.ContentAccessor>();
+            //services.AddTransient<ISponsorAccessor, Content.ContentAccessor>();
+            //services.AddTransient<IPresenterAccessor, Content.ContentAccessor>();
+            //services.AddTransient<IMeetingAccessor, Content.ContentAccessor>();
+            //services.AddTransient<ITemplateAccessor, Content.ContentAccessor>();
             return services;
         }
 
