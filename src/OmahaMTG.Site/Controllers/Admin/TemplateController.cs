@@ -28,7 +28,7 @@ namespace OmahaMTG.Site.Controllers.Admin
             return await TemplateManager.QueryTemplate(request);
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<TemplateModel>> Get(int id)
         {
             return await TemplateManager.GetTemplate(new TemplateGetRequest() { Id = id });

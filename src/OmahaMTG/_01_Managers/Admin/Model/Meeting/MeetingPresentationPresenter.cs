@@ -3,6 +3,6 @@
     public class MeetingPresentationPresenter
     {
         public int? PresenterId { get; set; }
-        public string Bio { get; set; }
+        public string MeetingBody { get; set; }
     }
 }

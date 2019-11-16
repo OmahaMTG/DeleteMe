@@ -12,6 +12,7 @@ namespace OmahaMTG.Data
         public int? MeetingId { get; set; }
         public ICollection<PresentationPresenterData> PresentationPresenters { get; set; }
         public bool IsDeleted { get; set; }
+        public string VimeoId { get; set; }
 
     }
 }

@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using OmahaMTG.Data;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
 
-    class UserGroupContext : DbContext
+    class UserGroupContext : IdentityDbContext
     {
         //private readonly ITimeUtility _timeUtility;
         //public UserGroupContext(DbContextOptions<UserGroupContext> options/*, ITimeUtility timeUtility*/)

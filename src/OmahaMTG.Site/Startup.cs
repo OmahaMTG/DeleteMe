@@ -1,18 +1,10 @@
-using Hero4Hire.Architecture;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OmahaMTG._00_Common;
-using OmahaMTG._01_Managers;
-using OmahaMTG._03_Accessors;
 using OmahaMTG.Config;
-using OmahaMTG.Site.Data;
 using System.Reflection;
-using Microsoft.AspNetCore.Http;
 
 namespace OmahaMTG.Site
 {
@@ -29,25 +21,14 @@ namespace OmahaMTG.Site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(OmahaMtgConfig.ConnectionString));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var assembly = Assembly.GetAssembly(typeof(OmahaMTG.Config.OmahaMtgConfig));
             services.AddControllersWithViews().AddApplicationPart(assembly).AddControllersAsServices();
             services.AddRazorPages();
 
-            //services.AddTransient<FactoryBase<string>>(new Hero4Hire.Architecture.Managers.ManagerFactory<string>(_serviceProvider, "test");)
-            //services.AddFactory<IManagerFactory<string>, ManagerFactory<string>>();
-            //services.AddSingleton(provider =>
-            //    new Func<AmbientContext>(() => provider.GetService<IUnitOfWork>()));
-            services.AddManagerFactory<AmbientContext>();
-            services.AddSingleton<IAmbientContextFactory<AmbientContext>, AmbientContextFactory>();
-            services.AddManagerServices();
-            services.AddAccessorServices();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddOmahaMtgContent(OmahaMtgConfig);
+
+            services.AddOmahaMtgServices(OmahaMtgConfig);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,18 +68,17 @@ namespace OmahaMTG.Site
                 endpoints.MapRazorPages();
             });
 
-            app.UseManagerServices();
-            app.UseAccessorServices();
+            app.UseOmahaMtgServices();
 
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                using (var context = serviceScope.ServiceProvider.GetRequiredService<Data.ApplicationDbContext>())
-                {
-                    context.Database.Migrate();
-                    // context.Database.EnsureDeleted();
-                    // context.Database.EnsureCreated();
-                }
-            }
+            //using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            //{
+            //    using (var context = serviceScope.ServiceProvider.GetRequiredService<Data.ApplicationDbContext>())
+            //    {
+            //        context.Database.Migrate();
+            //        // context.Database.EnsureDeleted();
+            //        // context.Database.EnsureCreated();
+            //    }
+            //}
         }
     }
 }

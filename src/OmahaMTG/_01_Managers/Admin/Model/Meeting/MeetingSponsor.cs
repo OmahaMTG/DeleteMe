@@ -3,6 +3,6 @@
     public class MeetingSponsor
     {
         public int? SponsorId { get; set; }
-        public string SponsorBody { get; set; }
+        public string SponsorMeetingBody { get; set; }
     }
 }

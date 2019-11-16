@@ -28,7 +28,7 @@ namespace OmahaMTG.Site.Controllers.Admin
             return await SponsorManager.QuerySponsor(request);
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<SponsorModel>> Get(int id)
         {
             return await SponsorManager.GetSponsor(new SponsorGetRequest() { Id = id });

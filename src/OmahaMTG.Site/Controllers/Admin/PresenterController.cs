@@ -28,7 +28,7 @@ namespace OmahaMTG.Site.Controllers.Admin
             return await PresenterManager.QueryPresenter(request);
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<PresenterModel>> Get(int id)
         {
             return await PresenterManager.GetPresenter(new PresenterGetRequest() { Id = id });

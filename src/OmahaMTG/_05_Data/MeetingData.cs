@@ -8,17 +8,30 @@ namespace OmahaMTG.Data
     class MeetingData : DataEntityBase
     {
         public string Title { get; set; }
-        public string Body { get; set; }
+        public int? TemplateId { get; set; }
+        public TemplateData Template { get; set; }
         public DateTime? PublishStartTime { get; set; }
-        public bool IsDeleted { get; set; }
-        public bool IsDraft { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public IEnumerable<PresentationData> Presentations { get; set; }
-        public HostData MeetingHost { get; set; } 
-        public int? MeetingHostId { get; set; }
-        public IEnumerable<MeetingSponsorData> MeetingSponsors { get; set; }
-        public long? VimeoId { get; set; }
+
+        public bool IsDraft { get; set; }
+
         public IEnumerable<MeetingTagData> MeetingTags { get; set; }
+
+        public string VimeoId { get; set; }
+
+        public HostData MeetingHost { get; set; }
+        public int? MeetingHostId { get; set; }
+        public string HostMeetingBody { get; set; }
+
+        public string MeetingMarkdownBody { get; set; }
+        public string MeetingHtmlBody { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public IEnumerable<PresentationData> Presentations { get; set; }
+
+        public IEnumerable<MeetingSponsorData> MeetingSponsors { get; set; }
+
+
     }
 }

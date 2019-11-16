@@ -26,7 +26,7 @@ namespace OmahaMTG.Site.Controllers.Admin
             return await HostManager.QueryHost(request);
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<HostModel>> Get(int id)
         {
             return await HostManager.GetHost(new HostGetRequest() { Id = id });

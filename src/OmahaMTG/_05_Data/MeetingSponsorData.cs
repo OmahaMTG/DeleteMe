@@ -9,5 +9,7 @@ namespace OmahaMTG.Data
         public MeetingData Meeting { get; set; }
         public int SponsorId { get; set; }
         public SponsorData Sponsor { get; set; }
+
+        public string SponsorMeetingBody { get; set; }
     }
 }

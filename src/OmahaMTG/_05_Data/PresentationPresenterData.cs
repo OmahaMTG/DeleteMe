@@ -9,5 +9,7 @@ namespace OmahaMTG.Data
         public PresentationData Presentation { get; set; }
         public int PresenterId { get; set; }
         public PresenterData Presenter { get; set; }
+
+        public string PresenterMeetingBody { get; set; }
     }
 }

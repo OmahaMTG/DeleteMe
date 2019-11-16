@@ -12,15 +12,16 @@ namespace OmahaMTG._01_Managers.Admin.Model.Meeting
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
 
-        public string Body { get; set; }
+        public string MarkdownBody { get; set; }
 
         public bool IsDraft { get; set; }
         public bool IsDeleted { get; set; }
 
         public IEnumerable<string> Tags { get; set; }
-        public long? VimeoId { get; set; }
+        public string VimeoId { get; set; }
         public IEnumerable<MeetingSponsor> MeetingSponsors { get; set; }
-        public MeetingHost MeetingHost { get; set; }
+        public int? MeetingHostId { get; set; }
+        public string MeetingHostBody { get; set; }
 
         public IEnumerable<MeetingPresentation> MeetingPresentations { get; set; }
     }
