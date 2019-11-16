@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace OmahaMTG._01_Managers.Admin.Model.Meeting
 {
-
     public class MeetingCreateRequest
     {
         public string Title { get; set; }
@@ -25,5 +24,4 @@ namespace OmahaMTG._01_Managers.Admin.Model.Meeting
 
         public IEnumerable<MeetingPresentation> MeetingPresentations { get; set; }
     }
-
 }

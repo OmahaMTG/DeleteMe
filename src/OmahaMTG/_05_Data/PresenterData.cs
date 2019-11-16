@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
     [Table("Presenters")]
-    class PresenterData : DataEntityBase
+    internal class PresenterData : DataEntityBase
     {
         public string Name { get; set; }
         public string Bio { get; set; }

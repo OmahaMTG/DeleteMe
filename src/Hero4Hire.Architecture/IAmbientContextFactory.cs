@@ -3,6 +3,5 @@
     public interface IAmbientContextFactory<out TAmbientContext> where TAmbientContext : IAmbientContext
     {
         TAmbientContext BuildAmbientContext();
-
     }
 }

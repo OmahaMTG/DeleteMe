@@ -1,5 +1,5 @@
 ﻿using OmahaMTG._01_Managers.Admin.Model.Host;
-using OmahaMTG.Data;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG._03_Accessors.Content
 {
@@ -7,7 +7,7 @@ namespace OmahaMTG._03_Accessors.Content
     {
         internal static HostData ToHostData(this HostCreateRequest createHostRequest)
         {
-            return new HostData()
+            return new HostData
             {
                 Name = createHostRequest.Name,
                 Blurb = createHostRequest.Blurb,
@@ -18,7 +18,7 @@ namespace OmahaMTG._03_Accessors.Content
 
         internal static HostModel ToHost(this HostData hostData)
         {
-            return new HostModel()
+            return new HostModel
             {
                 Id = hostData.Id,
                 Name = hostData.Name,
@@ -29,19 +29,18 @@ namespace OmahaMTG._03_Accessors.Content
             };
         }
 
-        internal static void ApplyUpdateHostRequestToHostData(this HostData hostDataToUpdate, HostUpdateRequest updateHostRequest)
+        internal static void ApplyUpdateHostRequestToHostData(this HostData hostDataToUpdate,
+            HostUpdateRequest updateHostRequest)
         {
             hostDataToUpdate.Name = updateHostRequest.Name;
             hostDataToUpdate.Blurb = updateHostRequest.Blurb;
             hostDataToUpdate.ContactInfo = updateHostRequest.ContactInfo;
             hostDataToUpdate.Address = updateHostRequest.Address;
-
         }
 
         //internal static IEnumerable<HostModel> ToHosts(this IEnumerable<HostData> hostDatas)
         //{
         //    return hostDatas.Select(u => u.ToHost());
         //}
-
     }
 }

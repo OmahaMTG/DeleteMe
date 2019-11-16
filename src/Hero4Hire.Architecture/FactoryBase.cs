@@ -5,9 +5,6 @@ namespace Hero4Hire.Architecture
 {
     public abstract class FactoryBase<TAmbientContext> where TAmbientContext : IAmbientContext
     {
-        public IServiceProvider ServiceProvider { get; private set; }
-        public TAmbientContext AmbientContext { get; private set; }
-
         protected FactoryBase(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
@@ -18,6 +15,9 @@ namespace Hero4Hire.Architecture
             AmbientContext = ambientContext;
             ServiceProvider = serviceProvider;
         }
+
+        public IServiceProvider ServiceProvider { get; }
+        public TAmbientContext AmbientContext { get; }
 
         protected T GetInstanceForType<T>()
         {

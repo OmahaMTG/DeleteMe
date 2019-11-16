@@ -16,19 +16,17 @@ namespace OmahaMTG.Site
             configuration.Bind("OmahaMTGConfig", OmahaMtgConfig);
         }
 
-        OmahaMtgConfig OmahaMtgConfig { get; }
+        private OmahaMtgConfig OmahaMtgConfig { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            var assembly = Assembly.GetAssembly(typeof(OmahaMTG.Config.OmahaMtgConfig));
+            var assembly = Assembly.GetAssembly(typeof(OmahaMtgConfig));
             services.AddControllersWithViews().AddApplicationPart(assembly).AddControllersAsServices();
             services.AddRazorPages();
 
 
             services.AddOmahaMtgServices(OmahaMtgConfig);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,16 +55,13 @@ namespace OmahaMTG.Site
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    "default",
+                    "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
 
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
 
             app.UseOmahaMtgServices();
 

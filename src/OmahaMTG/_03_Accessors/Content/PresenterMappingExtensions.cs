@@ -1,5 +1,5 @@
 ﻿using OmahaMTG._01_Managers.Admin.Model.Presenter;
-using OmahaMTG.Data;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG._03_Accessors.Content
 {
@@ -7,7 +7,7 @@ namespace OmahaMTG._03_Accessors.Content
     {
         internal static PresenterData ToPresenterData(this PresenterCreateRequest createPresenterRequest)
         {
-            return new PresenterData()
+            return new PresenterData
             {
                 Bio = createPresenterRequest.Bio,
                 Name = createPresenterRequest.Name,
@@ -18,7 +18,7 @@ namespace OmahaMTG._03_Accessors.Content
 
         internal static PresenterModel ToPresenter(this PresenterData presenterData)
         {
-            return new PresenterModel()
+            return new PresenterModel
             {
                 Id = presenterData.Id,
                 Bio = presenterData.Bio,
@@ -29,7 +29,8 @@ namespace OmahaMTG._03_Accessors.Content
             };
         }
 
-        internal static void ApplyUpdatePresenterRequestToPresenterData(this PresenterData presenterDataToUpdate, PresenterUpdateRequest updatePresenterRequest)
+        internal static void ApplyUpdatePresenterRequestToPresenterData(this PresenterData presenterDataToUpdate,
+            PresenterUpdateRequest updatePresenterRequest)
         {
             presenterDataToUpdate.Bio = updatePresenterRequest.Bio;
             presenterDataToUpdate.Name = updatePresenterRequest.Name;

@@ -1,5 +1,5 @@
-﻿using Hero4Hire.Architecture.Utilities;
-using System;
+﻿using System;
+using Hero4Hire.Architecture.Utilities;
 
 namespace Hero4Hire.Architecture.Accessors
 {
@@ -7,7 +7,8 @@ namespace Hero4Hire.Architecture.Accessors
     {
         private UtilityFactory<TAmbientContext> _utilityFactory;
 
-        public AccessorFactory(IServiceProvider serviceProvider, TAmbientContext ambientContext, UtilityFactory<TAmbientContext> utilityFactory) : base(serviceProvider, ambientContext)
+        public AccessorFactory(IServiceProvider serviceProvider, TAmbientContext ambientContext,
+            UtilityFactory<TAmbientContext> utilityFactory) : base(serviceProvider, ambientContext)
         {
             _utilityFactory = utilityFactory ?? new UtilityFactory<TAmbientContext>(serviceProvider, ambientContext);
         }
@@ -21,7 +22,7 @@ namespace Hero4Hire.Architecture.Accessors
         {
             _utilityFactory = utilityFactory ?? _utilityFactory;
 
-            T result = GetInstanceForType<T>();
+            var result = GetInstanceForType<T>();
 
             var @base = result as AccessorBase<TAmbientContext>;
             if (@base != null)
@@ -32,6 +33,5 @@ namespace Hero4Hire.Architecture.Accessors
 
             return result;
         }
-
     }
 }

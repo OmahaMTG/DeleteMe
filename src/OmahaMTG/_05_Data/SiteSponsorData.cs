@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
     [Table("SiteSponsors")]
-    class SiteSponsorData : DataEntityBase
+    internal class SiteSponsorData : DataEntityBase
     {
         public SponsorData Sponsor { get; set; }
         public int SponsorId { get; set; }

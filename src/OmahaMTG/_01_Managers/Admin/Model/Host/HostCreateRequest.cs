@@ -9,5 +9,4 @@
 
         public bool IsDeleted { get; set; }
     }
-
 }

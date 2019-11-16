@@ -1,13 +1,13 @@
 ﻿using OmahaMTG._01_Managers.Admin.Model.Sponsor;
-using OmahaMTG.Data;
+using OmahaMTG._05_Data;
 
-namespace OmahaMTG._03_Accessors.MappingExtensions
+namespace OmahaMTG._03_Accessors.Content
 {
     internal static class SqlSponsorMappingExtensions
     {
         internal static SponsorData ToSponsorData(this SponsorCreateRequest createSponsorRequest)
         {
-            return new SponsorData()
+            return new SponsorData
             {
                 Name = createSponsorRequest.Name,
                 Blurb = createSponsorRequest.Blurb,
@@ -19,7 +19,7 @@ namespace OmahaMTG._03_Accessors.MappingExtensions
 
         internal static SponsorModel ToSponsor(this SponsorData sponsorData)
         {
-            return new SponsorModel()
+            return new SponsorModel
             {
                 Id = sponsorData.Id,
                 Name = sponsorData.Name,
@@ -33,7 +33,8 @@ namespace OmahaMTG._03_Accessors.MappingExtensions
             };
         }
 
-        internal static void ApplyUpdateSponsorRequestToSponsorData(this SponsorData sponsorDataToUpdate, SponsorUpdateRequest updateSponsorRequest)
+        internal static void ApplyUpdateSponsorRequestToSponsorData(this SponsorData sponsorDataToUpdate,
+            SponsorUpdateRequest updateSponsorRequest)
         {
             sponsorDataToUpdate.Name = updateSponsorRequest.Name;
             sponsorDataToUpdate.Blurb = updateSponsorRequest.Blurb;
@@ -46,6 +47,5 @@ namespace OmahaMTG._03_Accessors.MappingExtensions
         //{
         //    return sponsorDatas.Select(u => u.ToSponsor());
         //}
-
     }
 }

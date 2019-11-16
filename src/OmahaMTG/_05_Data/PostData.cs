@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
     [Table("Posts")]
-    class PostData : DataEntityBase
+    internal class PostData : DataEntityBase
     {
         public string Title { get; set; }
         public string Body { get; set; }

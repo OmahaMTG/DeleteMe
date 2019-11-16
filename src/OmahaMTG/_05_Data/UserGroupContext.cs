@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using OmahaMTG.Data;
 
 namespace OmahaMTG._05_Data
 {
-
-    class UserGroupContext : IdentityDbContext
+    internal class UserGroupContext : IdentityDbContext
     {
         //private readonly ITimeUtility _timeUtility;
         //public UserGroupContext(DbContextOptions<UserGroupContext> options/*, ITimeUtility timeUtility*/)
@@ -15,7 +13,6 @@ namespace OmahaMTG._05_Data
         //}
         public UserGroupContext(DbContextOptions<UserGroupContext> options) : base(options)
         {
-            
         }
 
 
@@ -41,23 +38,22 @@ namespace OmahaMTG._05_Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<MeetingSponsorData>()
-                .HasKey(es => new { es.MeetingId, es.SponsorId });
+                .HasKey(es => new {es.MeetingId, es.SponsorId});
 
             modelBuilder.Entity<PresentationPresenterData>()
-                .HasKey(pp => new { pp.PresentationId, pp.PresenterId });
+                .HasKey(pp => new {pp.PresentationId, pp.PresenterId});
 
             modelBuilder.Entity<MeetingRsvpData>()
-                .HasKey(er => new { er.MeetingId, er.UserId });
+                .HasKey(er => new {er.MeetingId, er.UserId});
 
             modelBuilder.Entity<MeetingTagData>()
-                .HasKey(er => new { er.MeetingId, er.TagId });
+                .HasKey(er => new {er.MeetingId, er.TagId});
 
             modelBuilder.Entity<PostTagData>()
-                .HasKey(er => new { er.PostId, er.TagId });
+                .HasKey(er => new {er.PostId, er.TagId});
         }
 
-       // public int CurrentUserId { get; set; }
-
+        // public int CurrentUserId { get; set; }
 
 
         //public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
@@ -93,7 +89,7 @@ namespace OmahaMTG._05_Data
         //        .Where(x => (x.State == EntityState.Added || x.State == EntityState.Modified));
 
         //    var identityUser = Users.FirstOrDefault(u => u.Id == CurrentUserId);
-            
+
         //    //var now = _timeUtility.CurrentTime;
 
         //    //foreach (var entry in modifiedEntries)
@@ -113,6 +109,5 @@ namespace OmahaMTG._05_Data
 
         //    return base.SaveChanges();
         //}
-
     }
 }

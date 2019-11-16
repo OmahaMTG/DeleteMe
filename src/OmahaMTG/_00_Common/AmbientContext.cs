@@ -1,5 +1,5 @@
-﻿using Hero4Hire.Architecture;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Hero4Hire.Architecture;
 
 namespace OmahaMTG._00_Common
 {

@@ -1,6 +1,6 @@
-﻿using Hero4Hire.Architecture.Managers;
+﻿using System;
+using Hero4Hire.Architecture.Managers;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Hero4Hire.Architecture
 {
@@ -14,7 +14,8 @@ namespace Hero4Hire.Architecture
             services.AddSingleton<Func<TService>>(x => x.GetService<TService>);
         }
 
-        public static void AddManagerFactory<TAmbientContext>(this IServiceCollection services) where TAmbientContext : IAmbientContext
+        public static void AddManagerFactory<TAmbientContext>(this IServiceCollection services)
+            where TAmbientContext : IAmbientContext
         {
             services.AddTransient(typeof(IManagerFactory<TAmbientContext>), typeof(ManagerFactory<TAmbientContext>));
             //services.AddTransient<>

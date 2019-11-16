@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OmahaMTG._01_Managers.Admin.Model.Template;
-using OmahaMTG._03_Accessors.ContentAccessor.Contract;
-using OmahaMTG._03_Accessors.MappingExtensions;
-using OmahaMTG.Data;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using OmahaMTG._01_Managers.Admin.Model.Template;
+using OmahaMTG._03_Accessors.Content.Contract;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG._03_Accessors.Content
 {
-    partial class ContentAccessor : ITemplateAccessor
+    internal partial class ContentAccessor : ITemplateAccessor
     {
         public async Task<TemplateModel> CreateTemplate(TemplateCreateRequest request)
         {
@@ -41,7 +40,8 @@ namespace OmahaMTG._03_Accessors.Content
                 }
                 else
                 {
-                    templateFromDatabase.IsDeleted = true; ;
+                    templateFromDatabase.IsDeleted = true;
+                    ;
                 }
 
                 await _dbContext.SaveChangesAsync();
@@ -50,12 +50,13 @@ namespace OmahaMTG._03_Accessors.Content
 
         public async Task<SkipTakeSet<TemplateModel>> QueryTemplate(TemplateQueryRequest request)
         {
-            var result = (await _dbContext.Templates
+            var result = await _dbContext.Templates
                 .Where(p => request.IncludeDeleted || !p.IsDeleted)
-                .Where(p => string.IsNullOrWhiteSpace(request.Filter) || EF.Functions.Like(p.Name, $"%{request.Filter}%"))
+                .Where(p => string.IsNullOrWhiteSpace(request.Filter) ||
+                            EF.Functions.Like(p.Name, $"%{request.Filter}%"))
                 .OrderBy(p => p.Name)
                 .ThenBy(p => p.CreatedDate)
-                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToTemplate()));
+                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToTemplate());
 
             return result;
         }
@@ -71,4 +72,3 @@ namespace OmahaMTG._03_Accessors.Content
         }
     }
 }
-

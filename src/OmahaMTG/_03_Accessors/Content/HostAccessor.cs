@@ -1,15 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OmahaMTG._01_Managers.Admin.Model.Host;
-using OmahaMTG._03_Accessors.ContentAccessor.Contract;
-using OmahaMTG.Data;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using OmahaMTG._01_Managers.Admin.Model.Host;
+using OmahaMTG._03_Accessors.Content.Contract;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG._03_Accessors.Content
 {
-    partial class ContentAccessor : IHostAccessor
+    internal partial class ContentAccessor : IHostAccessor
     {
-
         public async Task<HostModel> CreateHost(HostCreateRequest request)
         {
             var newRecord = request.ToHostData();
@@ -36,25 +35,22 @@ namespace OmahaMTG._03_Accessors.Content
             if (hostFromDatabase != null)
             {
                 if (request.Perm)
-                {
                     _dbContext.Hosts.Remove(hostFromDatabase);
-                }
                 else
-                {
                     hostFromDatabase.IsDeleted = true;
-                }
                 await _dbContext.SaveChangesAsync();
             }
         }
 
         public async Task<SkipTakeSet<HostModel>> QueryHost(HostQueryRequest request)
         {
-            var result = (await _dbContext.Hosts
+            var result = await _dbContext.Hosts
                 .Where(p => request.IncludeDeleted || !p.IsDeleted)
-                .Where(p => string.IsNullOrWhiteSpace(request.Filter) || EF.Functions.Like(p.Name, $"%{request.Filter}%"))
+                .Where(p => string.IsNullOrWhiteSpace(request.Filter) ||
+                            EF.Functions.Like(p.Name, $"%{request.Filter}%"))
                 .OrderBy(p => p.Name)
                 .ThenBy(p => p.CreatedDate)
-                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToHost()));
+                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToHost());
 
             return result;
         }
@@ -68,8 +64,5 @@ namespace OmahaMTG._03_Accessors.Content
 
             return result;
         }
-
-
-
     }
 }

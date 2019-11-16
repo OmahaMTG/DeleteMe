@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
     [Table("Meetings")]
-    class MeetingData : DataEntityBase
+    internal class MeetingData : DataEntityBase
     {
         public string Title { get; set; }
         public int? TemplateId { get; set; }
@@ -31,7 +31,5 @@ namespace OmahaMTG.Data
         public IEnumerable<PresentationData> Presentations { get; set; }
 
         public IEnumerable<MeetingSponsorData> MeetingSponsors { get; set; }
-
-
     }
 }

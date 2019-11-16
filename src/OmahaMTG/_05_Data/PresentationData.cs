@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
     [Table("Presentations")]
-    class PresentationData : DataEntityBase
+    internal class PresentationData : DataEntityBase
     {
         public string Title { get; set; }
         public string Details { get; set; }
@@ -13,6 +13,5 @@ namespace OmahaMTG.Data
         public ICollection<PresentationPresenterData> PresentationPresenters { get; set; }
         public bool IsDeleted { get; set; }
         public string VimeoId { get; set; }
-
     }
 }

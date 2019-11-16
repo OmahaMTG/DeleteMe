@@ -1,6 +1,6 @@
-﻿using OmahaMTG._01_Managers.Admin.Model.Sponsor;
-using OmahaMTG.Data;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using OmahaMTG._01_Managers.Admin.Model.Sponsor;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG._01_Managers.Admin.Contract
 {
@@ -11,6 +11,5 @@ namespace OmahaMTG._01_Managers.Admin.Contract
         Task DeleteSponsor(SponsorDeleteRequest request);
         Task<SkipTakeSet<SponsorModel>> QuerySponsor(SponsorQueryRequest request);
         Task<SponsorModel> GetSponsor(SponsorGetRequest request);
-
     }
 }

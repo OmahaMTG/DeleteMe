@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using OmahaMTG._01_Managers.Admin.Model.Host;
-using OmahaMTG.Data;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG._01_Managers.Admin.Contract
 {

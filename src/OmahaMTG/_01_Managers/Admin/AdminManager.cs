@@ -1,4 +1,5 @@
-﻿using Hero4Hire.Architecture.Managers;
+﻿using System.Threading.Tasks;
+using Hero4Hire.Architecture.Managers;
 using OmahaMTG._00_Common;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._01_Managers.Admin.Model.Host;
@@ -6,13 +7,13 @@ using OmahaMTG._01_Managers.Admin.Model.Meeting;
 using OmahaMTG._01_Managers.Admin.Model.Presenter;
 using OmahaMTG._01_Managers.Admin.Model.Sponsor;
 using OmahaMTG._01_Managers.Admin.Model.Template;
-using OmahaMTG._03_Accessors.ContentAccessor.Contract;
-using OmahaMTG.Data;
-using System.Threading.Tasks;
+using OmahaMTG._03_Accessors.Content.Contract;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG._01_Managers.Admin
 {
-    class AdminManager : ManagerBase<AmbientContext>, IHostManager, IMeetingManager, IPresenterManager, ISponsorManager, ITemplateManager
+    internal class AdminManager : ManagerBase<AmbientContext>, IHostManager, IMeetingManager, IPresenterManager,
+        ISponsorManager, ITemplateManager
     {
         //private readonly AccessorFactory<string> _accessorFactory;
         //public AdminManager(AccessorFactory<string> accessorFactory)
@@ -22,6 +23,7 @@ namespace OmahaMTG._01_Managers.Admin
 
 
         #region Host
+
         public Task<HostModel> CreateHost(HostCreateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
@@ -65,26 +67,31 @@ namespace OmahaMTG._01_Managers.Admin
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.CreateMeeting(request);
         }
+
         public Task DeleteMeeting(MeetingDeleteRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.DeleteMeeting(request);
         }
+
         public Task<MeetingModel> GetMeeting(MeetingGetRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.GetMeeting(request);
         }
+
         public Task<SkipTakeSet<MeetingModel>> QueryMeeting(MeetingQueryRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.QueryMeeting(request);
         }
+
         public Task<MeetingModel> UpdateMeeting(MeetingUpdateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.UpdateMeeting(request);
         }
+
         #endregion Meeting
 
         #region Presenter
@@ -118,9 +125,11 @@ namespace OmahaMTG._01_Managers.Admin
             var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
             return hostAccessor.GetPresenter(request);
         }
+
         #endregion Presenter
 
         #region Sponsor
+
         public Task<SponsorModel> CreateSponsor(SponsorCreateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
@@ -150,9 +159,11 @@ namespace OmahaMTG._01_Managers.Admin
             var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
             return hostAccessor.GetSponsor(request);
         }
+
         #endregion Sponsor
 
         #region Template
+
         public Task<TemplateModel> CreateTemplate(TemplateCreateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
@@ -182,7 +193,7 @@ namespace OmahaMTG._01_Managers.Admin
             var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
             return hostAccessor.GetTemplate(request);
         }
-        #endregion Template
 
+        #endregion Template
     }
 }

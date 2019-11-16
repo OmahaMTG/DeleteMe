@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._00_Common;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._01_Managers.Admin.Model.Template;
-using OmahaMTG.Data;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG.Site.Controllers.Admin
 {
@@ -13,6 +13,7 @@ namespace OmahaMTG.Site.Controllers.Admin
     public class TemplateController : ControllerBase
     {
         private readonly IManagerFactory<AmbientContext> _managerFactory;
+
         public TemplateController(IManagerFactory<AmbientContext> managerFactory)
         {
             _managerFactory = managerFactory;
@@ -23,7 +24,7 @@ namespace OmahaMTG.Site.Controllers.Admin
 
         // GET: api/Default
         [HttpGet]
-        public async Task<ActionResult<SkipTakeSet<TemplateModel>>> Get([FromQuery]TemplateQueryRequest request)
+        public async Task<ActionResult<SkipTakeSet<TemplateModel>>> Get([FromQuery] TemplateQueryRequest request)
         {
             return await TemplateManager.QueryTemplate(request);
         }
@@ -31,7 +32,7 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpGet("{id}")]
         public async Task<ActionResult<TemplateModel>> Get(int id)
         {
-            return await TemplateManager.GetTemplate(new TemplateGetRequest() { Id = id });
+            return await TemplateManager.GetTemplate(new TemplateGetRequest {Id = id});
         }
 
         // POST: api/Default
@@ -51,9 +52,9 @@ namespace OmahaMTG.Site.Controllers.Admin
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
+        public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await TemplateManager.DeleteTemplate(new TemplateDeleteRequest() { Id = id, Perm = perm });
+            await TemplateManager.DeleteTemplate(new TemplateDeleteRequest {Id = id, Perm = perm});
             return Ok();
         }
     }

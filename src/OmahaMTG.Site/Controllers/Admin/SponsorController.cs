@@ -1,10 +1,10 @@
-﻿using Hero4Hire.Architecture.Managers;
+﻿using System.Threading.Tasks;
+using Hero4Hire.Architecture.Managers;
 using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._00_Common;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._01_Managers.Admin.Model.Sponsor;
-using OmahaMTG.Data;
-using System.Threading.Tasks;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG.Site.Controllers.Admin
 {
@@ -13,6 +13,7 @@ namespace OmahaMTG.Site.Controllers.Admin
     public class SponsorController : ControllerBase
     {
         private readonly IManagerFactory<AmbientContext> _managerFactory;
+
         public SponsorController(IManagerFactory<AmbientContext> managerFactory)
         {
             _managerFactory = managerFactory;
@@ -23,7 +24,7 @@ namespace OmahaMTG.Site.Controllers.Admin
 
         // GET: api/Default
         [HttpGet]
-        public async Task<ActionResult<SkipTakeSet<SponsorModel>>> Get([FromQuery]SponsorQueryRequest request)
+        public async Task<ActionResult<SkipTakeSet<SponsorModel>>> Get([FromQuery] SponsorQueryRequest request)
         {
             return await SponsorManager.QuerySponsor(request);
         }
@@ -31,7 +32,7 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpGet("{id}")]
         public async Task<ActionResult<SponsorModel>> Get(int id)
         {
-            return await SponsorManager.GetSponsor(new SponsorGetRequest() { Id = id });
+            return await SponsorManager.GetSponsor(new SponsorGetRequest {Id = id});
         }
 
         // POST: api/Default
@@ -51,9 +52,9 @@ namespace OmahaMTG.Site.Controllers.Admin
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
+        public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await SponsorManager.DeleteSponsor(new SponsorDeleteRequest() { Id = id, Perm = perm });
+            await SponsorManager.DeleteSponsor(new SponsorDeleteRequest {Id = id, Perm = perm});
             return Ok();
         }
     }

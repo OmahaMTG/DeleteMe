@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
     [Table("Hosts")]
-    class HostData : DataEntityBase
+    internal class HostData : DataEntityBase
     {
         public string Name { get; set; }
         public string Blurb { get; set; }

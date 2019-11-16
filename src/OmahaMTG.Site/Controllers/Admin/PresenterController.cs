@@ -1,10 +1,10 @@
-﻿using Hero4Hire.Architecture.Managers;
+﻿using System.Threading.Tasks;
+using Hero4Hire.Architecture.Managers;
 using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._00_Common;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._01_Managers.Admin.Model.Presenter;
-using OmahaMTG.Data;
-using System.Threading.Tasks;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG.Site.Controllers.Admin
 {
@@ -13,6 +13,7 @@ namespace OmahaMTG.Site.Controllers.Admin
     public class PresenterController : ControllerBase
     {
         private readonly IManagerFactory<AmbientContext> _managerFactory;
+
         public PresenterController(IManagerFactory<AmbientContext> managerFactory)
         {
             _managerFactory = managerFactory;
@@ -23,7 +24,7 @@ namespace OmahaMTG.Site.Controllers.Admin
 
         // GET: api/Default
         [HttpGet]
-        public async Task<ActionResult<SkipTakeSet<PresenterModel>>> Get([FromQuery]PresenterQueryRequest request)
+        public async Task<ActionResult<SkipTakeSet<PresenterModel>>> Get([FromQuery] PresenterQueryRequest request)
         {
             return await PresenterManager.QueryPresenter(request);
         }
@@ -31,7 +32,7 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpGet("{id}")]
         public async Task<ActionResult<PresenterModel>> Get(int id)
         {
-            return await PresenterManager.GetPresenter(new PresenterGetRequest() { Id = id });
+            return await PresenterManager.GetPresenter(new PresenterGetRequest {Id = id});
         }
 
         // POST: api/Default
@@ -51,9 +52,9 @@ namespace OmahaMTG.Site.Controllers.Admin
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
+        public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await PresenterManager.DeletePresenter(new PresenterDeleteRequest() { Id = id, Perm = perm });
+            await PresenterManager.DeletePresenter(new PresenterDeleteRequest {Id = id, Perm = perm});
             return Ok();
         }
     }

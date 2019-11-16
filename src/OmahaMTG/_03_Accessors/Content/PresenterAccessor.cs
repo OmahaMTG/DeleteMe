@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OmahaMTG._01_Managers.Admin.Model.Presenter;
-using OmahaMTG._03_Accessors.ContentAccessor.Contract;
-using OmahaMTG.Data;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using OmahaMTG._01_Managers.Admin.Model.Presenter;
+using OmahaMTG._03_Accessors.Content.Contract;
+using OmahaMTG._05_Data;
 
 namespace OmahaMTG._03_Accessors.Content
 {
-    partial class ContentAccessor : IPresenterAccessor
+    internal partial class ContentAccessor : IPresenterAccessor
     {
         public async Task<PresenterModel> CreatePresenter(PresenterCreateRequest request)
         {
@@ -41,7 +41,8 @@ namespace OmahaMTG._03_Accessors.Content
                 }
                 else
                 {
-                    presenterToDelete.IsDeleted = true; ;
+                    presenterToDelete.IsDeleted = true;
+                    ;
                 }
 
                 await _dbContext.SaveChangesAsync();
@@ -50,12 +51,13 @@ namespace OmahaMTG._03_Accessors.Content
 
         public async Task<SkipTakeSet<PresenterModel>> QueryPresenter(PresenterQueryRequest request)
         {
-            var result = (await _dbContext.Presenters
+            var result = await _dbContext.Presenters
                 .Where(p => request.IncludeDeleted || !p.IsDeleted)
-                .Where(p => string.IsNullOrWhiteSpace(request.Filter) || EF.Functions.Like(p.Name, $"%{request.Filter}%"))
+                .Where(p => string.IsNullOrWhiteSpace(request.Filter) ||
+                            EF.Functions.Like(p.Name, $"%{request.Filter}%"))
                 .OrderBy(p => p.Name)
                 .ThenBy(p => p.CreatedDate)
-                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToPresenter()));
+                .AsSkipTakeSet(request.Skip, request.Take, d => d.ToPresenter());
 
             return result;
         }

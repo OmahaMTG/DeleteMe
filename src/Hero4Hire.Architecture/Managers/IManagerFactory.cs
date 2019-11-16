@@ -9,6 +9,7 @@ namespace Hero4Hire.Architecture.Managers
         T CreateManager<T>() where T : class;
 
         T CreateManager<T>(
-            EngineFactory<TAmbientContext> engineFactory, AccessorFactory<TAmbientContext> accessorFactory, UtilityFactory<TAmbientContext> utilityFactory) where T : class;
+            EngineFactory<TAmbientContext> engineFactory, AccessorFactory<TAmbientContext> accessorFactory,
+            UtilityFactory<TAmbientContext> utilityFactory) where T : class;
     }
 }

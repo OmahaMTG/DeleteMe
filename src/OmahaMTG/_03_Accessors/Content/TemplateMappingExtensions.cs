@@ -1,22 +1,22 @@
 ﻿using OmahaMTG._01_Managers.Admin.Model.Template;
-using OmahaMTG.Data;
+using OmahaMTG._05_Data;
 
-namespace OmahaMTG._03_Accessors.MappingExtensions
+namespace OmahaMTG._03_Accessors.Content
 {
     internal static class TemplateMappingExtensions
     {
         internal static TemplateData ToTemplateData(this TemplateCreateRequest createTemplateRequest)
         {
-            return new TemplateData()
+            return new TemplateData
             {
                 Body = createTemplateRequest.Body,
-                Name = createTemplateRequest.Name,
+                Name = createTemplateRequest.Name
             };
         }
 
         internal static TemplateModel ToTemplate(this TemplateData templateData)
         {
-            return new TemplateModel()
+            return new TemplateModel
             {
                 Id = templateData.Id,
                 Body = templateData.Body,
@@ -24,11 +24,11 @@ namespace OmahaMTG._03_Accessors.MappingExtensions
             };
         }
 
-        internal static void ApplyUpdateTemplateRequestToTemplateData(this TemplateData templateDataToUpdate, TemplateUpdateRequest updateTemplateRequest)
+        internal static void ApplyUpdateTemplateRequestToTemplateData(this TemplateData templateDataToUpdate,
+            TemplateUpdateRequest updateTemplateRequest)
         {
             templateDataToUpdate.Name = updateTemplateRequest.Name;
             templateDataToUpdate.Name = updateTemplateRequest.Name;
-
         }
 
         //internal static IEnumerable<TemplateModel> ToTemplates(this IEnumerable<TemplateData> templateDatas)

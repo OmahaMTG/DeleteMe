@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
     public class SkipTakeSet<T>
     {

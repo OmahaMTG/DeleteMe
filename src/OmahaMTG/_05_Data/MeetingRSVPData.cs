@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
     [Table("MeetingRSVPs")]
-    class MeetingRsvpData
+    internal class MeetingRsvpData
     {
         public string UserId { get; set; }
 

@@ -1,6 +1,5 @@
 ﻿namespace OmahaMTG._01_Managers.Admin.Model.Template
 {
-
     public class TemplateModel
     {
         public int Id { get; set; }
@@ -9,6 +8,4 @@
 
         public bool IsDeleted { get; set; }
     }
-
-
 }

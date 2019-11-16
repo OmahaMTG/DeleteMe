@@ -1,6 +1,5 @@
 ﻿namespace OmahaMTG._01_Managers.Admin.Model.Host
 {
-
     public class HostUpdateRequest
     {
         public int Id { get; set; }
@@ -11,8 +10,4 @@
 
         public bool IsDeleted { get; set; }
     }
-
-
-
-
 }

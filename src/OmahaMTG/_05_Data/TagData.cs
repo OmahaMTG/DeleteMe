@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
     [Table("Tags")]
-    class TagData : DataEntityBase
+    internal class TagData : DataEntityBase
     {
         public string Name { get; set; }
     }

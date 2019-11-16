@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace OmahaMTG.Data
+namespace OmahaMTG._05_Data
 {
-    class DataEntityBase
+    internal class DataEntityBase
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
