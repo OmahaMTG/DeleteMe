@@ -1,49 +1,60 @@
-﻿//using Microsoft.AspNetCore.Mvc;
-//using OmahaMTG.Accessors.ContentAccessorContracts;
-//using OmahaMTG.Data;
-//using System.Threading.Tasks;
-//using OmahaMTG._01_Managers.Admin.Model.Template;
+﻿using System.Threading.Tasks;
+using Hero4Hire.Architecture.Managers;
+using Microsoft.AspNetCore.Mvc;
+using OmahaMTG._00_Common;
+using OmahaMTG._01_Managers.Admin.Contract;
+using OmahaMTG._01_Managers.Admin.Model.Template;
+using OmahaMTG.Data;
 
-//namespace OmahaMTG.Controllers.Admin
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class TemplateController : ControllerBase
-//    {
-//        private readonly ITemplateManager _templateAccessor;
-//        public TemplateController(ITemplateManager templateAccessor)
-//        {
-//            _templateAccessor = templateAccessor;
-//        }
+namespace OmahaMTG.Site.Controllers.Admin
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TemplateController : ControllerBase
+    {
+        private readonly IManagerFactory<AmbientContext> _managerFactory;
+        public TemplateController(IManagerFactory<AmbientContext> managerFactory)
+        {
+            _managerFactory = managerFactory;
+        }
 
-//        // GET: api/Default
-//        [HttpGet]
-//        public async Task<ActionResult<SkipTakeSet<TemplateModel>>> Get([FromQuery]TemplateQueryRequest request)
-//        {
-//            return await _templateAccessor.QueryTemplate(request);
-//        }
+        private ITemplateManager TemplateManager => _managerFactory.CreateManager<ITemplateManager>();
 
-//        // POST: api/Default
-//        [HttpPost]
-//        public async Task<ActionResult<TemplateModel>> Post([FromBody] TemplateCreateRequest request)
-//        {
-//            return await _templateAccessor.CreateTemplate(request);
-//        }
 
-//        // PUT: api/Default/5
-//        [HttpPut("{id}")]
-//        public async Task<ActionResult<TemplateModel>> Put(int id, [FromBody] TemplateUpdateRequest request)
-//        {
-//            request.Id = id;
-//            return await _templateAccessor.UpdateTemplate(request);
-//        }
+        // GET: api/Default
+        [HttpGet]
+        public async Task<ActionResult<SkipTakeSet<TemplateModel>>> Get([FromQuery]TemplateQueryRequest request)
+        {
+            return await TemplateManager.QueryTemplate(request);
+        }
 
-//        // DELETE: api/ApiWithActions/5
-//        [HttpDelete("{id}")]
-//        public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
-//        {
-//            await _templateAccessor.DeleteTemplate(new TemplateDeleteRequest() { Id = id, Perm = perm });
-//            return Ok();
-//        }
-//    }
-//}
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<ActionResult<TemplateModel>> Get(int id)
+        {
+            return await TemplateManager.GetTemplate(new TemplateGetRequest() { Id = id });
+        }
+
+        // POST: api/Default
+        [HttpPost]
+        public async Task<ActionResult<TemplateModel>> Post([FromBody] TemplateCreateRequest request)
+        {
+            return await TemplateManager.CreateTemplate(request);
+        }
+
+        // PUT: api/Default/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<TemplateModel>> Put(int id, [FromBody] TemplateUpdateRequest request)
+        {
+            request.Id = id;
+            return await TemplateManager.UpdateTemplate(request);
+        }
+
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
+        {
+            await TemplateManager.DeleteTemplate(new TemplateDeleteRequest() { Id = id, Perm = perm });
+            return Ok();
+        }
+    }
+}

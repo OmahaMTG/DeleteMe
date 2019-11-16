@@ -60,7 +60,7 @@ namespace OmahaMTG._03_Accessors.Content
             return result;
         }
 
-        public async Task<SponsorModel> GetSponsor(SponsorModel request)
+        public async Task<SponsorModel> GetSponsor(SponsorGetRequest request)
         {
             var result = await _dbContext.Sponsors
                 .Where(p => request.Id == p.Id)

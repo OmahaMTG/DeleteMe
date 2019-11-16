@@ -4,7 +4,7 @@ using Hero4Hire.Architecture.Utilities;
 
 namespace Hero4Hire.Architecture.Managers
 {
-    public interface IManagerFactory<TAmbientContext>
+    public interface IManagerFactory<TAmbientContext> where TAmbientContext : IAmbientContext
     {
         T CreateManager<T>() where T : class;
 

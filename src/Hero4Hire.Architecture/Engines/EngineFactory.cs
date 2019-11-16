@@ -1,10 +1,10 @@
-﻿using System;
-using Hero4Hire.Architecture.Accessors;
+﻿using Hero4Hire.Architecture.Accessors;
 using Hero4Hire.Architecture.Utilities;
+using System;
 
 namespace Hero4Hire.Architecture.Engines
 {
-    public class EngineFactory<TAmbientContext> : FactoryBase<TAmbientContext>
+    public class EngineFactory<TAmbientContext> : FactoryBase<TAmbientContext> where TAmbientContext : IAmbientContext
     {
         private AccessorFactory<TAmbientContext> _accessorFactory;
         private UtilityFactory<TAmbientContext> _utilityFactory;
@@ -28,7 +28,7 @@ namespace Hero4Hire.Architecture.Engines
             T result = GetInstanceForType<T>();
 
             // configure the context and the accessor factory if the result is not a mock
-            if (result is EngineBase< TAmbientContext>)
+            if (result is EngineBase<TAmbientContext>)
             {
                 (result as EngineBase<TAmbientContext>).AmbientContext = AmbientContext;
                 (result as EngineBase<TAmbientContext>).AccessorFactory = _accessorFactory;

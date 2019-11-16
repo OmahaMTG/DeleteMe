@@ -1,9 +1,9 @@
-﻿using System;
-using Hero4Hire.Architecture.Utilities;
+﻿using Hero4Hire.Architecture.Utilities;
+using System;
 
 namespace Hero4Hire.Architecture.Accessors
 {
-    public class AccessorFactory<TAmbientContext> : FactoryBase<TAmbientContext>
+    public class AccessorFactory<TAmbientContext> : FactoryBase<TAmbientContext> where TAmbientContext : IAmbientContext
     {
         private UtilityFactory<TAmbientContext> _utilityFactory;
 

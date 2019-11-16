@@ -145,7 +145,7 @@ namespace OmahaMTG._01_Managers.Admin
             return hostAccessor.QuerySponsor(request);
         }
 
-        public Task<SponsorModel> GetSponsor(SponsorModel request)
+        public Task<SponsorModel> GetSponsor(SponsorGetRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
             return hostAccessor.GetSponsor(request);

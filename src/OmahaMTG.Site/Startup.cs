@@ -12,6 +12,7 @@ using OmahaMTG._03_Accessors;
 using OmahaMTG.Config;
 using OmahaMTG.Site.Data;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
 
 namespace OmahaMTG.Site
 {
@@ -41,9 +42,11 @@ namespace OmahaMTG.Site
             //services.AddFactory<IManagerFactory<string>, ManagerFactory<string>>();
             //services.AddSingleton(provider =>
             //    new Func<AmbientContext>(() => provider.GetService<IUnitOfWork>()));
+            services.AddManagerFactory<AmbientContext>();
             services.AddSingleton<IAmbientContextFactory<AmbientContext>, AmbientContextFactory>();
             services.AddManagerServices();
             services.AddAccessorServices();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.AddOmahaMtgContent(OmahaMtgConfig);
         }
 

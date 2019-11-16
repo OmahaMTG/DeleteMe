@@ -10,6 +10,6 @@ namespace OmahaMTG._03_Accessors.ContentAccessor.Contract
         Task<SponsorModel> UpdateSponsor(SponsorUpdateRequest request);
         Task DeleteSponsor(SponsorDeleteRequest request);
         Task<SkipTakeSet<SponsorModel>> QuerySponsor(SponsorQueryRequest request);
-        Task<SponsorModel> GetSponsor(SponsorModel request);
+        Task<SponsorModel> GetSponsor(SponsorGetRequest request);
     }
 }

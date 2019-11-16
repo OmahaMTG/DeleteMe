@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hero4Hire.Architecture.Managers;
+using Microsoft.AspNetCore.Mvc;
+using OmahaMTG._00_Common;
+using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._01_Managers.Admin.Model.Host;
 using OmahaMTG.Data;
-using System;
 using System.Threading.Tasks;
-using Hero4Hire.Architecture;
-using OmahaMTG._00_Common;
-
-//using OmahaMTG.Accessors.ContentAccessorContracts;
 
 namespace OmahaMTG.Site.Controllers.Admin
 {
@@ -14,47 +12,43 @@ namespace OmahaMTG.Site.Controllers.Admin
     [ApiController]
     public class HostController : ControllerBase
     {
-        private readonly IServiceProvider _serviceProvider;
-        public HostController(IServiceProvider serviceProvider, IAmbientContextFactory<AmbientContext> factory)
+        private readonly IManagerFactory<AmbientContext> _managerFactory;
+        public HostController(IManagerFactory<AmbientContext> managerFactory)
         {
-            _serviceProvider = serviceProvider;
+            _managerFactory = managerFactory;
         }
 
-        // GET: api/Default
+        private IHostManager HostManager => _managerFactory.CreateManager<IHostManager>();
+
         [HttpGet]
         public async Task<ActionResult<SkipTakeSet<HostModel>>> Get([FromQuery]HostQueryRequest request)
         {
-
-            //var managerFactory = new Hero4Hire.Architecture.Managers.ManagerFactory<string>(_serviceProvider, "test");
-            //var manager = managerFactory.CreateManager<IHostManager>();
-
-            //return await manager.QueryHost(request);
-
-            throw new NotImplementedException();
-            //return await _hostAccessor.QueryHost(request);
+            return await HostManager.QueryHost(request);
         }
 
-        //// POST: api/Default
-        //[HttpPost]
-        //public async Task<ActionResult<HostModel>> Post([FromBody] HostCreateRequest request)
-        //{
-        //    return await _hostAccessor.CreateHost(request);
-        //}
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<ActionResult<HostModel>> Get(int id)
+        {
+            return await HostManager.GetHost(new HostGetRequest() { Id = id });
+        }
 
-        //// PUT: api/Default/5
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult<HostModel>> Put(int id, [FromBody] HostUpdateRequest request)
-        //{
-        //    request.Id = id;
-        //    return await _hostAccessor.UpdateHost(request);
-        //}
+        [HttpPost]
+        public async Task<ActionResult<HostModel>> Post([FromBody] HostCreateRequest request)
+        {
+            return await HostManager.CreateHost(request);
+        }
 
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
-        //{
-        //    await _hostAccessor.DeleteHost(new HostDeleteRequest() { Id = id, Perm = perm });
-        //    return Ok();
-        //}
+        [HttpPut("{id}")]
+        public async Task<ActionResult<HostModel>> Put(int id, [FromBody] HostUpdateRequest request)
+        {
+            return await HostManager.UpdateHost(request);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
+        {
+            await HostManager.DeleteHost(new HostDeleteRequest() { Id = id, Perm = perm });
+            return Ok();
+        }
     }
 }

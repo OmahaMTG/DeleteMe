@@ -1,49 +1,60 @@
-﻿//using Microsoft.AspNetCore.Mvc;
-//using OmahaMTG.Accessors.ContentAccessorContracts;
-//using OmahaMTG.Data;
-//using System.Threading.Tasks;
-//using OmahaMTG._01_Managers.Admin.Model.Presenter;
+﻿using Hero4Hire.Architecture.Managers;
+using Microsoft.AspNetCore.Mvc;
+using OmahaMTG._00_Common;
+using OmahaMTG._01_Managers.Admin.Contract;
+using OmahaMTG._01_Managers.Admin.Model.Presenter;
+using OmahaMTG.Data;
+using System.Threading.Tasks;
 
-//namespace OmahaMTG.Controllers.Admin
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class PresenterController : ControllerBase
-//    {
-//        private readonly IPresenterManager _presenterAccessor;
-//        public PresenterController(IPresenterManager presenterAccessor)
-//        {
-//            _presenterAccessor = presenterAccessor;
-//        }
+namespace OmahaMTG.Site.Controllers.Admin
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PresenterController : ControllerBase
+    {
+        private readonly IManagerFactory<AmbientContext> _managerFactory;
+        public PresenterController(IManagerFactory<AmbientContext> managerFactory)
+        {
+            _managerFactory = managerFactory;
+        }
 
-//        // GET: api/Default
-//        [HttpGet]
-//        public async Task<ActionResult<SkipTakeSet<PresenterModel>>> Get([FromQuery]PresenterQueryRequest request)
-//        {
-//            return await _presenterAccessor.QueryPresenter(request);
-//        }
+        private IPresenterManager PresenterManager => _managerFactory.CreateManager<IPresenterManager>();
 
-//        // POST: api/Default
-//        [HttpPost]
-//        public async Task<ActionResult<PresenterModel>> Post([FromBody] PresenterCreateRequest request)
-//        {
-//            return await _presenterAccessor.CreatePresenter(request);
-//        }
 
-//        // PUT: api/Default/5
-//        [HttpPut("{id}")]
-//        public async Task<ActionResult<PresenterModel>> Put(int id, [FromBody] PresenterUpdateRequest request)
-//        {
-//            request.Id = id;
-//            return await _presenterAccessor.UpdatePresenter(request);
-//        }
+        // GET: api/Default
+        [HttpGet]
+        public async Task<ActionResult<SkipTakeSet<PresenterModel>>> Get([FromQuery]PresenterQueryRequest request)
+        {
+            return await PresenterManager.QueryPresenter(request);
+        }
 
-//        // DELETE: api/ApiWithActions/5
-//        [HttpDelete("{id}")]
-//        public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
-//        {
-//            await _presenterAccessor.DeletePresenter(new PresenterDeleteRequest() { Id = id, Perm = perm });
-//            return Ok();
-//        }
-//    }
-//}
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<ActionResult<PresenterModel>> Get(int id)
+        {
+            return await PresenterManager.GetPresenter(new PresenterGetRequest() { Id = id });
+        }
+
+        // POST: api/Default
+        [HttpPost]
+        public async Task<ActionResult<PresenterModel>> Post([FromBody] PresenterCreateRequest request)
+        {
+            return await PresenterManager.CreatePresenter(request);
+        }
+
+        // PUT: api/Default/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<PresenterModel>> Put(int id, [FromBody] PresenterUpdateRequest request)
+        {
+            request.Id = id;
+            return await PresenterManager.UpdatePresenter(request);
+        }
+
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id, [FromQuery]bool perm)
+        {
+            await PresenterManager.DeletePresenter(new PresenterDeleteRequest() { Id = id, Perm = perm });
+            return Ok();
+        }
+    }
+}

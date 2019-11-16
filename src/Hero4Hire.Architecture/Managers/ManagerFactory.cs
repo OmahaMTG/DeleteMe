@@ -7,11 +7,10 @@ namespace Hero4Hire.Architecture.Managers
 {
 
 
-    public class ManagerFactory<TAmbientContext> : FactoryBase<TAmbientContext>, IManagerFactory<TAmbientContext>
+    public class ManagerFactory<TAmbientContext> : FactoryBase<TAmbientContext>, IManagerFactory<TAmbientContext> where TAmbientContext : IAmbientContext
     {
-        public ManagerFactory(IServiceProvider serviceProvider, Func<TAmbientContext> ambientContextFactory) : base(serviceProvider, ambientContextFactory())
+        public ManagerFactory(IServiceProvider serviceProvider, IAmbientContextFactory<TAmbientContext> ambientContextFactory) : base(serviceProvider, ambientContextFactory.BuildAmbientContext())
         {
-
         }
 
         public T CreateManager<T>() where T : class

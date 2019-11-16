@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Hero4Hire.Architecture
 {
-    public abstract class FactoryBase<TAmbientContext>
+    public abstract class FactoryBase<TAmbientContext> where TAmbientContext : IAmbientContext
     {
         public IServiceProvider ServiceProvider { get; private set; }
         public TAmbientContext AmbientContext { get; private set; }
