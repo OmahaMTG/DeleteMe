@@ -27,10 +27,4 @@
     <ProjectReference Include="..\Hero4Hire.Architecture\Hero4Hire.Architecture.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="_03_Accessors\MappingExtensions\" />
-    <Folder Include="_04_Utilities\" />
-    <Folder Include="_02_Engines\" />
-  </ItemGroup>
-
 </Project>

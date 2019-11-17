@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OmahaMTG._05_Data
 {
@@ -6,6 +7,7 @@ namespace OmahaMTG._05_Data
     internal class MeetingRsvpData
     {
         public string UserId { get; set; }
+        public IdentityUser User { get; set; }
 
         public int MeetingId { get; set; }
         public MeetingData Meeting { get; set; }

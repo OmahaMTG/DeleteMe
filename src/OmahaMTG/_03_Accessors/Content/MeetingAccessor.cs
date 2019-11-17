@@ -10,7 +10,16 @@ namespace OmahaMTG._03_Accessors.Content
     {
         public Task<MeetingModel> CreateMeeting(MeetingCreateRequest request)
         {
-            throw new NotImplementedException();
+            var newMeeting = request.ToMeetingData();
+            //await _dbContext.Meetings.AddAsync(newMeeting);
+            //await _dbContext.SaveChangesAsync();
+            //return (await _dbContext.Meetings
+            //    .Include(i => i.MeetingSponsors).ThenInclude(i => i.Sponsor)
+            //    .Include(i => i.MeetingHost)
+            //    .Include(i => i.Presentations).ThenInclude(i => i.PresentationPresenters).ThenInclude(i => i.Presenter)
+            //    .Include(_ => _.MeetingTags).ThenInclude(_ => _.Tag)
+            //    .Where(w => w.Id == newMeeting.Id)
+            //    .FirstOrDefaultAsync()).ToMeeting();
         }
 
         public Task DeleteMeeting(MeetingDeleteRequest request)
