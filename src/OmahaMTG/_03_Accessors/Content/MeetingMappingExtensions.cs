@@ -16,12 +16,12 @@ namespace OmahaMTG._03_Accessors.Content
                 Title = createMeetingRequest.Title,
                 StartTime = createMeetingRequest.StartTime,
                 EndTime = createMeetingRequest.EndTime,
-                MeetingSponsors = createMeetingRequest.MeetingSponsors.Select(s => new MeetingSponsorData() { SponsorId = s.SponsorId, SponsorMeetingBody = s.SponsorMeetingBody }).ToList(),
+                MeetingSponsors = createMeetingRequest.MeetingSponsors?.Select(s => new MeetingSponsorData() { SponsorId = s.SponsorId, SponsorMeetingBody = s.SponsorMeetingBody }).ToList(),
                 MeetingHostId = createMeetingRequest.MeetingHostId,
-                MeetingTags = createMeetingRequest.Tags.Select(s => new MeetingTagData() { Tag = new TagData() { Name = s } }).ToList(),
+                MeetingTags = createMeetingRequest.Tags?.Select(s => new MeetingTagData() { Tag = new TagData() { Name = s } }).ToList(),
                 VimeoId = createMeetingRequest.VimeoId,
                 TemplateId = createMeetingRequest.TemplateId,
-                Presentations = createMeetingRequest.MeetingPresentations.Select(s => s.ToPresentationData()).ToList()
+                Presentations = createMeetingRequest.MeetingPresentations?.Select(s => s.ToPresentationData()).ToList()
             };
 
         }
@@ -33,7 +33,7 @@ namespace OmahaMTG._03_Accessors.Content
                 VimeoId = meeting.VimeoId,
                 Details = meeting.PresentationDetails,
                 Title = meeting.PresentationTitle,
-                PresentationPresenters = meeting.MeetingPresentationPresenters.Select(s => s.ToPresentationPresenterData()).ToList()
+                PresentationPresenters = meeting.MeetingPresentationPresenters?.Select(s => s.ToPresentationPresenterData()).ToList()
             };
         }
 

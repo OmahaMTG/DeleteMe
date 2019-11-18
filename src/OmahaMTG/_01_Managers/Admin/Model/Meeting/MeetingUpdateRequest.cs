@@ -5,8 +5,9 @@ namespace OmahaMTG._01_Managers.Admin.Model.Meeting
 {
     public class MeetingUpdateRequest
     {
+        public int Id { get; set; }
         public string Title { get; set; }
-        public int TemplateId { get; set; }
+        public int? TemplateId { get; set; }
         public DateTime? PublishStartTime { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }

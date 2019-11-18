@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using OmahaMTG._00_Common;
 using OmahaMTG._01_Managers.Admin;
 using OmahaMTG._01_Managers.Admin.Contract;
+using OmahaMTG._03_Accessors.Content;
+using OmahaMTG._03_Accessors.Content.Contract;
 using OmahaMTG._05_Data;
 
 namespace OmahaMTG.Config
@@ -31,6 +33,12 @@ namespace OmahaMTG.Config
             services.AddTransient<IPresenterManager, AdminManager>();
             services.AddTransient<IMeetingManager, AdminManager>();
             services.AddTransient<ITemplateManager, AdminManager>();
+
+            services.AddTransient<IHostAccessor, ContentAccessor>();
+            services.AddTransient<ISponsorAccessor, ContentAccessor>();
+            services.AddTransient<IPresenterAccessor, ContentAccessor>();
+            services.AddTransient<IMeetingAccessor, ContentAccessor>();
+            services.AddTransient<ITemplateAccessor, ContentAccessor>();
             return services;
         }
 
