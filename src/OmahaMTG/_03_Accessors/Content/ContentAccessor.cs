@@ -1,5 +1,5 @@
 ﻿using Hero4Hire.Architecture.Accessors;
-using OmahaMTG._00_Common;
+using OmahaMTG._00_Model;
 using OmahaMTG._05_Data;
 
 namespace OmahaMTG._03_Accessors.Content

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using OmahaMTG._01_Managers.Admin.Model.Host;
+using OmahaMTG._00_Model.Admin.Model.Host;
 using OmahaMTG._03_Accessors.Content.Contract;
 using OmahaMTG._05_Data;
 

@@ -1,0 +1,46 @@
+.listContainer {
+  flex: 0 0 300px;
+  // background-color: red;
+  //height: 100%;
+  border-radius: 3px;
+  border: 1px solid #343d47;
+  margin: 10px;
+  box-shadow: 5px 4px 5px 0px rgba(0, 0, 0, 0.1);
+
+  padding: 4px;
+
+  display: flex;
+  flex-direction: column;
+}
+.search {
+  flex: 0 0 auto;
+
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+
+  margin-bottom: 25px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  flex: 1 0 auto;
+}
+.formContainer {
+  flex: 1 0 auto;
+  margin: 10px;
+}
+
+.searchButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-top: 20px;
+
+  button {
+    margin-left: 10px;
+  }
+}

@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './App.module.scss';
-import Sponsors from './screens/contentManagers/Sponsors';
 import { Route, HashRouter as Router, Link } from 'react-router-dom';
-import Hosts from './screens/contentManagers/Hosts';
-import Presenters from './screens/contentManagers/Presenter';
-import Templates from './screens/contentManagers/Templates';
-import GroupMeeting from './screens/contentManagers/GroupMeeting';
+import { Sponsors } from './2_Screens/ResourceManagers/Sponsor';
+import { Hosts } from './2_Screens/ResourceManagers/Host';
+import { Meetings } from './2_Screens/ResourceManagers/Meeting';
+import { Presenters } from './2_Screens/ResourceManagers/Presenter';
+import { Templates } from './2_Screens/ResourceManagers/Template';
 // import { CounterButton } from './components/CounterButton';
 
 const App = () => {
@@ -17,38 +17,48 @@ const App = () => {
           <div className={styles.sidebar}>
             <ul className={styles.siteNav}>
               <li>
-                <Link to="/Admin/">Home</Link>
-              </li>{' '}
+                <Link to="/Admin/" style={{ color: 'red' }}>
+                  Home
+                </Link>
+              </li>
               <li>
-                <Link to="/Admin/Event/">Events</Link>
+                <Link to="/Admin/Meetings/" style={{ color: 'red' }}>
+                  Meetings
+                </Link>
               </li>
               <li>
                 <Link to="/Admin/Sponsor/">Sponsors</Link>
               </li>
               <li>
-                <Link to="/Admin/Host/">Hosts</Link>
+                <Link to="/Admin/Hosts/">Hosts</Link>
               </li>
               <li>
-                <Link to="/Admin/Presenter/">Presenters</Link>
+                <Link to="/Admin/Presenters/">Presenters</Link>
               </li>
               <li>
-                <Link to="/Admin/Message/">Contact</Link>
+                <Link to="/Admin/Templates/">Templates</Link>
               </li>
               <li>
-                <Link to="/Admin/Template/">Templates</Link>
+                <Link to="/Admin/Contact/" style={{ color: 'red' }}>
+                  Contact
+                </Link>
               </li>
+              {/* <li>
+                <Link to="/Admin/WinnerPicker/" style={{ color: 'red' }}>
+                  Winner Picker
+                </Link>
+              </li> */}
               {/* <li>
                 <Link to="/Posts/">Posts</Link>
               </li> */}
             </ul>
           </div>
           <div className={styles.content}>
+            <Route path="/Admin/Meetings/:id?" component={Meetings} />
+            <Route path="/Admin/Hosts/:id?" component={Hosts} />
             <Route path="/Admin/Sponsor/:id?" component={Sponsors} />
-            <Route path="/Admin/Host/:id?" component={Hosts} />
-            <Route path="/Admin/Event/:id?" component={GroupMeeting} />
-            <Route path="/Admin/Presenter/:id?" component={Presenters} />
-
-            <Route path="/Admin/Template/:id?" component={Templates} />
+            <Route path="/Admin/Presenters/:id?" component={Presenters} />
+            <Route path="/Admin/Templates/:id?" component={Templates} />
           </div>
         </div>
       </div>

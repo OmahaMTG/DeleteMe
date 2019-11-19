@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using OmahaMTG._01_Managers.Admin.Model.Sponsor;
+using OmahaMTG._00_Model.Admin.Model.Sponsor;
 using OmahaMTG._05_Data;
 
 namespace OmahaMTG._01_Managers.Admin.Contract

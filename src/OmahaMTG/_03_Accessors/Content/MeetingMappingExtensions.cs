@@ -1,4 +1,4 @@
-﻿using OmahaMTG._01_Managers.Admin.Model.Meeting;
+﻿using OmahaMTG._00_Model.Admin.Model.Meeting;
 using OmahaMTG._05_Data;
 using System;
 using System.Linq;
@@ -89,25 +89,21 @@ namespace OmahaMTG._03_Accessors.Content
             };
         }
 
-        //    internal static void ApplyUpdateMeetingRequestToMeetingData(this MeetingData meetingDataToUpdate, MeetingUpdateRequest updateMeetingRequest)
-        //    {
-        //        meetingDataToUpdate.Body = updateMeetingRequest.Body;
-        //        meetingDataToUpdate.IsDraft = updateMeetingRequest.IsDraft;
-        //        meetingDataToUpdate.PublishStartTime = updateMeetingRequest.PublishStartTime;
-        //        meetingDataToUpdate.Title = updateMeetingRequest.Title;
-        //        meetingDataToUpdate.StartTime = updateMeetingRequest.StartTime;
-        //        meetingDataToUpdate.EndTime = updateMeetingRequest.EndTime;
-        //        meetingDataToUpdate.MeetingHostId = updateMeetingRequest.HostId;
-        //        // meetingDataToUpdate.MeetingSponsors = updateMeetingRequest.SponsorIds.Select(s => new MeetingSponsorData() { SponsorId = s });
-        //        meetingDataToUpdate.MeetingTags = updateMeetingRequest.Tags
-        //            .Select(s => new MeetingTagData() { Tag = new TagData() { Name = s } }).ToList();
-        //        meetingDataToUpdate.VimeoId = updateMeetingRequest.VimeoId;
-        //    }
+        internal static void ApplyUpdateMeetingRequestToMeetingData(this MeetingData meetingDataToUpdate, MeetingUpdateRequest updateMeetingRequest)
+        {
+            meetingDataToUpdate.MeetingMarkdownBody = updateMeetingRequest.MarkdownBody;
+            meetingDataToUpdate.IsDraft = updateMeetingRequest.IsDraft;
+            meetingDataToUpdate.PublishStartTime = updateMeetingRequest.PublishStartTime;
+            meetingDataToUpdate.Title = updateMeetingRequest.Title;
+            meetingDataToUpdate.StartTime = updateMeetingRequest.StartTime;
+            meetingDataToUpdate.EndTime = updateMeetingRequest.EndTime;
+            meetingDataToUpdate.MeetingHostId = updateMeetingRequest.MeetingHostId;
+            // meetingDataToUpdate.MeetingSponsors = updateMeetingRequest.SponsorIds.Select(s => new MeetingSponsorData() { SponsorId = s });
+            meetingDataToUpdate.MeetingTags = updateMeetingRequest.Tags
+                .Select(s => new MeetingTagData() { Tag = new TagData() { Name = s } }).ToList();
+            meetingDataToUpdate.VimeoId = updateMeetingRequest.VimeoId;
+        }
 
-        //    //internal static IEnumerable<MeetingModel> ToMeetings(this IEnumerable<MeetingData> meetingDatas)
-        //    //{
-        //    //    return meetingDatas.Select(u => u.ToMeeting());
-        //    //}
     }
 }
 

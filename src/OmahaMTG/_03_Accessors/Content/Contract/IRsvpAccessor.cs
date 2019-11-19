@@ -1,6 +1,6 @@
-﻿using OmahaMTG._01_Managers.Admin.Model.Rsvp;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using OmahaMTG._00_Model.Admin.Model.Rsvp;
 
 namespace OmahaMTG._03_Accessors.Content.Contract
 {

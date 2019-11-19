@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OmahaMTG._01_Managers.Admin.Model.Rsvp;
 using OmahaMTG._03_Accessors.Content.Contract;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OmahaMTG._00_Model.Admin.Model.Rsvp;
 
 namespace OmahaMTG._03_Accessors.Content
 {

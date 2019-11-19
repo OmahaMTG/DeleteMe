@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OmahaMTG._01_Managers.Admin.Model.Meeting;
+using OmahaMTG._00_Model.Admin.Model.Meeting;
 using OmahaMTG._03_Accessors.Content.Contract;
 using OmahaMTG._05_Data;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -64,9 +63,21 @@ namespace OmahaMTG._03_Accessors.Content
                 .AsSkipTakeSet(request.Skip, request.Take, d => d.ToMeeting());
         }
 
-        public Task<MeetingModel> UpdateMeeting(MeetingUpdateRequest request)
+        public async Task<MeetingModel> UpdateMeeting(MeetingUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var meetingToUpdate = await _dbContext.Meetings
+                .Include(i => i.MeetingSponsors).ThenInclude(i => i.Sponsor)
+                .Include(i => i.MeetingHost)
+                .Include(i => i.Presentations).ThenInclude(i => i.PresentationPresenters).ThenInclude(i => i.Presenter)
+                .Include(_ => _.MeetingTags).ThenInclude(_ => _.Tag).FirstOrDefaultAsync(w => w.Id == request.Id);
+
+            if (meetingToUpdate != null)
+            {
+                meetingToUpdate.ApplyUpdateMeetingRequestToMeetingData(request);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return meetingToUpdate.ToMeeting();
         }
     }
 }

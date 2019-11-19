@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using OmahaMTG._00_Common;
+using OmahaMTG._00_Model;
 using OmahaMTG._01_Managers.Admin;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._03_Accessors.Content;

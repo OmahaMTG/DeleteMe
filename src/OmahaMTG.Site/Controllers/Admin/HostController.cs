@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Hero4Hire.Architecture.Managers;
 using Microsoft.AspNetCore.Mvc;
-using OmahaMTG._00_Common;
+using OmahaMTG._00_Model;
+using OmahaMTG._00_Model.Admin.Model.Host;
 using OmahaMTG._01_Managers.Admin.Contract;
-using OmahaMTG._01_Managers.Admin.Model.Host;
 using OmahaMTG._05_Data;
 
 namespace OmahaMTG.Site.Controllers.Admin

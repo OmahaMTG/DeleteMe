@@ -1,0 +1,81 @@
+.fieldSet {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  // width: 100%;
+  align-items: left;
+  margin-top: 20px;
+  label {
+    // font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    margin-bottom: 5px;
+  }
+  input {
+    // border-color: #3c3c3c;
+    // background-color: #3c3c3c;
+    // // border-radius: 4px;
+    // border: 1px solid #3c3c3c;
+    // color: #e2e2e2;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  textarea {
+    // border-color: #3c3c3c;
+    // background-color: #3c3c3c;
+    // // border-radius: 4px;
+    // border: 1px solid #3c3c3c;
+    // color: #e2e2e2;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .react-mde .grip {
+    background-color: #333333;
+    border-color: #1e1e1e;
+  }
+
+  .mde-header {
+    background: #333333;
+    border-color: #1e1e1e;
+  }
+
+  .react-mde {
+    border-color: #1e1e1e;
+  }
+
+  .mde-header .mde-tabs button.selected {
+    border-color: #1e1e1e;
+  }
+
+  .mde-header .mde-tabs button {
+    color: #adadad;
+  }
+
+  .mde-header ul.mde-header-group li.mde-header-item button {
+    color: #adadad;
+  }
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttonFieldSet {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+  .right {
+    button {
+      margin-left: 30px;
+    }
+  }
+}

@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Hero4Hire.Architecture.Managers;
-using OmahaMTG._00_Common;
+using OmahaMTG._00_Model;
+using OmahaMTG._00_Model.Admin.Model.Host;
+using OmahaMTG._00_Model.Admin.Model.Meeting;
+using OmahaMTG._00_Model.Admin.Model.Presenter;
+using OmahaMTG._00_Model.Admin.Model.Sponsor;
+using OmahaMTG._00_Model.Admin.Model.Template;
 using OmahaMTG._01_Managers.Admin.Contract;
-using OmahaMTG._01_Managers.Admin.Model.Host;
-using OmahaMTG._01_Managers.Admin.Model.Meeting;
-using OmahaMTG._01_Managers.Admin.Model.Presenter;
-using OmahaMTG._01_Managers.Admin.Model.Sponsor;
-using OmahaMTG._01_Managers.Admin.Model.Template;
 using OmahaMTG._03_Accessors.Content.Contract;
 using OmahaMTG._05_Data;
 

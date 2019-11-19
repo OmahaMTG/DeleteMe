@@ -1,4 +1,4 @@
-﻿using OmahaMTG._01_Managers.Admin.Model.Sponsor;
+﻿using OmahaMTG._00_Model.Admin.Model.Sponsor;
 using OmahaMTG._05_Data;
 
 namespace OmahaMTG._03_Accessors.Content
