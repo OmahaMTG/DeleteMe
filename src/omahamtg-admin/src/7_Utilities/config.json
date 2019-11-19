@@ -8,5 +8,10 @@
     "env": "localdev",
     "uiHostname": "localhost",
     "apiServer": "https://localhost:4433/api/"
+  },
+  {
+    "env": "inttest",
+    "uiHostname": "www.example.com",
+    "apiServer": "https://omtg.azurewebsites.net/api/"
   }
 ]
