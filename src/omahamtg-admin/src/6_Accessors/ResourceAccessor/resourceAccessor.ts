@@ -25,7 +25,15 @@ const buildResourceAccessor = <T extends resourceBase>(url: string): IResourceAc
     return;
   };
 
-  return { queryResources, createResource, updateResource, deleteResource };
+  const getResource = async (resourceId: number) => {
+    const result = await http.get<T>(`${url}/${resourceId}`, { validateStatus: status => status < 500 });
+    if (result.status === 404) {
+      return undefined;
+    }
+    return result.data;
+  };
+
+  return { queryResources, createResource, updateResource, deleteResource, getResource };
 };
 
 export { buildResourceAccessor };

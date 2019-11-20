@@ -12,6 +12,6 @@
   {
     "env": "inttest",
     "uiHostname": "www.example.com",
-    "apiServer": "https://omtg.azurewebsites.net/api/"
+    "apiServer": "http://localhost:51816/api/"
   }
 ]

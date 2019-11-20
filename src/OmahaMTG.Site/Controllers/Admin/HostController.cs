@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Hero4Hire.Architecture.Managers;
+﻿using Hero4Hire.Architecture.Managers;
 using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._00_Model;
 using OmahaMTG._00_Model.Admin.Model.Host;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._05_Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG.Site.Controllers.Admin
 {
@@ -30,7 +30,13 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpGet("{id}")]
         public async Task<ActionResult<HostModel>> Get(int id)
         {
-            return await HostManager.GetHost(new HostGetRequest {Id = id});
+            var result = await HostManager.GetHost(new HostGetRequest { Id = id });
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
         }
 
         [HttpPost]
@@ -42,13 +48,14 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpPut("{id}")]
         public async Task<ActionResult<HostModel>> Put(int id, [FromBody] HostUpdateRequest request)
         {
+            request.Id = id;
             return await HostManager.UpdateHost(request);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await HostManager.DeleteHost(new HostDeleteRequest {Id = id, Perm = perm});
+            await HostManager.DeleteHost(new HostDeleteRequest { Id = id, Perm = perm });
             return Ok();
         }
     }

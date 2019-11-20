@@ -3,7 +3,7 @@ module.exports = {
   transform: {
     '^.+\\.[t|j]sx?$': 'babel-jest'
   },
-  testRegex: '(/__tests__/)(inttest)\\.(jsx?|tsx?)$',
+  testRegex: '(/__tests__/.*(integrations))\\.[jt]sx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 
   testURL: 'https://www.example.com',

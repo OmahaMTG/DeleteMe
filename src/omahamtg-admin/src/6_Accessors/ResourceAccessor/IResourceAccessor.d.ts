@@ -5,4 +5,5 @@ export interface IResourceAccessor<T extends resourceBase> {
   createResource: (resource: Omit<T, 'id'>) => Promise<T>;
   updateResource: (resourceId: number, resource: Omit<T, 'id'>) => Promise<T>;
   deleteResource: (resourceId: number, perm: boolean) => Promise<void>;
+  getResource: (resourceId: number) => Promise<T | undefined>;
 }
