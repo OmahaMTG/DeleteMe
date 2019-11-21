@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Hero4Hire.Architecture.Managers;
+﻿using Hero4Hire.Architecture.Managers;
 using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._00_Model;
 using OmahaMTG._00_Model.Admin.Model.Template;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._05_Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG.Site.Controllers.Admin
 {
@@ -27,12 +27,19 @@ namespace OmahaMTG.Site.Controllers.Admin
         public async Task<ActionResult<SkipTakeSet<TemplateModel>>> Get([FromQuery] TemplateQueryRequest request)
         {
             return await TemplateManager.QueryTemplate(request);
+
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TemplateModel>> Get(int id)
         {
-            return await TemplateManager.GetTemplate(new TemplateGetRequest {Id = id});
+            var result = await TemplateManager.GetTemplate(new TemplateGetRequest { Id = id });
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
         }
 
         // POST: api/Default
@@ -54,7 +61,7 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await TemplateManager.DeleteTemplate(new TemplateDeleteRequest {Id = id, Perm = perm});
+            await TemplateManager.DeleteTemplate(new TemplateDeleteRequest { Id = id, Perm = perm });
             return Ok();
         }
     }

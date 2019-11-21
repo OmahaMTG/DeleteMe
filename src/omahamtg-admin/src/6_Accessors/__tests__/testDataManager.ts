@@ -28,7 +28,7 @@ export const buildTestDataManager = <TModel extends resourceBase>(
     const updatedResource = createRequestCreator();
     const updateResult = await resourceAccessor.updateResource(idToUpdate, updatedResource);
     var updatedIndex = currentResources.findIndex(x => x.created.id === idToUpdate);
-    currentResources[updatedIndex] = { ...currentResources[updatedIndex], created: updateResult };
+    currentResources[updatedIndex] = { ...currentResources[updatedIndex], created: updateResult, requested: updatedResource };
     return updatedIndex;
   };
 

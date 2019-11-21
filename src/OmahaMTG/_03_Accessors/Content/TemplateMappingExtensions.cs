@@ -28,7 +28,7 @@ namespace OmahaMTG._03_Accessors.Content
             TemplateUpdateRequest updateTemplateRequest)
         {
             templateDataToUpdate.Name = updateTemplateRequest.Name;
-            templateDataToUpdate.Name = updateTemplateRequest.Name;
+            templateDataToUpdate.Body = updateTemplateRequest.Body;
         }
 
         //internal static IEnumerable<TemplateModel> ToTemplates(this IEnumerable<TemplateData> templateDatas)

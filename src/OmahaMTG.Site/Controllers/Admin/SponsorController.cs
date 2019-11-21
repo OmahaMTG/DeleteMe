@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Hero4Hire.Architecture.Managers;
+﻿using Hero4Hire.Architecture.Managers;
 using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._00_Model;
 using OmahaMTG._00_Model.Admin.Model.Sponsor;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._05_Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG.Site.Controllers.Admin
 {
@@ -27,12 +27,20 @@ namespace OmahaMTG.Site.Controllers.Admin
         public async Task<ActionResult<SkipTakeSet<SponsorModel>>> Get([FromQuery] SponsorQueryRequest request)
         {
             return await SponsorManager.QuerySponsor(request);
+
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<SponsorModel>> Get(int id)
         {
-            return await SponsorManager.GetSponsor(new SponsorGetRequest {Id = id});
+            var result = await SponsorManager.GetSponsor(new SponsorGetRequest { Id = id });
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
         }
 
         // POST: api/Default
@@ -54,7 +62,7 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await SponsorManager.DeleteSponsor(new SponsorDeleteRequest {Id = id, Perm = perm});
+            await SponsorManager.DeleteSponsor(new SponsorDeleteRequest { Id = id, Perm = perm });
             return Ok();
         }
     }

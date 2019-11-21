@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Hero4Hire.Architecture.Managers;
+﻿using Hero4Hire.Architecture.Managers;
 using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._00_Model;
 using OmahaMTG._00_Model.Admin.Model.Presenter;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._05_Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG.Site.Controllers.Admin
 {
@@ -32,7 +32,13 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpGet("{id}")]
         public async Task<ActionResult<PresenterModel>> Get(int id)
         {
-            return await PresenterManager.GetPresenter(new PresenterGetRequest {Id = id});
+            var result = await PresenterManager.GetPresenter(new PresenterGetRequest { Id = id });
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
         }
 
         // POST: api/Default
@@ -54,7 +60,7 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await PresenterManager.DeletePresenter(new PresenterDeleteRequest {Id = id, Perm = perm});
+            await PresenterManager.DeletePresenter(new PresenterDeleteRequest { Id = id, Perm = perm });
             return Ok();
         }
     }
