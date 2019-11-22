@@ -1,107 +1,75 @@
 import { buildResourceAccessor } from '../ResourceAccessor';
 import { IHost } from '../../3_Contracts/IHost';
 import faker from 'faker';
-import { buildTestDataManager } from './testDataManager';
 
+const buildTestHostRequest = () => ({
+  address: faker.random.words(),
+  blurb: faker.random.words(),
+  contactInfo: faker.random.words(),
+  name: faker.random.words()
+});
 const hostApi = buildResourceAccessor<IHost>('/host');
-const testDataManager = buildTestDataManager<IHost>(
-  () => ({
-    address: faker.random.words(),
-    blurb: faker.random.words(),
-    contactInfo: faker.random.words(),
-    name: faker.random.words()
-  }),
-  hostApi
-);
 
 describe('host API', () => {
-  afterAll(async () => {
-    testDataManager.CleanAllResources();
-  });
-
   it('Creating a host, should create that host and return a record of that host.', async () => {
-    const createdIndex = await testDataManager.CreateTestResources();
+    const hostCreateRequest = buildTestHostRequest();
+    const hostCreateResponse = await hostApi.createResource(hostCreateRequest);
 
-    const requestedResource = testDataManager.currentResources[createdIndex].requested;
-    const createdResource = testDataManager.currentResources[createdIndex].created;
-    const hostFromServer = await hostApi.getResource(createdResource.id);
+    const hostFromServer = await hostApi.getResource(hostCreateResponse.id);
 
-    expect(hostFromServer).not.toBeUndefined();
-    expect(hostFromServer && hostFromServer.address).toEqual(requestedResource.address);
-    expect(hostFromServer && hostFromServer.blurb).toEqual(requestedResource.blurb);
-    expect(hostFromServer && hostFromServer.contactInfo).toEqual(requestedResource.contactInfo);
-    expect(hostFromServer && hostFromServer.name).toEqual(requestedResource.name);
+    expect(hostFromServer).toEqual({ ...hostCreateRequest, isDeleted: false, id: expect.any(Number) });
   });
 
   it('Getting a host, should return that host.', async () => {
-    const createdIndex = await testDataManager.CreateTestResources();
+    const hostCreateRequest = buildTestHostRequest();
+    const hostCreateResponse = await hostApi.createResource(hostCreateRequest);
 
-    const createdResponse = testDataManager.currentResources[createdIndex].created;
-    const requestedResource = testDataManager.currentResources[createdIndex].requested;
-
-    expect(createdResponse.address).toEqual(requestedResource.address);
-    expect(createdResponse.blurb).toEqual(requestedResource.blurb);
-    expect(createdResponse.contactInfo).toEqual(requestedResource.contactInfo);
-    expect(createdResponse.name).toEqual(requestedResource.name);
+    expect(hostCreateResponse).toEqual({ ...hostCreateRequest, isDeleted: false, id: expect.any(Number) });
   });
 
   it('Deleting a host, should delete that host', async () => {
-    const createdIndex = await testDataManager.CreateTestResources();
+    const hostCreateRequest = buildTestHostRequest();
+    const hostCreateResponse = await hostApi.createResource(hostCreateRequest);
 
-    const createdResponse = testDataManager.currentResources[createdIndex].created;
+    await hostApi.deleteResource(hostCreateResponse.id, true);
 
-    await hostApi.deleteResource(createdResponse.id, true);
-
-    const hostFromServer = await hostApi.getResource(createdResponse.id);
+    const hostFromServer = await hostApi.getResource(hostCreateResponse.id);
 
     expect(hostFromServer).toBeUndefined();
   });
 
   it('Updating a host, should return the updated host.', async () => {
-    const itemIndex = await testDataManager.CreateTestResources();
+    const hostCreateRequest = buildTestHostRequest();
+    const hostCreateResponse = await hostApi.createResource(hostCreateRequest);
 
-    const createdResponse = testDataManager.currentResources[itemIndex].created;
+    const hostUpdateRequest = buildTestHostRequest();
+    const hostUpdateResponse = await hostApi.updateResource(hostCreateResponse.id, hostUpdateRequest);
 
-    const updatedIndex = await testDataManager.UpdateTestResource(createdResponse.id);
-
-    const requestedUpdate = testDataManager.currentResources[updatedIndex].requested;
-    const updatedResponse = testDataManager.currentResources[updatedIndex].created;
-
-    expect(updatedResponse.address).toEqual(requestedUpdate.address);
-    expect(updatedResponse.blurb).toEqual(requestedUpdate.blurb);
-    expect(updatedResponse.contactInfo).toEqual(requestedUpdate.contactInfo);
-    expect(updatedResponse.name).toEqual(requestedUpdate.name);
+    expect(hostUpdateResponse).toEqual({ ...hostUpdateRequest, isDeleted: false, id: expect.any(Number) });
   });
 
   it('Updating a host, and then getting that host, should return that host', async () => {
-    const itemIndex = await testDataManager.CreateTestResources();
+    const hostCreateRequest = buildTestHostRequest();
+    const hostCreateResponse = await hostApi.createResource(hostCreateRequest);
 
-    const createdResponse = testDataManager.currentResources[itemIndex].created;
+    const hostUpdateRequest = buildTestHostRequest();
+    await hostApi.updateResource(hostCreateResponse.id, hostUpdateRequest);
 
-    const updatedIndex = await testDataManager.UpdateTestResource(createdResponse.id);
+    const hostFromServer = await hostApi.getResource(hostCreateResponse.id);
 
-    const serverHost = await hostApi.getResource(testDataManager.currentResources[updatedIndex].created.id);
-
-    expect(serverHost && serverHost.address).toEqual(testDataManager.currentResources[updatedIndex].created.address);
-    expect(serverHost && serverHost.blurb).toEqual(testDataManager.currentResources[updatedIndex].created.blurb);
-    expect(serverHost && serverHost.contactInfo).toEqual(testDataManager.currentResources[updatedIndex].created.contactInfo);
-    expect(serverHost && serverHost.name).toEqual(testDataManager.currentResources[updatedIndex].created.name);
+    expect(hostFromServer).toEqual({ ...hostUpdateRequest, isDeleted: false, id: expect.any(Number) });
   });
 
   it('Querying a host, should return that matching hosts.', async () => {
-    let testIndex = 0;
+    let hostQueryTarget = buildTestHostRequest();
     for (let index = 0; index < 10; index++) {
-      const createdIndex = await testDataManager.CreateTestResources();
-      if (index === 5) testIndex = createdIndex;
+      const hostCreateRequest = buildTestHostRequest();
+      const hostCreateResponse = await hostApi.createResource(hostCreateRequest);
+      if (index === 5) hostQueryTarget = hostCreateResponse;
     }
 
-    const createdResponse = testDataManager.currentResources[testIndex].created;
+    const queryResponse = await hostApi.queryResources(0, 1, hostQueryTarget.name);
 
-    const queryResponse = await hostApi.queryResources(0, 1, createdResponse.name);
-
-    expect(createdResponse.address).toEqual(queryResponse.records[0].address);
-    expect(createdResponse.blurb).toEqual(queryResponse.records[0].blurb);
-    expect(createdResponse.contactInfo).toEqual(queryResponse.records[0].contactInfo);
-    expect(createdResponse.name).toEqual(queryResponse.records[0].name);
+    expect(queryResponse.records[0]).toEqual(hostQueryTarget);
   });
 });

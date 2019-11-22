@@ -1,96 +1,73 @@
 import { buildResourceAccessor } from '../ResourceAccessor';
 import { ITemplate } from '../../3_Contracts/ITemplate';
 import faker from 'faker';
-import { buildTestDataManager } from './testDataManager';
 
+const buildTestTemplateRequest = () => ({
+  body: faker.random.words(),
+  name: faker.random.words()
+});
 const templateApi = buildResourceAccessor<ITemplate>('/template');
-const testDataManager = buildTestDataManager<ITemplate>(
-  () => ({
-    body: faker.random.words(),
-    name: faker.random.words()
-  }),
-  templateApi
-);
 
 describe('template API', () => {
-  afterAll(async () => {
-    testDataManager.CleanAllResources();
-  });
-
   it('Creating a template, should create that template and return a record of that template.', async () => {
-    const createdIndex = await testDataManager.CreateTestResources();
+    const templateCreateRequest = buildTestTemplateRequest();
+    const templateCreateResponse = await templateApi.createResource(templateCreateRequest);
 
-    const requestedResource = testDataManager.currentResources[createdIndex].requested;
-    const createdResource = testDataManager.currentResources[createdIndex].created;
-    const templateFromServer = await templateApi.getResource(createdResource.id);
+    const templateFromServer = await templateApi.getResource(templateCreateResponse.id);
 
-    expect(templateFromServer).not.toBeUndefined();
-
-    expect(templateFromServer && templateFromServer.body).toEqual(requestedResource.body);
-    expect(templateFromServer && templateFromServer.name).toEqual(requestedResource.name);
+    expect(templateFromServer).toEqual({ ...templateCreateRequest, isDeleted: false, id: expect.any(Number) });
   });
 
   it('Getting a template, should return that template.', async () => {
-    const createdIndex = await testDataManager.CreateTestResources();
+    const templateCreateRequest = buildTestTemplateRequest();
+    const templateCreateResponse = await templateApi.createResource(templateCreateRequest);
 
-    const createdResponse = testDataManager.currentResources[createdIndex].created;
-    const requestedResource = testDataManager.currentResources[createdIndex].requested;
-
-    expect(createdResponse.body).toEqual(requestedResource.body);
-    expect(createdResponse.name).toEqual(requestedResource.name);
+    expect(templateCreateResponse).toEqual({ ...templateCreateRequest, isDeleted: false, id: expect.any(Number) });
   });
 
   it('Deleting a template, should delete that template', async () => {
-    const createdIndex = await testDataManager.CreateTestResources();
+    const templateCreateRequest = buildTestTemplateRequest();
+    const templateCreateResponse = await templateApi.createResource(templateCreateRequest);
 
-    const createdResponse = testDataManager.currentResources[createdIndex].created;
+    await templateApi.deleteResource(templateCreateResponse.id, true);
 
-    await templateApi.deleteResource(createdResponse.id, true);
-
-    const templateFromServer = await templateApi.getResource(createdResponse.id);
+    const templateFromServer = await templateApi.getResource(templateCreateResponse.id);
 
     expect(templateFromServer).toBeUndefined();
   });
 
   it('Updating a template, should return the updated template.', async () => {
-    const itemIndex = await testDataManager.CreateTestResources();
+    const templateCreateRequest = buildTestTemplateRequest();
+    const templateCreateResponse = await templateApi.createResource(templateCreateRequest);
 
-    const createdResponse = testDataManager.currentResources[itemIndex].created;
+    const templateUpdateRequest = buildTestTemplateRequest();
+    const templateUpdateResponse = await templateApi.updateResource(templateCreateResponse.id, templateUpdateRequest);
 
-    const updatedIndex = await testDataManager.UpdateTestResource(createdResponse.id);
-
-    const requestedUpdate = testDataManager.currentResources[updatedIndex].requested;
-    const updatedResponse = testDataManager.currentResources[updatedIndex].created;
-
-    expect(updatedResponse.body).toEqual(requestedUpdate.body);
-    expect(updatedResponse.name).toEqual(requestedUpdate.name);
+    expect(templateUpdateResponse).toEqual({ ...templateUpdateRequest, isDeleted: false, id: expect.any(Number) });
   });
 
   it('Updating a template, and then getting that template, should return that template', async () => {
-    const itemIndex = await testDataManager.CreateTestResources();
+    const templateCreateRequest = buildTestTemplateRequest();
+    const templateCreateResponse = await templateApi.createResource(templateCreateRequest);
 
-    const createdResponse = testDataManager.currentResources[itemIndex].created;
+    const templateUpdateRequest = buildTestTemplateRequest();
+    await templateApi.updateResource(templateCreateResponse.id, templateUpdateRequest);
 
-    const updatedIndex = await testDataManager.UpdateTestResource(createdResponse.id);
+    const templateFromServer = await templateApi.getResource(templateCreateResponse.id);
 
-    const serverTemplate = await templateApi.getResource(testDataManager.currentResources[updatedIndex].created.id);
-
-    expect(serverTemplate && serverTemplate.body).toEqual(testDataManager.currentResources[updatedIndex].created.body);
-    expect(serverTemplate && serverTemplate.name).toEqual(testDataManager.currentResources[updatedIndex].created.name);
+    expect(templateFromServer).toEqual({ ...templateUpdateRequest, isDeleted: false, id: expect.any(Number) });
   });
 
   it('Querying a template, should return that matching templates.', async () => {
-    let testIndex = 0;
+    let templateQueryTarget = buildTestTemplateRequest();
     for (let index = 0; index < 10; index++) {
-      const createdIndex = await testDataManager.CreateTestResources();
-      if (index === 5) testIndex = createdIndex;
+      const templateCreateRequest = buildTestTemplateRequest();
+      const templateCreateResponse = await templateApi.createResource(templateCreateRequest);
+      if (index === 5) templateQueryTarget = templateCreateResponse;
     }
 
-    const createdResponse = testDataManager.currentResources[testIndex].created;
+    const queryResponse = await templateApi.queryResources(0, 1, templateQueryTarget.name);
 
-    const queryResponse = await templateApi.queryResources(0, 1, createdResponse.name);
-
-    expect(createdResponse.body).toEqual(queryResponse.records[0].body);
-    expect(createdResponse.name).toEqual(queryResponse.records[0].name);
+    expect(queryResponse.records[0]).toEqual(templateQueryTarget);
   });
 });
