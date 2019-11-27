@@ -1,35 +1,29 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using Hero4Hire.Architecture;
 using Microsoft.EntityFrameworkCore;
 using OmahaMTG._00_Model.Admin.Model.Template;
 using OmahaMTG._03_Accessors.Content.Contract;
 using OmahaMTG._05_Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OmahaMTG._03_Accessors.Content
 {
     internal partial class ContentAccessor : ITemplateAccessor
     {
-        public async Task<TemplateModel> CreateTemplate(TemplateCreateRequest request)
+
+        public async Task<Response<TemplateModel>> CreateTemplate(TemplateCreateRequest request)
         {
             var newRecord = request.ToTemplateData();
             _dbContext.Templates.Add(newRecord);
             await _dbContext.SaveChangesAsync();
-            return newRecord.ToTemplate();
-        }
-
-        public async Task<TemplateModel> UpdateTemplate(TemplateUpdateRequest request)
-        {
-            var templateToUpdate = await _dbContext.Templates.FirstOrDefaultAsync(w => w.Id == request.Id);
-            if (templateToUpdate != null)
+            return new Response<TemplateModel>()
             {
-                templateToUpdate.ApplyUpdateTemplateRequestToTemplateData(request);
-                await _dbContext.SaveChangesAsync();
-            }
-
-            return templateToUpdate.ToTemplate();
+                Status = ResponseStatusCodes.Ok,
+                Data = newRecord.ToTemplate()
+            }; ;
         }
 
-        public async Task DeleteTemplate(TemplateDeleteRequest request)
+        public async Task<NullResponse> DeleteTemplate(TemplateDeleteRequest request)
         {
             var templateFromDatabase = await _dbContext.Templates.FirstOrDefaultAsync(w => w.Id == request.Id);
             if (templateFromDatabase != null)
@@ -45,10 +39,32 @@ namespace OmahaMTG._03_Accessors.Content
                 }
 
                 await _dbContext.SaveChangesAsync();
+                return new NullResponse() { Status = ResponseStatusCodes.OkNoContent };
             }
+
+            return new NullResponse() { Status = ResponseStatusCodes.NotFound };
         }
 
-        public async Task<SkipTakeSet<TemplateModel>> QueryTemplate(TemplateQueryRequest request)
+        public async Task<Response<TemplateModel>> GetTemplate(TemplateGetRequest request)
+        {
+            var result = await _dbContext.Templates
+                .Where(p => request.Id == p.Id)
+                .Select(s => s.ToTemplate())
+                .FirstOrDefaultAsync();
+
+            if (result == null)
+            {
+                return new Response<TemplateModel>() { Status = ResponseStatusCodes.NotFound };
+            }
+
+            return new Response<TemplateModel>()
+            {
+                Status = ResponseStatusCodes.Ok,
+                Data = result
+            };
+        }
+
+        public async Task<Response<SkipTakeSet<TemplateModel>>> QueryTemplate(TemplateQueryRequest request)
         {
             var result = await _dbContext.Templates
                 .Where(p => request.IncludeDeleted || !p.IsDeleted)
@@ -58,17 +74,28 @@ namespace OmahaMTG._03_Accessors.Content
                 .ThenBy(p => p.CreatedDate)
                 .AsSkipTakeSet(request.Skip, request.Take, d => d.ToTemplate());
 
-            return result;
+            return new Response<SkipTakeSet<TemplateModel>>()
+            {
+                Status = ResponseStatusCodes.Ok,
+                Data = result
+            };
         }
 
-        public async Task<TemplateModel> GetTemplate(TemplateGetRequest request)
+        public async Task<Response<TemplateModel>> UpdateTemplate(TemplateUpdateRequest request)
         {
-            var result = await _dbContext.Templates
-                .Where(p => request.Id == p.Id)
-                .Select(s => s.ToTemplate())
-                .FirstOrDefaultAsync();
+            var templateToUpdate = await _dbContext.Templates.FirstOrDefaultAsync(w => w.Id == request.Id);
+            if (templateToUpdate != null)
+            {
+                templateToUpdate.ApplyUpdateTemplateRequestToTemplateData(request);
+                await _dbContext.SaveChangesAsync();
+                return new Response<TemplateModel>()
+                {
+                    Status = ResponseStatusCodes.Ok,
+                    Data = templateToUpdate.ToTemplate()
+                };
+            }
 
-            return result;
+            return new Response<TemplateModel>() { Status = ResponseStatusCodes.NotFound };
         }
     }
 }

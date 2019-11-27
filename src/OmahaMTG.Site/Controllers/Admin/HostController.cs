@@ -24,39 +24,38 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpGet]
         public async Task<ActionResult<SkipTakeSet<HostModel>>> Get([FromQuery] HostQueryRequest request)
         {
-            return await HostManager.QueryHost(request);
+            var result = await HostManager.QueryHost(request);
+            return result.ToActionResult();
+
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<HostModel>> Get(int id)
         {
             var result = await HostManager.GetHost(new HostGetRequest { Id = id });
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return result;
+            return result.ToActionResult();
         }
 
         [HttpPost]
         public async Task<ActionResult<HostModel>> Post([FromBody] HostCreateRequest request)
         {
-            return await HostManager.CreateHost(request);
+            var result = await HostManager.CreateHost(request);
+            return result.ToActionResult();
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<HostModel>> Put(int id, [FromBody] HostUpdateRequest request)
         {
             request.Id = id;
-            return await HostManager.UpdateHost(request);
+            var result = await HostManager.UpdateHost(request);
+            return result.ToActionResult();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await HostManager.DeleteHost(new HostDeleteRequest { Id = id, Perm = perm });
-            return Ok();
+            var result = await HostManager.DeleteHost(new HostDeleteRequest { Id = id, Perm = perm });
+            return result.ToActionResult();
         }
     }
 }

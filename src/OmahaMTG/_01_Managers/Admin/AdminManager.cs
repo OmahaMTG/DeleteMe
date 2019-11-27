@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using Hero4Hire.Architecture;
 using Hero4Hire.Architecture.Managers;
 using OmahaMTG._00_Model;
 using OmahaMTG._00_Model.Admin.Model.Host;
@@ -9,6 +9,7 @@ using OmahaMTG._00_Model.Admin.Model.Template;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._03_Accessors.Content.Contract;
 using OmahaMTG._05_Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG._01_Managers.Admin
 {
@@ -24,69 +25,70 @@ namespace OmahaMTG._01_Managers.Admin
 
         #region Host
 
-        public Task<HostModel> CreateHost(HostCreateRequest request)
+        public Task<Response<HostModel>> CreateHost(HostCreateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
             return hostAccessor.CreateHost(request);
         }
 
 
-        public Task DeleteHost(HostDeleteRequest request)
+        public Task<NullResponse> DeleteHost(HostDeleteRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
             return hostAccessor.DeleteHost(request);
         }
 
 
-        public Task<HostModel> GetHost(HostGetRequest request)
+        public Task<Response<HostModel>> GetHost(HostGetRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
             return hostAccessor.GetHost(request);
         }
 
 
-        public Task<SkipTakeSet<HostModel>> QueryHost(HostQueryRequest request)
+        public Task<Response<SkipTakeSet<HostModel>>> QueryHost(HostQueryRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
             return hostAccessor.QueryHost(request);
         }
 
 
-        public Task<HostModel> UpdateHost(HostUpdateRequest request)
+        public Task<Response<HostModel>> UpdateHost(HostUpdateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
             return hostAccessor.UpdateHost(request);
         }
 
+
         #endregion Host
 
         #region Meeting
 
-        public Task<MeetingModel> CreateMeeting(MeetingCreateRequest request)
+        public Task<Response<MeetingModel>> CreateMeeting(MeetingCreateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.CreateMeeting(request);
         }
 
-        public Task DeleteMeeting(MeetingDeleteRequest request)
+        public Task<NullResponse> DeleteMeeting(MeetingDeleteRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.DeleteMeeting(request);
         }
 
-        public Task<MeetingModel> GetMeeting(MeetingGetRequest request)
+        public Task<Response<MeetingModel>> GetMeeting(MeetingGetRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.GetMeeting(request);
         }
 
-        public Task<SkipTakeSet<MeetingModel>> QueryMeeting(MeetingQueryRequest request)
+        public Task<Response<SkipTakeSet<MeetingModel>>> QueryMeeting(MeetingQueryRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.QueryMeeting(request);
         }
 
-        public Task<MeetingModel> UpdateMeeting(MeetingUpdateRequest request)
+        public Task<Response<MeetingModel>> UpdateMeeting(MeetingUpdateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
             return hostAccessor.UpdateMeeting(request);
@@ -96,31 +98,31 @@ namespace OmahaMTG._01_Managers.Admin
 
         #region Presenter
 
-        public Task<PresenterModel> CreatePresenter(PresenterCreateRequest request)
+        public Task<Response<PresenterModel>> CreatePresenter(PresenterCreateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
             return hostAccessor.CreatePresenter(request);
         }
 
-        public Task<PresenterModel> UpdatePresenter(PresenterUpdateRequest request)
+        public Task<Response<PresenterModel>> UpdatePresenter(PresenterUpdateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
             return hostAccessor.UpdatePresenter(request);
         }
 
-        public Task DeletePresenter(PresenterDeleteRequest request)
+        public Task<NullResponse> DeletePresenter(PresenterDeleteRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
             return hostAccessor.DeletePresenter(request);
         }
 
-        public Task<SkipTakeSet<PresenterModel>> QueryPresenter(PresenterQueryRequest request)
+        public Task<Response<SkipTakeSet<PresenterModel>>> QueryPresenter(PresenterQueryRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
             return hostAccessor.QueryPresenter(request);
         }
 
-        public Task<PresenterModel> GetPresenter(PresenterGetRequest request)
+        public Task<Response<PresenterModel>> GetPresenter(PresenterGetRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
             return hostAccessor.GetPresenter(request);
@@ -130,31 +132,31 @@ namespace OmahaMTG._01_Managers.Admin
 
         #region Sponsor
 
-        public Task<SponsorModel> CreateSponsor(SponsorCreateRequest request)
+        public Task<Response<SponsorModel>> CreateSponsor(SponsorCreateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
             return hostAccessor.CreateSponsor(request);
         }
 
-        public Task<SponsorModel> UpdateSponsor(SponsorUpdateRequest request)
+        public Task<Response<SponsorModel>> UpdateSponsor(SponsorUpdateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
             return hostAccessor.UpdateSponsor(request);
         }
 
-        public Task DeleteSponsor(SponsorDeleteRequest request)
+        public Task<NullResponse> DeleteSponsor(SponsorDeleteRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
             return hostAccessor.DeleteSponsor(request);
         }
 
-        public Task<SkipTakeSet<SponsorModel>> QuerySponsor(SponsorQueryRequest request)
+        public Task<Response<SkipTakeSet<SponsorModel>>> QuerySponsor(SponsorQueryRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
             return hostAccessor.QuerySponsor(request);
         }
 
-        public Task<SponsorModel> GetSponsor(SponsorGetRequest request)
+        public Task<Response<SponsorModel>> GetSponsor(SponsorGetRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
             return hostAccessor.GetSponsor(request);
@@ -164,35 +166,37 @@ namespace OmahaMTG._01_Managers.Admin
 
         #region Template
 
-        public Task<TemplateModel> CreateTemplate(TemplateCreateRequest request)
+        public Task<Response<TemplateModel>> CreateTemplate(TemplateCreateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
             return hostAccessor.CreateTemplate(request);
         }
 
-        public Task<TemplateModel> UpdateTemplate(TemplateUpdateRequest request)
+        public Task<Response<TemplateModel>> UpdateTemplate(TemplateUpdateRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
             return hostAccessor.UpdateTemplate(request);
         }
 
-        public Task DeleteTemplate(TemplateDeleteRequest request)
+        public Task<NullResponse> DeleteTemplate(TemplateDeleteRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
             return hostAccessor.DeleteTemplate(request);
         }
 
-        public Task<SkipTakeSet<TemplateModel>> QueryTemplate(TemplateQueryRequest request)
+        public Task<Response<SkipTakeSet<TemplateModel>>> QueryTemplate(TemplateQueryRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
             return hostAccessor.QueryTemplate(request);
         }
 
-        public Task<TemplateModel> GetTemplate(TemplateGetRequest request)
+        public Task<Response<TemplateModel>> GetTemplate(TemplateGetRequest request)
         {
             var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
             return hostAccessor.GetTemplate(request);
         }
+
+
 
         #endregion Template
     }

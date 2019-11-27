@@ -26,7 +26,8 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpGet]
         public async Task<ActionResult<SkipTakeSet<TemplateModel>>> Get([FromQuery] TemplateQueryRequest request)
         {
-            return await TemplateManager.QueryTemplate(request);
+            var result = await TemplateManager.QueryTemplate(request);
+            return result.ToActionResult();
 
         }
 
@@ -34,19 +35,15 @@ namespace OmahaMTG.Site.Controllers.Admin
         public async Task<ActionResult<TemplateModel>> Get(int id)
         {
             var result = await TemplateManager.GetTemplate(new TemplateGetRequest { Id = id });
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return result;
+            return result.ToActionResult();
         }
 
         // POST: api/Default
         [HttpPost]
         public async Task<ActionResult<TemplateModel>> Post([FromBody] TemplateCreateRequest request)
         {
-            return await TemplateManager.CreateTemplate(request);
+            var result = await TemplateManager.CreateTemplate(request);
+            return result.ToActionResult();
         }
 
         // PUT: api/Default/5
@@ -54,15 +51,16 @@ namespace OmahaMTG.Site.Controllers.Admin
         public async Task<ActionResult<TemplateModel>> Put(int id, [FromBody] TemplateUpdateRequest request)
         {
             request.Id = id;
-            return await TemplateManager.UpdateTemplate(request);
+            var result = await TemplateManager.UpdateTemplate(request);
+            return result.ToActionResult();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await TemplateManager.DeleteTemplate(new TemplateDeleteRequest { Id = id, Perm = perm });
-            return Ok();
+            var result = await TemplateManager.DeleteTemplate(new TemplateDeleteRequest { Id = id, Perm = perm });
+            return result.ToActionResult();
         }
     }
 }

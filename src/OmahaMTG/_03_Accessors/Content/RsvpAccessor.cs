@@ -1,25 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hero4Hire.Architecture;
+using Microsoft.EntityFrameworkCore;
+using OmahaMTG._00_Model.Admin.Model.Rsvp;
 using OmahaMTG._03_Accessors.Content.Contract;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using OmahaMTG._00_Model.Admin.Model.Rsvp;
 
 namespace OmahaMTG._03_Accessors.Content
 {
     internal partial class ContentAccessor : IRsvpAccessor
     {
-        public async Task<RsvpCountModel> GetRsvpCount(RsvpGetCountRequest request)
+        public async Task<Response<RsvpCountModel>> GetRsvpCount(RsvpGetCountRequest request)
         {
             var result = await _dbContext.MeetingRsvps
                 .Where(w => w.MeetingId == request.MeetingId)
                 .CountAsync();
 
-            return new RsvpCountModel() { Count = result };
-
+            return new Response<RsvpCountModel>()
+            {
+                Status = ResponseStatusCodes.Ok,
+                Data = new RsvpCountModel() { Count = result }
+            };
         }
 
-        public async Task<IEnumerable<RsvpModel>> GetRsvps(RsvpGetRequest request)
+        public async Task<Response<IEnumerable<RsvpModel>>> GetRsvps(RsvpGetRequest request)
         {
             var result = await _dbContext.MeetingRsvps
                 .Where(w => w.MeetingId == request.MeetingId)
@@ -27,7 +31,12 @@ namespace OmahaMTG._03_Accessors.Content
                 .Select(s => s.ToRsvp())
                 .ToListAsync();
 
-            return result;
+            return new Response<IEnumerable<RsvpModel>>()
+            {
+                Status = ResponseStatusCodes.Ok,
+                Data = result
+            };
+
         }
     }
 }

@@ -26,7 +26,8 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpGet]
         public async Task<ActionResult<SkipTakeSet<SponsorModel>>> Get([FromQuery] SponsorQueryRequest request)
         {
-            return await SponsorManager.QuerySponsor(request);
+            var result = await SponsorManager.QuerySponsor(request);
+            return result.ToActionResult();
 
         }
 
@@ -34,20 +35,15 @@ namespace OmahaMTG.Site.Controllers.Admin
         public async Task<ActionResult<SponsorModel>> Get(int id)
         {
             var result = await SponsorManager.GetSponsor(new SponsorGetRequest { Id = id });
-
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return result;
+            return result.ToActionResult();
         }
 
         // POST: api/Default
         [HttpPost]
         public async Task<ActionResult<SponsorModel>> Post([FromBody] SponsorCreateRequest request)
         {
-            return await SponsorManager.CreateSponsor(request);
+            var result = await SponsorManager.CreateSponsor(request);
+            return result.ToActionResult();
         }
 
         // PUT: api/Default/5
@@ -55,15 +51,16 @@ namespace OmahaMTG.Site.Controllers.Admin
         public async Task<ActionResult<SponsorModel>> Put(int id, [FromBody] SponsorUpdateRequest request)
         {
             request.Id = id;
-            return await SponsorManager.UpdateSponsor(request);
+            var result = await SponsorManager.UpdateSponsor(request);
+            return result.ToActionResult();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await SponsorManager.DeleteSponsor(new SponsorDeleteRequest { Id = id, Perm = perm });
-            return Ok();
+            var result = await SponsorManager.DeleteSponsor(new SponsorDeleteRequest { Id = id, Perm = perm });
+            return result.ToActionResult();
         }
     }
 }

@@ -1,15 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using Hero4Hire.Architecture;
 using OmahaMTG._00_Model.Admin.Model.Template;
 using OmahaMTG._05_Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG._03_Accessors.Content.Contract
 {
     public interface ITemplateAccessor
     {
-        Task<TemplateModel> CreateTemplate(TemplateCreateRequest request);
-        Task<TemplateModel> UpdateTemplate(TemplateUpdateRequest request);
-        Task DeleteTemplate(TemplateDeleteRequest request);
-        Task<SkipTakeSet<TemplateModel>> QueryTemplate(TemplateQueryRequest request);
-        Task<TemplateModel> GetTemplate(TemplateGetRequest request);
+        Task<Response<TemplateModel>> CreateTemplate(TemplateCreateRequest request);
+        Task<Response<TemplateModel>> UpdateTemplate(TemplateUpdateRequest request);
+        Task<NullResponse> DeleteTemplate(TemplateDeleteRequest request);
+        Task<Response<SkipTakeSet<TemplateModel>>> QueryTemplate(TemplateQueryRequest request);
+        Task<Response<TemplateModel>> GetTemplate(TemplateGetRequest request);
     }
 }

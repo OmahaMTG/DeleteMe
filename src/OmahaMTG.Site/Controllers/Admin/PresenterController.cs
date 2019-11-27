@@ -26,26 +26,23 @@ namespace OmahaMTG.Site.Controllers.Admin
         [HttpGet]
         public async Task<ActionResult<SkipTakeSet<PresenterModel>>> Get([FromQuery] PresenterQueryRequest request)
         {
-            return await PresenterManager.QueryPresenter(request);
+            var result = await PresenterManager.QueryPresenter(request);
+            return result.ToActionResult();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PresenterModel>> Get(int id)
         {
             var result = await PresenterManager.GetPresenter(new PresenterGetRequest { Id = id });
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return result;
+            return result.ToActionResult();
         }
 
         // POST: api/Default
         [HttpPost]
         public async Task<ActionResult<PresenterModel>> Post([FromBody] PresenterCreateRequest request)
         {
-            return await PresenterManager.CreatePresenter(request);
+            var result = await PresenterManager.CreatePresenter(request);
+            return result.ToActionResult();
         }
 
         // PUT: api/Default/5
@@ -53,15 +50,16 @@ namespace OmahaMTG.Site.Controllers.Admin
         public async Task<ActionResult<PresenterModel>> Put(int id, [FromBody] PresenterUpdateRequest request)
         {
             request.Id = id;
-            return await PresenterManager.UpdatePresenter(request);
+            var result = await PresenterManager.UpdatePresenter(request);
+            return result.ToActionResult();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id, [FromQuery] bool perm)
         {
-            await PresenterManager.DeletePresenter(new PresenterDeleteRequest { Id = id, Perm = perm });
-            return Ok();
+            var result = await PresenterManager.DeletePresenter(new PresenterDeleteRequest { Id = id, Perm = perm });
+            return result.ToActionResult();
         }
     }
 }

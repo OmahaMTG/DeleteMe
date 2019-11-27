@@ -1,15 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using Hero4Hire.Architecture;
 using OmahaMTG._00_Model.Admin.Model.Presenter;
 using OmahaMTG._05_Data;
+using System.Threading.Tasks;
 
 namespace OmahaMTG._01_Managers.Admin.Contract
 {
     public interface IPresenterManager
     {
-        Task<PresenterModel> CreatePresenter(PresenterCreateRequest request);
-        Task<PresenterModel> UpdatePresenter(PresenterUpdateRequest request);
-        Task DeletePresenter(PresenterDeleteRequest request);
-        Task<SkipTakeSet<PresenterModel>> QueryPresenter(PresenterQueryRequest request);
-        Task<PresenterModel> GetPresenter(PresenterGetRequest request);
+        Task<Response<PresenterModel>> CreatePresenter(PresenterCreateRequest request);
+        Task<Response<PresenterModel>> UpdatePresenter(PresenterUpdateRequest request);
+        Task<NullResponse> DeletePresenter(PresenterDeleteRequest request);
+        Task<Response<SkipTakeSet<PresenterModel>>> QueryPresenter(PresenterQueryRequest request);
+        Task<Response<PresenterModel>> GetPresenter(PresenterGetRequest request);
     }
 }
