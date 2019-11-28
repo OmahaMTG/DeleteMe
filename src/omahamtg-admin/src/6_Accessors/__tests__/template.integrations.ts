@@ -60,14 +60,18 @@ describe('template API', () => {
 
   it('Querying a template, should return that matching templates.', async () => {
     let templateQueryTarget = buildTestTemplateRequest();
+    let queryTargetId = 0;
     for (let index = 0; index < 10; index++) {
       const templateCreateRequest = buildTestTemplateRequest();
       const templateCreateResponse = await templateApi.createResource(templateCreateRequest);
-      if (index === 5) templateQueryTarget = templateCreateResponse;
+      if (index === 5) {
+        templateQueryTarget = templateCreateResponse;
+        queryTargetId = templateCreateResponse.id;
+      }
     }
 
-    const queryResponse = await templateApi.queryResources(0, 1, templateQueryTarget.name);
-
-    expect(queryResponse.records[0]).toEqual(templateQueryTarget);
+    const queryResponse = await templateApi.queryResources(0, 50, templateQueryTarget.name);
+    queryResponse.records.find(host => host.id === queryTargetId);
+    expect(queryResponse.records.find(host => host.id === queryTargetId)).toEqual(templateQueryTarget);
   });
 });

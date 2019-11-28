@@ -42,6 +42,7 @@ namespace OmahaMTG.Controllers.Admin
         public async Task<ActionResult<MeetingModel>> Post([FromBody] MeetingCreateRequest request)
         {
             var result = await MeetingManager.CreateMeeting(request);
+            System.Diagnostics.Debug.WriteLine(result);
             return result.ToActionResult();
         }
 

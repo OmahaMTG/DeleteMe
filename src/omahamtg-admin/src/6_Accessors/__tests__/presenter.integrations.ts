@@ -61,14 +61,19 @@ describe('presenter API', () => {
 
   it('Querying a presenter, should return that matching presenters.', async () => {
     let presenterQueryTarget = buildTestPresenterRequest();
+    let queryTargetId = 0;
     for (let index = 0; index < 10; index++) {
       const presenterCreateRequest = buildTestPresenterRequest();
       const presenterCreateResponse = await presenterApi.createResource(presenterCreateRequest);
-      if (index === 5) presenterQueryTarget = presenterCreateResponse;
+      if (index === 5) {
+        presenterQueryTarget = presenterCreateResponse;
+        queryTargetId = presenterCreateResponse.id;
+      }
     }
 
-    const queryResponse = await presenterApi.queryResources(0, 1, presenterQueryTarget.name);
+    const queryResponse = await presenterApi.queryResources(0, 50, presenterQueryTarget.name);
 
-    expect(queryResponse.records[0]).toEqual(presenterQueryTarget);
+    queryResponse.records.find(host => host.id === queryTargetId);
+    expect(queryResponse.records.find(host => host.id === queryTargetId)).toEqual(presenterQueryTarget);
   });
 });

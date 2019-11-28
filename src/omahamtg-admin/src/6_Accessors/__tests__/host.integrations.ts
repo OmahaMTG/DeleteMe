@@ -62,14 +62,18 @@ describe('host API', () => {
 
   it('Querying a host, should return that matching hosts.', async () => {
     let hostQueryTarget = buildTestHostRequest();
+    let queryTargetId = 0;
     for (let index = 0; index < 10; index++) {
       const hostCreateRequest = buildTestHostRequest();
       const hostCreateResponse = await hostApi.createResource(hostCreateRequest);
-      if (index === 5) hostQueryTarget = hostCreateResponse;
+      if (index === 5) {
+        hostQueryTarget = hostCreateResponse;
+        queryTargetId = hostCreateResponse.id;
+      }
     }
 
-    const queryResponse = await hostApi.queryResources(0, 1, hostQueryTarget.name);
-
-    expect(queryResponse.records[0]).toEqual(hostQueryTarget);
+    const queryResponse = await hostApi.queryResources(0, 50, hostQueryTarget.name);
+    queryResponse.records.find(host => host.id === queryTargetId);
+    expect(queryResponse.records.find(host => host.id === queryTargetId)).toEqual(hostQueryTarget);
   });
 });

@@ -18,6 +18,7 @@ namespace OmahaMTG._03_Accessors.Content
                 EndTime = createMeetingRequest.EndTime,
                 MeetingSponsors = createMeetingRequest.MeetingSponsors?.Select(s => new MeetingSponsorData() { SponsorId = s.SponsorId, SponsorMeetingBody = s.SponsorMeetingBody }).ToList(),
                 MeetingHostId = createMeetingRequest.MeetingHostId,
+                HostMeetingBody = createMeetingRequest.MeetingHostBody,
                 MeetingTags = createMeetingRequest.Tags?.Select(s => new MeetingTagData() { Tag = new TagData() { Name = s } }).ToList(),
                 VimeoId = createMeetingRequest.VimeoId,
                 TemplateId = createMeetingRequest.TemplateId,

@@ -34,9 +34,9 @@ namespace OmahaMTG._03_Accessors.Content
                 else
                 {
                     presenterToDelete.IsDeleted = true;
-                    ;
                 }
 
+                await _dbContext.SaveChangesAsync();
                 return new NullResponse() { Status = ResponseStatusCodes.OkNoContent };
             }
 

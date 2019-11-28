@@ -12,7 +12,6 @@ namespace OmahaMTG._00_Model.Admin.Model.Meeting
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
 
-        public string MarkdownBody { get; set; }
 
         public bool IsDraft { get; set; }
         public bool IsDeleted { get; set; }

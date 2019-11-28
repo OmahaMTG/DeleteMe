@@ -63,14 +63,18 @@ describe('sponsor API', () => {
 
   it('Querying a sponsor, should return that matching sponsors.', async () => {
     let sponsorQueryTarget = buildTestSponsorRequest();
+    let queryTargetId = 0;
     for (let index = 0; index < 10; index++) {
       const sponsorCreateRequest = buildTestSponsorRequest();
       const sponsorCreateResponse = await sponsorApi.createResource(sponsorCreateRequest);
-      if (index === 5) sponsorQueryTarget = sponsorCreateResponse;
+      if (index === 5) {
+        sponsorQueryTarget = sponsorCreateResponse;
+        queryTargetId = sponsorCreateResponse.id;
+      }
     }
 
-    const queryResponse = await sponsorApi.queryResources(0, 1, sponsorQueryTarget.name);
-
-    expect(queryResponse.records[0]).toEqual(sponsorQueryTarget);
+    const queryResponse = await sponsorApi.queryResources(0, 50, sponsorQueryTarget.name);
+    queryResponse.records.find(host => host.id === queryTargetId);
+    expect(queryResponse.records.find(host => host.id === queryTargetId)).toEqual(sponsorQueryTarget);
   });
 });
