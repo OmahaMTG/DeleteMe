@@ -1,11 +1,7 @@
 import { buildResourceAccessor } from '../ResourceAccessor';
 import { ITemplate } from '../../3_Contracts/ITemplate';
-import faker from 'faker';
+import { buildTestTemplateRequest } from './testResourceBuilders';
 
-const buildTestTemplateRequest = () => ({
-  body: faker.random.words(),
-  name: faker.random.words()
-});
 const templateApi = buildResourceAccessor<ITemplate>('/template');
 
 describe('template API', () => {

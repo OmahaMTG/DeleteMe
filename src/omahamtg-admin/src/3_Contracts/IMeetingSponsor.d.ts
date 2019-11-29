@@ -1,4 +1,4 @@
 export interface IMeetingSponsor {
-  id?: number;
-  blurb: string;
+  sponsorId?: number;
+  sponsorMeetingBody: string;
 }

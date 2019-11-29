@@ -57,6 +57,7 @@ namespace OmahaMTG._03_Accessors.Content
                 Title = meetingData.Title,
                 StartTime = meetingData.StartTime,
                 EndTime = meetingData.EndTime,
+                TemplateId = meetingData.TemplateId,
                 IsDeleted = meetingData.IsDeleted,
                 MeetingHostId = meetingData.MeetingHostId,
                 MeetingHostBody = meetingData.HostMeetingBody,

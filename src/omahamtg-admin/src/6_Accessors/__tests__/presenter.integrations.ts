@@ -1,12 +1,7 @@
 import { buildResourceAccessor } from '../ResourceAccessor';
 import { IPresenter } from '../../3_Contracts/IPresenter';
-import faker from 'faker';
+import { buildTestPresenterRequest } from './testResourceBuilders';
 
-const buildTestPresenterRequest = () => ({
-  bio: faker.random.words(),
-  contactInfo: faker.random.words(),
-  name: faker.random.words()
-});
 const presenterApi = buildResourceAccessor<IPresenter>('/presenter');
 
 describe('presenter API', () => {

@@ -1,7 +1,8 @@
 import { IMeetingPresentationPresenter } from './IMeetingPresentationPresenter';
 export interface IMeetingPresentation {
-  id?: number;
-  title: string;
-  details: string;
-  presenters: IMeetingPresentationPresenter[];
+  presentationId?: number;
+  presentationTitle: string;
+  presentationDetails: string;
+  vimeoId?: string;
+  meetingPresentationPresenters: IMeetingPresentationPresenter[];
 }

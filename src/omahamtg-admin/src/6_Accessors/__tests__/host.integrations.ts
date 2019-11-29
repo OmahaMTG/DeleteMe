@@ -1,13 +1,7 @@
 import { buildResourceAccessor } from '../ResourceAccessor';
 import { IHost } from '../../3_Contracts/IHost';
-import faker from 'faker';
+import { buildTestHostRequest } from './testResourceBuilders';
 
-const buildTestHostRequest = () => ({
-  address: faker.random.words(),
-  blurb: faker.random.words(),
-  contactInfo: faker.random.words(),
-  name: faker.random.words()
-});
 const hostApi = buildResourceAccessor<IHost>('/host');
 
 describe('host API', () => {

@@ -1,14 +1,7 @@
 import { buildResourceAccessor } from '../ResourceAccessor';
 import { ISponsor } from '../../3_Contracts/ISponsor';
-import faker from 'faker';
+import { buildTestSponsorRequest } from './testResourceBuilders';
 
-const buildTestSponsorRequest = () => ({
-  blurb: faker.random.words(),
-  contactInfo: faker.random.words(),
-  name: faker.random.words(),
-  shortBlurb: faker.random.words(),
-  url: faker.internet.url()
-});
 const sponsorApi = buildResourceAccessor<ISponsor>('/sponsor');
 
 describe('sponsor API', () => {
