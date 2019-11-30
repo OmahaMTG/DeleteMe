@@ -10,9 +10,9 @@ namespace OmahaMTG._05_Data
         public string Title { get; set; }
         public int? TemplateId { get; set; }
         public TemplateData Template { get; set; }
-        public DateTime? PublishStartTime { get; set; }
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
+        public DateTimeOffset? PublishStartTime { get; set; }
+        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
 
         public bool IsDraft { get; set; }
 

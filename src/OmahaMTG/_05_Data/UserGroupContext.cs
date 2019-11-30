@@ -38,19 +38,28 @@ namespace OmahaMTG._05_Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<MeetingSponsorData>()
-                .HasKey(es => new {es.MeetingId, es.SponsorId});
+                .HasKey(es => new { es.MeetingId, es.SponsorId });
 
             modelBuilder.Entity<PresentationPresenterData>()
-                .HasKey(pp => new {pp.PresentationId, pp.PresenterId});
+                .HasKey(pp => new { pp.PresentationId, pp.PresenterId });
 
             modelBuilder.Entity<MeetingRsvpData>()
-                .HasKey(er => new {er.MeetingId, er.UserId});
+                .HasKey(er => new { er.MeetingId, er.UserId });
 
             modelBuilder.Entity<MeetingTagData>()
-                .HasKey(er => new {er.MeetingId, er.TagId});
+                .HasKey(er => new { er.MeetingId, er.TagId });
 
             modelBuilder.Entity<PostTagData>()
-                .HasKey(er => new {er.PostId, er.TagId});
+                .HasKey(er => new { er.PostId, er.TagId });
+
+            modelBuilder.Entity<MeetingData>()
+                .HasMany(m => m.MeetingTags).WithOne(mt => mt.Meeting).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MeetingData>()
+                .HasMany(m => m.MeetingSponsors).WithOne(mt => mt.Meeting).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MeetingData>()
+                .HasMany(m => m.Presentations).WithOne(mt => mt.Meeting).OnDelete(DeleteBehavior.Cascade);
         }
 
         // public int CurrentUserId { get; set; }

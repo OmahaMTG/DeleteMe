@@ -1,4 +1,4 @@
 export interface IMeetingPresentationPresenter {
-  id?: number;
-  bio: string;
+  presenterId?: number;
+  meetingPresentationPresenterBody: string;
 }

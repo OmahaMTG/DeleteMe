@@ -10,6 +10,6 @@ namespace OmahaMTG._05_Data
         public int? PresenterId { get; set; }
         public PresenterData Presenter { get; set; }
 
-        public string PresenterMeetingBody { get; set; }
+        public string PresenterPresentationBody { get; set; }
     }
 }

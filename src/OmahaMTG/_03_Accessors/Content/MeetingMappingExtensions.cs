@@ -16,7 +16,7 @@ namespace OmahaMTG._03_Accessors.Content
                 Title = createMeetingRequest.Title,
                 StartTime = createMeetingRequest.StartTime,
                 EndTime = createMeetingRequest.EndTime,
-                MeetingSponsors = createMeetingRequest.MeetingSponsors?.Select(s => new MeetingSponsorData() { SponsorId = s.SponsorId, SponsorMeetingBody = s.SponsorMeetingBody }).ToList(),
+                MeetingSponsors = createMeetingRequest.MeetingSponsors?.Select(s => new MeetingSponsorData() { SponsorId = s.SponsorId, MeetingSponsorBody = s.MeetingSponsorBody }).ToList(),
                 MeetingHostId = createMeetingRequest.MeetingHostId,
                 HostMeetingBody = createMeetingRequest.MeetingHostBody,
                 MeetingTags = createMeetingRequest.Tags?.Select(s => new MeetingTagData() { Tag = new TagData() { Name = s } }).ToList(),
@@ -43,7 +43,7 @@ namespace OmahaMTG._03_Accessors.Content
             return new PresentationPresenterData()
             {
                 PresenterId = presenter.PresenterId,
-                PresenterMeetingBody = presenter.MeetingBody
+                PresenterPresentationBody = presenter.MeetingPresentationPresenterBody
             };
         }
 
@@ -61,7 +61,7 @@ namespace OmahaMTG._03_Accessors.Content
                 IsDeleted = meetingData.IsDeleted,
                 MeetingHostId = meetingData.MeetingHostId,
                 MeetingHostBody = meetingData.HostMeetingBody,
-                MeetingSponsors = meetingData.MeetingSponsors?.Select(ms => new MeetingSponsor() { SponsorId = ms.SponsorId, SponsorMeetingBody = ms.SponsorMeetingBody }),
+                MeetingSponsors = meetingData.MeetingSponsors?.Select(ms => new MeetingSponsor() { SponsorId = ms.SponsorId, MeetingSponsorBody = ms.MeetingSponsorBody }),
                 MeetingPresentations = meetingData.Presentations.Select(s => s.ToPresentation()),
                 Tags = meetingData.MeetingTags?.Select(s => s.Tag.Name),
                 VimeoId = meetingData.VimeoId
@@ -87,7 +87,7 @@ namespace OmahaMTG._03_Accessors.Content
             return new MeetingPresentationPresenter()
             {
                 PresenterId = presenterData.PresenterId,
-                MeetingBody = presenterData.PresenterMeetingBody
+                MeetingPresentationPresenterBody = presenterData.PresenterPresentationBody
             };
         }
 

@@ -37,7 +37,6 @@ namespace OmahaMTG._03_Accessors.Content
             {
                 if (request.Perm)
                 {
-
                     _dbContext.Meetings.Remove(meetingFromDatabase);
                 }
                 else
@@ -53,13 +52,13 @@ namespace OmahaMTG._03_Accessors.Content
 
         public async Task<Response<MeetingModel>> GetMeeting(MeetingGetRequest request)
         {
-            var result = (await _dbContext.Meetings
+            var result = await _dbContext.Meetings
                 .Include(i => i.MeetingSponsors).ThenInclude(i => i.Sponsor)
                 .Include(i => i.MeetingHost)
                 .Include(i => i.Presentations).ThenInclude(i => i.PresentationPresenters).ThenInclude(i => i.Presenter)
                 .Include(_ => _.MeetingTags).ThenInclude(_ => _.Tag)
                 .Where(w => w.Id == request.Id)
-                .FirstOrDefaultAsync()).ToMeeting();
+                .FirstOrDefaultAsync();
 
             if (result == null)
             {
@@ -69,7 +68,7 @@ namespace OmahaMTG._03_Accessors.Content
             return new Response<MeetingModel>()
             {
                 Status = ResponseStatusCodes.Ok,
-                Data = result
+                Data = result.ToMeeting()
             };
         }
 

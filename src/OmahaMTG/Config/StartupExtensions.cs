@@ -49,8 +49,8 @@ namespace OmahaMTG.Config
                 using (var context = serviceScope.ServiceProvider.GetRequiredService<UserGroupContext>())
                 {
                     // context.Database.Migrate();
-                    //   context.Database.EnsureDeleted();
-                    //   context.Database.EnsureCreated();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                 }
             }
 

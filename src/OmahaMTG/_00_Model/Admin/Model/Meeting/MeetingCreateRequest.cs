@@ -7,9 +7,9 @@ namespace OmahaMTG._00_Model.Admin.Model.Meeting
     {
         public string Title { get; set; }
         public int? TemplateId { get; set; }
-        public DateTime? PublishStartTime { get; set; }
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
+        public DateTimeOffset? PublishStartTime { get; set; }
+        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
 
         public string MarkdownBody { get; set; }
 

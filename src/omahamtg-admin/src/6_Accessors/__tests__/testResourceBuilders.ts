@@ -4,6 +4,8 @@ import { IHost } from '../../3_Contracts/IHost';
 import { buildResourceAccessor } from '../ResourceAccessor';
 import { ITemplate } from '../../3_Contracts/ITemplate';
 import { ISponsor } from '../../3_Contracts/ISponsor';
+import { IPresenter } from '../../3_Contracts/IPresenter';
+import moment from 'moment';
 
 const buildTestHostRequest = () => ({
   address: faker.random.words(),
@@ -34,6 +36,7 @@ const buildTestPresenterRequest = () => ({
 const hostApi = buildResourceAccessor<IHost>('/host');
 const templateApi = buildResourceAccessor<ITemplate>('/template');
 const sponsorApi = buildResourceAccessor<ISponsor>('/sponsor');
+const presenterApi = buildResourceAccessor<IPresenter>('/presenter');
 
 const buildTestMeetingRequest = async (): Promise<Omit<IMeeting, 'id'>> => {
   const testHostRequest1 = buildTestHostRequest();
@@ -48,25 +51,49 @@ const buildTestMeetingRequest = async (): Promise<Omit<IMeeting, 'id'>> => {
   const testSponsorRequest2 = buildTestSponsorRequest();
   const testSponsorResponse2 = await sponsorApi.createResource(testSponsorRequest2);
 
+  const testPresenterRequest1 = buildTestPresenterRequest();
+  const testPresenterResponse1 = await presenterApi.createResource(testPresenterRequest1);
+
+  const testPresenterRequest2 = buildTestPresenterRequest();
+  const testPresenterResponse2 = await presenterApi.createResource(testPresenterRequest2);
+
+  const testPresenterRequest3 = buildTestPresenterRequest();
+  const testPresenterResponse3 = await presenterApi.createResource(testPresenterRequest3);
+
+  const testPresenterRequest4 = buildTestPresenterRequest();
+  const testPresenterResponse4 = await presenterApi.createResource(testPresenterRequest4);
+
   return {
-    startTime: faker.date.past().toISOString(),
-    endTime: faker.date.future().toISOString(),
+    startTime: moment(faker.date.past()).toISOString(true),
+    endTime: moment(faker.date.past()).toISOString(true),
     meetingHostBody: faker.random.words(),
     isDraft: false,
     meetingHostId: testHostResponse1.id,
-    publishStartTime: faker.date.past().toISOString(),
+    publishStartTime: moment(faker.date.past()).toISOString(true),
     title: faker.random.words(),
     meetingPresentations: [
       {
         presentationDetails: faker.random.words(),
         presentationTitle: faker.random.words(),
         vimeoId: faker.random.words(),
-        meetingPresentationPresenters: []
+        meetingPresentationPresenters: [
+          { presenterId: testPresenterResponse1.id, meetingPresentationPresenterBody: faker.random.words() },
+          { presenterId: testPresenterResponse2.id, meetingPresentationPresenterBody: faker.random.words() }
+        ]
+      },
+      {
+        presentationDetails: faker.random.words(),
+        presentationTitle: faker.random.words(),
+        vimeoId: faker.random.words(),
+        meetingPresentationPresenters: [
+          { presenterId: testPresenterResponse3.id, meetingPresentationPresenterBody: faker.random.words() },
+          { presenterId: testPresenterResponse4.id, meetingPresentationPresenterBody: faker.random.words() }
+        ]
       }
     ],
     meetingSponsors: [
-      { sponsorId: testSponsorResponse1.id, sponsorMeetingBody: faker.random.words() },
-      { sponsorId: testSponsorResponse2.id, sponsorMeetingBody: faker.random.words() }
+      { sponsorId: testSponsorResponse1.id, meetingSponsorBody: faker.random.words() },
+      { sponsorId: testSponsorResponse2.id, meetingSponsorBody: faker.random.words() }
     ],
     tags: ['testTag1', 'testTag2', 'testTag3'],
     templateId: testTemplateResponse1.id,

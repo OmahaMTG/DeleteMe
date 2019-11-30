@@ -12,11 +12,11 @@ interface DateTimeProps<T> {
 
 export const DateTime = <T extends {}>(props: DateTimeProps<T>) => {
   const onOk = (selectedTime: moment.Moment) => {
-    props.onChange({ name: props.name, value: selectedTime.toISOString() });
+    props.onChange({ name: props.name, value: selectedTime.toISOString(false) });
   };
 
   const onChange = (selectedTime: moment.Moment | null, dateString: string) => {
-    props.onChange({ name: props.name, value: selectedTime ? selectedTime.toISOString() : undefined });
+    props.onChange({ name: props.name, value: selectedTime ? selectedTime.toISOString(false) : undefined });
   };
 
   return (

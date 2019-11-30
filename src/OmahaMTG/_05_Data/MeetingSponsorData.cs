@@ -10,6 +10,6 @@ namespace OmahaMTG._05_Data
         public int? SponsorId { get; set; }
         public SponsorData Sponsor { get; set; }
 
-        public string SponsorMeetingBody { get; set; }
+        public string MeetingSponsorBody { get; set; }
     }
 }
