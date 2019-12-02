@@ -54,4 +54,22 @@ describe('meeting API', () => {
     queryResponse.records.find(meeting => meeting.id === queryTargetId);
     expect(queryResponse.records.find(meeting => meeting.id === queryTargetId)).toEqual(meetingQueryTarget);
   });
+
+  fit('Updating a meeting, and then getting that meeting, should return that meeting', async () => {
+    const meetingCreateRequest = await buildTestMeetingRequest();
+    const meetingCreateResponse = await meetingApi.createResource(meetingCreateRequest);
+
+    const meetingUpdateRequest = await buildTestMeetingRequest();
+    await meetingApi.updateResource(meetingCreateResponse.id, meetingUpdateRequest);
+
+    const meetingFromServer = await meetingApi.getResource(meetingCreateResponse.id);
+
+    expect(meetingFromServer).toEqual({
+      ...meetingUpdateRequest,
+      isDeleted: false,
+      id: expect.any(Number),
+      tags: expect.any(Array),
+      meetingPresentations: expect.any(Array)
+    });
+  });
 });

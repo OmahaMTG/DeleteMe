@@ -100,10 +100,36 @@ namespace OmahaMTG._03_Accessors.Content
             meetingDataToUpdate.StartTime = updateMeetingRequest.StartTime;
             meetingDataToUpdate.EndTime = updateMeetingRequest.EndTime;
             meetingDataToUpdate.MeetingHostId = updateMeetingRequest.MeetingHostId;
+            meetingDataToUpdate.TemplateId = updateMeetingRequest.TemplateId;
+            meetingDataToUpdate.HostMeetingBody = updateMeetingRequest.MeetingHostBody;
             // meetingDataToUpdate.MeetingSponsors = updateMeetingRequest.SponsorIds.Select(s => new MeetingSponsorData() { SponsorId = s });
             meetingDataToUpdate.MeetingTags = updateMeetingRequest.Tags
                 .Select(s => new MeetingTagData() { Tag = new TagData() { Name = s } }).ToList();
             meetingDataToUpdate.VimeoId = updateMeetingRequest.VimeoId;
+
+            meetingDataToUpdate.MeetingSponsors = updateMeetingRequest.MeetingSponsors?.Select(s =>
+                new MeetingSponsorData() { SponsorId = s.SponsorId, MeetingSponsorBody = s.MeetingSponsorBody }).ToList();
+
+            meetingDataToUpdate.Presentations = updateMeetingRequest.MeetingPresentations
+                ?.Select(s => s.ToPresentationData()).ToList();
+            //foreach (var currentSponsor in meetingDataToUpdate.MeetingSponsors)
+            //{
+            //    var isRemoved = true;
+            //    foreach (var sponsorToAdd in updateMeetingRequest.MeetingSponsors)
+            //    {
+            //        if (currentSponsor.SponsorId == sponsorToAdd.SponsorId)
+            //        {
+            //            currentSponsor.MeetingSponsorBody = sponsorToAdd.MeetingSponsorBody;
+            //            isRemoved = false;
+            //        }
+
+            //    }
+
+            //    if (isRemoved)
+            //    {
+            //        meetingDataToUpdate.MeetingSponsors
+            //    }
+            //}
         }
 
     }

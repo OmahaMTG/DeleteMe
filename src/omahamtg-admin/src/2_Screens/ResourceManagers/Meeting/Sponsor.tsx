@@ -43,14 +43,14 @@ export const MeetingSponsors = (props: MeetingSponsorsProps) => {
               <SelectInput
                 label={'Host'}
                 name={'title'}
-                onChange={event => props.updateProperty(index, { name: 'id', value: event.value })}
+                onChange={event => props.updateProperty(index, { name: 'sponsorId', value: event.value })}
                 fetchData={fetchSponsorLookup}
               />
               <MarkdownInput
                 label={'Host Details'}
                 name={'blurb'}
-                value={sponsor.blurb}
-                onChange={event => props.updateProperty(index, { name: 'blurb', value: event.value })}
+                value={sponsor.meetingSponsorBody}
+                onChange={event => props.updateProperty(index, { name: 'meetingSponsorBody', value: event.value })}
                 extraAction={{ label: 'Populate From Host Record', action: console.log }}
               />
             </Collapse.Panel>

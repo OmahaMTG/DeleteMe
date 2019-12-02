@@ -6,10 +6,12 @@ const defaultMeeting: Omit<IMeeting, 'id'> = {
   title: '',
   isDraft: false,
   tags: [],
-  hostBody: '',
+
+  meetingHostBody: '',
   vimeoId: '',
-  sponsors: [{ id: 1, blurb: 'hello 2' }, { id: 1, blurb: 'hello 1' }],
-  presentations: []
+  meetingSponsors: [{ sponsorId: 1, meetingSponsorBody: 'hello 2' }, { sponsorId: 1, meetingSponsorBody: 'hello 1' }],
+  // presentations: []
+  meetingPresentations: []
 };
 
 const meetingApi = buildResourceAccessor<IMeeting>('/meeting');
@@ -18,12 +20,12 @@ const useMeetingManager = () => {
   const rootResourceManager = useResourceManager(meetingApi, defaultMeeting, '/Admin/Meeting');
 
   const addBlankSponsor = () => {
-    rootResourceManager.setFormState(s => ({ ...s, editView: { ...s.editView, sponsors: [...s.editView.sponsors, { blurb: '' }] } }));
+    rootResourceManager.setFormState(s => ({ ...s, editView: { ...s.editView, sponsors: [...s.editView.meetingSponsors, { blurb: '' }] } }));
   };
 
   const removeSponsor = (index: number) => {
     rootResourceManager.setFormState(s => {
-      const newSponsors = [...s.editView.sponsors];
+      const newSponsors = [...s.editView.meetingSponsors];
       newSponsors.splice(index, 1);
       return { ...s, editView: { ...s.editView, sponsors: newSponsors } };
     });
@@ -37,7 +39,7 @@ const useMeetingManager = () => {
 
   const updateSponsorProperty = <K extends keyof IMeetingSponsor>(index: number, changeEvent: { name: K; value: IMeetingSponsor[K] }) => {
     rootResourceManager.setFormState(cur => {
-      const updateSponsors = [...cur.editView.sponsors];
+      const updateSponsors = [...cur.editView.meetingSponsors];
       updateSponsors[index][changeEvent.name] = changeEvent.value;
 
       return {

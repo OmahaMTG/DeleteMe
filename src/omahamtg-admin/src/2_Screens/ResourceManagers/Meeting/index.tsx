@@ -45,10 +45,10 @@ export const Meetings = () => {
           <MeetingSponsors
             removeSponsor={resourceManager.resourceFormManager.removeSponsor}
             addBlankSponsor={resourceManager.resourceFormManager.addBlankSponsor}
-            sponsors={resourceManager.resourceFormManager.formState.editView.sponsors}
+            sponsors={resourceManager.resourceFormManager.formState.editView.meetingSponsors}
             updateProperty={resourceManager.resourceFormManager.updateSponsorProperty}
           />
-          <MeetingPresentations values={resourceManager.resourceFormManager.formState.editView.presentations} />
+          <MeetingPresentations values={resourceManager.resourceFormManager.formState.editView.meetingPresentations} />
           <FormButtonGroup
             onClickCancelButton={console.log}
             onClickDeleteButton={toggleDeleteConfirmationModal}

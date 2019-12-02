@@ -19,7 +19,7 @@ export const PresentationPresenters = (props: PresentationPresentersProps) => {
           <MarkdownInput
             label={'Host Details'}
             name={'blurb'}
-            value={presenter.bio}
+            value={presenter.meetingPresentationPresenterBody}
             onChange={console.log}
             extraAction={{ label: 'Populate From Host Record', action: console.log }}
           />
