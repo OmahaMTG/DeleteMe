@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OmahaMTG.Infrastructure.Data.Model;
+using System.Diagnostics;
+using System.Threading;
 
 namespace OmahaMTG.Infrastructure.Data
 {
@@ -14,6 +16,7 @@ namespace OmahaMTG.Infrastructure.Data
         //}
         public UserGroupContext(DbContextOptions<UserGroupContext> options) : base(options)
         {
+
         }
 
 
