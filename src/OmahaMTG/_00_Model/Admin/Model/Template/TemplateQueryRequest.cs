@@ -1,4 +1,4 @@
-﻿using OmahaMTG._05_Data;
+﻿using OmahaMTG.Infrastructure.Data;
 
 namespace OmahaMTG._00_Model.Admin.Model.Template
 {

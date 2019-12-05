@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace OmahaMTG._05_Data
+namespace OmahaMTG.Infrastructure.Data
 {
     public static class QueryableExtensions
     {

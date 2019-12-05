@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
-namespace OmahaMTG._05_Data
+namespace OmahaMTG.Infrastructure.Data.Model
 {
     [Table("MeetingRSVPs")]
     internal class MeetingRsvpData

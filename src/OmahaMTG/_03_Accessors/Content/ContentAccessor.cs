@@ -1,6 +1,6 @@
 ﻿using Hero4Hire.Architecture.Accessors;
 using OmahaMTG._00_Model;
-using OmahaMTG._05_Data;
+using OmahaMTG.Infrastructure.Data;
 
 namespace OmahaMTG._03_Accessors.Content
 {

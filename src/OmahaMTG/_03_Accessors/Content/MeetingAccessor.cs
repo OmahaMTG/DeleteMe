@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using OmahaMTG._00_Model.Admin.Model.Meeting;
 using OmahaMTG._03_Accessors.Content.Contract;
-using OmahaMTG._05_Data;
 using System.Linq;
 using System.Threading.Tasks;
+using OmahaMTG.Infrastructure.Data;
 
 namespace OmahaMTG._03_Accessors.Content
 {

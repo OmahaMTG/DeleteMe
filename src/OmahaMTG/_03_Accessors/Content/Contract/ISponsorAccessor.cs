@@ -1,7 +1,7 @@
 ﻿using Hero4Hire.Architecture;
 using OmahaMTG._00_Model.Admin.Model.Sponsor;
-using OmahaMTG._05_Data;
 using System.Threading.Tasks;
+using OmahaMTG.Infrastructure.Data;
 
 namespace OmahaMTG._03_Accessors.Content.Contract
 {

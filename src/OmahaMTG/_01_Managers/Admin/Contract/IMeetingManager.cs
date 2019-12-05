@@ -1,7 +1,7 @@
 ﻿using Hero4Hire.Architecture;
 using OmahaMTG._00_Model.Admin.Model.Meeting;
-using OmahaMTG._05_Data;
 using System.Threading.Tasks;
+using OmahaMTG.Infrastructure.Data;
 
 namespace OmahaMTG._01_Managers.Admin.Contract
 {

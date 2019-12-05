@@ -22,9 +22,7 @@ const App = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/Admin/Meetings/" style={{ color: 'red' }}>
-                  Meetings
-                </Link>
+                <Link to="/Admin/Meetings/">Meetings</Link>
               </li>
               <li>
                 <Link to="/Admin/Sponsor/">Sponsors</Link>
@@ -43,14 +41,6 @@ const App = () => {
                   Contact
                 </Link>
               </li>
-              {/* <li>
-                <Link to="/Admin/WinnerPicker/" style={{ color: 'red' }}>
-                  Winner Picker
-                </Link>
-              </li> */}
-              {/* <li>
-                <Link to="/Posts/">Posts</Link>
-              </li> */}
             </ul>
           </div>
           <div className={styles.content}>

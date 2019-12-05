@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OmahaMTG._05_Data
+namespace OmahaMTG.Infrastructure.Data.Model
 {
     internal class DataEntityBase
     {

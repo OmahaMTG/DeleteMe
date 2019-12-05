@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._00_Model;
 using OmahaMTG._00_Model.Admin.Model.Template;
 using OmahaMTG._01_Managers.Admin.Contract;
-using OmahaMTG._05_Data;
 using System.Threading.Tasks;
+using OmahaMTG.Infrastructure.Data;
 
 namespace OmahaMTG.Site.Controllers.Admin
 {

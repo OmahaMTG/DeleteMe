@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OmahaMTG._05_Data
+namespace OmahaMTG.Infrastructure.Data.Model
 {
     [Table("Sponsors")]
     internal class SponsorData : DataEntityBase

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using OmahaMTG.Infrastructure.Data.Model;
 
-namespace OmahaMTG._05_Data
+namespace OmahaMTG.Infrastructure.Data
 {
     internal class UserGroupContext : IdentityDbContext
     {

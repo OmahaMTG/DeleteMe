@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using OmahaMTG._00_Model;
 using OmahaMTG._00_Model.Admin.Model.Meeting;
 using OmahaMTG._01_Managers.Admin.Contract;
-using OmahaMTG._05_Data;
-using System;
+using OmahaMTG.Infrastructure.Data;
 using System.Threading.Tasks;
 
-namespace OmahaMTG.Controllers.Admin
+namespace OmahaMTG.Site.Controllers.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -39,7 +38,7 @@ namespace OmahaMTG.Controllers.Admin
                 var result = await MeetingManager.GetMeeting(new MeetingGetRequest() { Id = id });
                 return result.ToActionResult();
             }
-            catch (Exception ex)
+            catch
             {
                 return BadRequest();
             }

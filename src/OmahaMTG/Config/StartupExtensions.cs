@@ -9,7 +9,7 @@ using OmahaMTG._01_Managers.Admin;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._03_Accessors.Content;
 using OmahaMTG._03_Accessors.Content.Contract;
-using OmahaMTG._05_Data;
+using OmahaMTG.Infrastructure.Data;
 
 namespace OmahaMTG.Config
 {

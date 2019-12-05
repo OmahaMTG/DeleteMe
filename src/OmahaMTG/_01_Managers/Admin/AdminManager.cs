@@ -8,8 +8,8 @@ using OmahaMTG._00_Model.Admin.Model.Sponsor;
 using OmahaMTG._00_Model.Admin.Model.Template;
 using OmahaMTG._01_Managers.Admin.Contract;
 using OmahaMTG._03_Accessors.Content.Contract;
-using OmahaMTG._05_Data;
 using System.Threading.Tasks;
+using OmahaMTG.Infrastructure.Data;
 
 namespace OmahaMTG._01_Managers.Admin
 {

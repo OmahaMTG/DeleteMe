@@ -1,7 +1,7 @@
 ﻿using OmahaMTG._00_Model.Admin.Model.Meeting;
-using OmahaMTG._05_Data;
 using System;
 using System.Linq;
+using OmahaMTG.Infrastructure.Data.Model;
 
 namespace OmahaMTG._03_Accessors.Content
 {

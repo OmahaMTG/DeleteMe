@@ -1,4 +1,4 @@
-﻿namespace OmahaMTG._05_Data
+﻿namespace OmahaMTG.Infrastructure.Data
 {
     public abstract class SkipTakeRequest
     {
