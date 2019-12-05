@@ -3,14 +3,10 @@ using Hero4Hire.Architecture.Utilities;
 
 namespace Hero4Hire.Architecture.Engines
 {
-    abstract class EngineBase<TAmbientContext> : ServiceContractBase<TAmbientContext>
+    internal abstract class EngineBase<TAmbientContext> : ServiceContractBase<TAmbientContext>
+        where TAmbientContext : IAmbientContext
     {
         public AccessorFactory<TAmbientContext> AccessorFactory { get; set; }
         public UtilityFactory<TAmbientContext> UtilityFactory { get; set; }
-
-        protected EngineBase()
-        {
-
-        }
     }
 }

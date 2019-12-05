@@ -5,43 +5,38 @@ using Hero4Hire.Architecture.Utilities;
 
 namespace Hero4Hire.Architecture.Managers
 {
-    public class ManagerFactory<TAmbientContext> : FactoryBase<TAmbientContext>
+    public class ManagerFactory<TAmbientContext> : FactoryBase<TAmbientContext>, IManagerFactory<TAmbientContext>
+        where TAmbientContext : IAmbientContext
     {
-        public ManagerFactory(IServiceProvider serviceProvider, TAmbientContext ambientContext) : base(serviceProvider, ambientContext)
+        public ManagerFactory(IServiceProvider serviceProvider,
+            IAmbientContextFactory<TAmbientContext> ambientContextFactory) : base(serviceProvider,
+            ambientContextFactory.BuildAmbientContext())
         {
-
         }
 
         public T CreateManager<T>() where T : class
         {
-            T result = CreateManager<T>(null, null, null);
+            var result = CreateManager<T>(null, null, null);
             return result;
         }
 
         public T CreateManager<T>(
-            EngineFactory<TAmbientContext> engineFactory, AccessorFactory<TAmbientContext> accessorFactory, UtilityFactory<TAmbientContext> utilityFactory) where T : class
+            EngineFactory<TAmbientContext> engineFactory, AccessorFactory<TAmbientContext> accessorFactory,
+            UtilityFactory<TAmbientContext> utilityFactory) where T : class
         {
-            if (AmbientContext == null)
-            {
-                throw new InvalidOperationException("Context cannot be null");
-            }
+            if (AmbientContext == null) throw new InvalidOperationException("Context cannot be null");
 
             if (utilityFactory == null)
-            {
                 utilityFactory = new UtilityFactory<TAmbientContext>(ServiceProvider, AmbientContext);
-            }
 
             if (accessorFactory == null)
-            {
                 accessorFactory = new AccessorFactory<TAmbientContext>(ServiceProvider, AmbientContext, utilityFactory);
-            }
 
             if (engineFactory == null)
-            {
-                engineFactory = new EngineFactory<TAmbientContext>(ServiceProvider, AmbientContext, accessorFactory, utilityFactory);
-            }
+                engineFactory = new EngineFactory<TAmbientContext>(ServiceProvider, AmbientContext, accessorFactory,
+                    utilityFactory);
 
-            T result = GetInstanceForType<T>();
+            var result = GetInstanceForType<T>();
 
             var @base = result as ManagerBase<TAmbientContext>;
             if (@base != null)
@@ -52,7 +47,9 @@ namespace Hero4Hire.Architecture.Managers
                 @base.UtilityFactory = utilityFactory;
             }
             else
+            {
                 throw new InvalidOperationException($"{typeof(T).Name} does not implement ManagerBase");
+            }
 
             return result;
         }

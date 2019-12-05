@@ -8,7 +8,7 @@ var filter = function(pathname, req) {
 module.exports = function(app) {
   app.use(
     proxy(filter, {
-      target: 'https://omtg.azurewebsites.net',
+      target: 'http://localhost:51816/',
       changeOrigin: true
     })
   );

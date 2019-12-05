@@ -1,0 +1,203 @@
+﻿using Hero4Hire.Architecture;
+using Hero4Hire.Architecture.Managers;
+using OmahaMTG._00_Model;
+using OmahaMTG._00_Model.Admin.Model.Host;
+using OmahaMTG._00_Model.Admin.Model.Meeting;
+using OmahaMTG._00_Model.Admin.Model.Presenter;
+using OmahaMTG._00_Model.Admin.Model.Sponsor;
+using OmahaMTG._00_Model.Admin.Model.Template;
+using OmahaMTG._01_Managers.Admin.Contract;
+using OmahaMTG._03_Accessors.Content.Contract;
+using System.Threading.Tasks;
+using OmahaMTG.Infrastructure.Data;
+
+namespace OmahaMTG._01_Managers.Admin
+{
+    internal class AdminManager : ManagerBase<AmbientContext>, IHostManager, IMeetingManager, IPresenterManager,
+        ISponsorManager, ITemplateManager
+    {
+        //private readonly AccessorFactory<string> _accessorFactory;
+        //public AdminManager(AccessorFactory<string> accessorFactory)
+        //{
+        //    _accessorFactory = accessorFactory;
+        //}
+
+
+        #region Host
+
+        public Task<Response<HostModel>> CreateHost(HostCreateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
+            return hostAccessor.CreateHost(request);
+        }
+
+
+        public Task<NullResponse> DeleteHost(HostDeleteRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
+            return hostAccessor.DeleteHost(request);
+        }
+
+
+        public Task<Response<HostModel>> GetHost(HostGetRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
+            return hostAccessor.GetHost(request);
+        }
+
+
+        public Task<Response<SkipTakeSet<HostModel>>> QueryHost(HostQueryRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
+            return hostAccessor.QueryHost(request);
+        }
+
+
+        public Task<Response<HostModel>> UpdateHost(HostUpdateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IHostAccessor>();
+            return hostAccessor.UpdateHost(request);
+        }
+
+
+        #endregion Host
+
+        #region Meeting
+
+        public Task<Response<MeetingModel>> CreateMeeting(MeetingCreateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
+            return hostAccessor.CreateMeeting(request);
+        }
+
+        public Task<NullResponse> DeleteMeeting(MeetingDeleteRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
+            return hostAccessor.DeleteMeeting(request);
+        }
+
+        public Task<Response<MeetingModel>> GetMeeting(MeetingGetRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
+            return hostAccessor.GetMeeting(request);
+        }
+
+        public Task<Response<SkipTakeSet<MeetingModel>>> QueryMeeting(MeetingQueryRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
+            return hostAccessor.QueryMeeting(request);
+        }
+
+        public Task<Response<MeetingModel>> UpdateMeeting(MeetingUpdateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IMeetingAccessor>();
+            return hostAccessor.UpdateMeeting(request);
+        }
+
+        #endregion Meeting
+
+        #region Presenter
+
+        public Task<Response<PresenterModel>> CreatePresenter(PresenterCreateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
+            return hostAccessor.CreatePresenter(request);
+        }
+
+        public Task<Response<PresenterModel>> UpdatePresenter(PresenterUpdateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
+            return hostAccessor.UpdatePresenter(request);
+        }
+
+        public Task<NullResponse> DeletePresenter(PresenterDeleteRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
+            return hostAccessor.DeletePresenter(request);
+        }
+
+        public Task<Response<SkipTakeSet<PresenterModel>>> QueryPresenter(PresenterQueryRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
+            return hostAccessor.QueryPresenter(request);
+        }
+
+        public Task<Response<PresenterModel>> GetPresenter(PresenterGetRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<IPresenterAccessor>();
+            return hostAccessor.GetPresenter(request);
+        }
+
+        #endregion Presenter
+
+        #region Sponsor
+
+        public Task<Response<SponsorModel>> CreateSponsor(SponsorCreateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
+            return hostAccessor.CreateSponsor(request);
+        }
+
+        public Task<Response<SponsorModel>> UpdateSponsor(SponsorUpdateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
+            return hostAccessor.UpdateSponsor(request);
+        }
+
+        public Task<NullResponse> DeleteSponsor(SponsorDeleteRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
+            return hostAccessor.DeleteSponsor(request);
+        }
+
+        public Task<Response<SkipTakeSet<SponsorModel>>> QuerySponsor(SponsorQueryRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
+            return hostAccessor.QuerySponsor(request);
+        }
+
+        public Task<Response<SponsorModel>> GetSponsor(SponsorGetRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ISponsorAccessor>();
+            return hostAccessor.GetSponsor(request);
+        }
+
+        #endregion Sponsor
+
+        #region Template
+
+        public Task<Response<TemplateModel>> CreateTemplate(TemplateCreateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
+            return hostAccessor.CreateTemplate(request);
+        }
+
+        public Task<Response<TemplateModel>> UpdateTemplate(TemplateUpdateRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
+            return hostAccessor.UpdateTemplate(request);
+        }
+
+        public Task<NullResponse> DeleteTemplate(TemplateDeleteRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
+            return hostAccessor.DeleteTemplate(request);
+        }
+
+        public Task<Response<SkipTakeSet<TemplateModel>>> QueryTemplate(TemplateQueryRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
+            return hostAccessor.QueryTemplate(request);
+        }
+
+        public Task<Response<TemplateModel>> GetTemplate(TemplateGetRequest request)
+        {
+            var hostAccessor = AccessorFactory.CreateAccessor<ITemplateAccessor>();
+            return hostAccessor.GetTemplate(request);
+        }
+
+
+
+        #endregion Template
+    }
+}
